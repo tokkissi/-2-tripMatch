@@ -4,7 +4,7 @@
   "description": "team8282 server",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app",
+    "start": "nodemon index",
     "dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" index.ts"
   },
   "keywords": [],

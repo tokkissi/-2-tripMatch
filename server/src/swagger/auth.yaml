@@ -61,8 +61,14 @@
             properties:
               email:
                 type: string
-              number:
-                type: number
+              nickname:
+                type: string
+              password:
+                type: string
+              gender:
+                type: string
+              age:
+                type: string
     responses:
       201:
         description: 성공

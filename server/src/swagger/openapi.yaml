@@ -10,6 +10,10 @@ servers:
 paths:
   /api/main/auth/email:
     $ref: "./auth.yaml#/~1auth~1email"
+  /api/main/auth/certify:
+    $ref: "./auth.yaml#/~1auth~1certify"
+  /api/main/auth/join:
+    $ref: "./auth.yaml#/~1auth~1join"
 components:
   schemas:
     status:

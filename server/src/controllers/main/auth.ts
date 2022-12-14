@@ -5,9 +5,8 @@ const authController = Router();
 
 authController.post("/email", async (req, res, next) => {
   try {
-    const result = await userService.checkEmail(req.body);
-    if (result === "OK") res.status(201).end();
-    else next(new Error("409"));
+    await userService.checkEmail(req.body);
+    res.status(201).end();
   } catch (err) {
     next(err);
   }

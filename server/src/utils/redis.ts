@@ -14,9 +14,8 @@ const redisClient = createClient({
 class Redis {
   private redis = redisClient.v4;
 
-  async set(key: string, value: string): Promise<string> {
-    const result = await this.redis.set(key, value);
-    return result;
+  async set(key: string, value: string): Promise<void> {
+    await this.redis.set(key, value);
   }
   async get(key: string): Promise<string> {
     const result = await this.redis.get(key);

@@ -11,16 +11,15 @@ class UserService {
     return String(number).padStart(6, "0");
   }
 
-  async checkEmail({ email }: Partial<User>): Promise<string> {
+  async checkEmail({ email }: Partial<User>): Promise<void> {
     const user = await this.userModel.findByEmail(email as string);
-    if (user) return "";
+    if (user) throw new Error("409");
     const number = this.randomNumber();
-    const result = await redis.set(email as string, number);
+    await redis.set(email as string, number);
     await sendMail(
       email as string,
       `다음 인증번호를 입력해주십시오. >> ${number}`
     );
-    return result;
   }
   async checkNumber({ email, number }: { email: string; number: number }) {
     const correct = await redis.get(email);

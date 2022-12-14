@@ -14,9 +14,9 @@ export default async function sendMail(
   text: string
 ): Promise<void> {
   await transport.sendMail({
-    from: "Laftel <laftel@elice.io>",
+    from: "TripMatch <tripmatch@elice.io>",
     to: email,
-    subject: "Welcome to Laftel",
+    subject: "Welcome to TripMatch",
     text,
   });
 }

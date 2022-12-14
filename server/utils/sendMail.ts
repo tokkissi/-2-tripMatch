@@ -9,7 +9,10 @@ const transport = nodemailer.createTransport({
   },
 });
 
-export default async function sendMail(email: string, text: string) {
+export default async function sendMail(
+  email: string,
+  text: string
+): Promise<void> {
   await transport.sendMail({
     from: "Laftel <laftel@elice.io>",
     to: email,

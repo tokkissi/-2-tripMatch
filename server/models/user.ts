@@ -5,8 +5,12 @@ import { User } from "../interfaces";
 class UserModel {
   private userDB = mongoose.model("users", userSchema);
 
-  async create(userInfo: User) {
+  async create(userInfo: Partial<User>) {
     const user = await this.userDB.create(userInfo);
+    return user;
+  }
+  async findByEmail(email: string) {
+    const user = await this.userDB.findOne({ email });
     return user;
   }
 }

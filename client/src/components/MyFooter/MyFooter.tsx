@@ -1,11 +1,8 @@
 import React from "react";
+import Footer from "./MyFooterStyle";
 
 const MyFooter = () => {
-  return (
-    <footer
-      style={{ width: "100%", height: "200px", backgroundColor: "green" }}
-    ></footer>
-  );
+  return <Footer>푸터</Footer>;
 };
 
 export default MyFooter;

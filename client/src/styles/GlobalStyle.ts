@@ -4,12 +4,14 @@ import reset from "styled-reset";
 const GlobalStyle = createGlobalStyle`
   ${reset}
 
-  box-sizing: border-box;
-
+  body {
+    box-sizing: border-box;
+  }
+  
   main {
     min-height: 100vh;
+    width: 100vw;
     position: relative;
-    width: 100%;
   }
 
 `;

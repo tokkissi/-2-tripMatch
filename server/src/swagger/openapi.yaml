@@ -14,6 +14,8 @@ paths:
     $ref: "./auth.yaml#/~1auth~1certify"
   /api/main/auth/join:
     $ref: "./auth.yaml#/~1auth~1join"
+  /api/main/auth/login:
+    $ref: "./auth.yaml#/~1auth~1login"
 components:
   schemas:
     status:

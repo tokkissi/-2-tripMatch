@@ -1,5 +1,4 @@
 import React from "react";
-import UserProfile from "../../components/UserProfile/UserProfile";
 import PostDetail from "../../components/PostDetail/PostDetail";
 import styled from "styled-components";
 import Category from "../../components/Category/Category";

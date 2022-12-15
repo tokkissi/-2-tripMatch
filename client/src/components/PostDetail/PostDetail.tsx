@@ -1,6 +1,19 @@
 import React from "react";
-import styled from "styled-components";
+
 import UserProfile from "../UserProfile/UserProfile";
+import {
+  Thumbnail,
+  ThumbnailImg,
+  PostTitle,
+  MatchStatus,
+  UserContainer,
+  Date,
+  MatchContainer,
+  PostContent,
+  MatchButton,
+  ButtonContainer,
+  Button,
+} from "./style";
 
 interface PostDetailProps {
   matchData?: any;
@@ -22,7 +35,6 @@ const PostDetail: React.FC<PostDetailProps> = ({ matchData }) => {
         )}
         공주 한정식 82식당 후기입니다
       </PostTitle>
-
       <UserContainer>
         <UserProfile />
         <Date>2022-12-12 02:19</Date>
@@ -75,93 +87,3 @@ const PostDetail: React.FC<PostDetailProps> = ({ matchData }) => {
 };
 
 export default PostDetail;
-
-const PostTitle = styled.h3`
-  font-size: 20px;
-  margin: 20px 0;
-`;
-
-const MatchStatus = styled.span<{ status: boolean }>`
-  display: inline-block;
-  margin-right: 10px;
-  font-size: 18px;
-  font-weight: bold;
-  color: ${(props) => (props.status ? "#0088b9" : "#999")};
-`;
-
-const Thumbnail = styled.div`
-  width: 100%;
-  height: 300px;
-  overflow: hidden;
-  margin-bottom: 10px;
-`;
-
-const ThumbnailImg = styled.img`
-  width: 100%;
-`;
-
-const UserContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const MatchContainer = styled.div`
-  width: 50%;
-  border: 2px solid #daeaf1;
-  border-radius: 10px;
-  margin-top: 20px;
-  padding: 20px 30px;
-  font-size: 15px;
-  line-height: 1.7;
-  span {
-    display: inline-block;
-    margin-right: 10px;
-    color: #747474;
-    font-size: 14px;
-  }
-`;
-
-const PostContent = styled.article`
-  min-height: 300px;
-  padding: 40px 0;
-  font-size: 14px;
-  line-height: 1.7;
-`;
-
-const Date = styled.p`
-  font-size: 13px;
-  color: #747474;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: end;
-`;
-
-const Button = styled.button`
-  width: 70px;
-  height: 30px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: #daeaf1;
-  color: #333;
-
-  + button {
-    margin-left: 15px;
-  }
-`;
-
-const MatchButton = styled.button`
-  width: 150px;
-  height: 50px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: #f2d1d1;
-  font-size: 17px;
-  color: #fff;
-  font-weight: bold;
-  margin-bottom: 20px;
-`;

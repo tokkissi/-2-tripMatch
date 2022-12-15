@@ -14,19 +14,17 @@ const AuthTemplateBlock = styled.div`
 `;
 
 // form 입력할 흰색 박스
-const WhiteBox = styled.div`
+const PinkBox = styled.div`
   box-sizing: border-box;
-  padding: 2rem;
   background-color: ${(props) => props.theme.color.lightpink};
-  border-radius: 0.8rem;
-  width: 60%;
-  max-width: 50rem;
-  min-width: 18em;
-  margin: 10% 0;
+  border-radius: 0.5rem;
+  max-width: 40rem;
+  min-width: 25em;
+  margin: 2rem;
   .title {
-    margin-top: 3rem;
+    margin-top: 2rem;
     text-align: center;
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: 600;
   }
 `;
@@ -38,10 +36,10 @@ type AuthTemplateProps = {
 const AuthTemplate = ({ children }: AuthTemplateProps) => {
   return (
     <AuthTemplateBlock>
-      <WhiteBox>
+      <PinkBox>
         <div className="title">TripMatch</div>
         {children}
-      </WhiteBox>
+      </PinkBox>
     </AuthTemplateBlock>
   );
 };

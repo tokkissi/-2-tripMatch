@@ -69,6 +69,8 @@
                 type: string
               age:
                 type: string
+              introduce:
+                type: string
     responses:
       201:
         description: 성공

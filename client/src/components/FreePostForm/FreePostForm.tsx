@@ -1,5 +1,11 @@
 import React, { useRef } from "react";
-import styled from "styled-components";
+import {
+  Button,
+  ButtonContainer,
+  Select,
+  TitleContainer,
+  TitleInput,
+} from "./style";
 
 interface FreePostFormProps {
   post?: any;
@@ -55,59 +61,3 @@ const FreePostForm: React.FC<FreePostFormProps> = ({ post }) => {
 };
 
 export default FreePostForm;
-
-const TitleContainer = styled.div`
-  display: flex;
-`;
-
-const Select = styled.select`
-  border: 1px solid #dbdbdb;
-  border-radius: 5px;
-  color: #333;
-  width: 100px;
-  height: 40px;
-  outline: none;
-  text-indent: 10px;
-
-  &:focus {
-    outline: none;
-    border: 2px solid #c6dce4;
-  }
-
-  + select {
-    margin-left: 10px;
-  }
-`;
-
-const TitleInput = styled.input`
-  flex-grow: 1;
-  outline: none;
-  border: 1px solid #dbdbdb;
-  border-radius: 5px;
-  margin-left: 10px;
-  text-indent: 10px;
-
-  &:focus {
-    outline: none;
-    border: 2px solid #c6dce4;
-  }
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: end;
-`;
-
-const Button = styled.button`
-  outline: none;
-  width: 100px;
-  height: 40px;
-  background-color: #daeaf1;
-  border: none;
-  border-radius: 40px;
-  cursor: pointer;
-
-  + button {
-    margin-left: 20px;
-  }
-`;

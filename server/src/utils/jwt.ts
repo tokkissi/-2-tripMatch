@@ -21,11 +21,11 @@ class Jwt {
       );
     });
   }
-  verify(token: string) {
+  verify(token: string): Promise<jsonwebtoken.JwtPayload> {
     return new Promise((res, rej) => {
       jsonwebtoken.verify(token, this.secretKey as string, (err, decoded) => {
         if (err) rej(err);
-        else res(decoded);
+        else res(decoded as jsonwebtoken.JwtPayload);
       });
     });
   }

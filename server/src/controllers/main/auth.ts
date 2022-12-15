@@ -34,7 +34,7 @@ authController.post("/login", async (req, res, next) => {
       .status(201)
       .cookie("accessToken", accessToken, {
         httpOnly: true,
-        maxAge: 1 * 3600 * 1000,
+        maxAge: 1 * 3600 * 1000 * 24 * 7,
       })
       .json({ refresh });
   } catch (err) {

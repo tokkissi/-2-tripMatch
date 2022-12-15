@@ -1,8 +1,5 @@
-import React from "react";
 import Footer from "./MyFooterStyle";
-import insta from "../../images/freeIconInstagram.png";
-import twit from "../../images/freeIconTwitter.png";
-import face from "../../images/freeIconFacebook.png";
+import { Link } from "react-router-dom";
 
 const MyFooter = () => {
   return (
@@ -33,9 +30,24 @@ const MyFooter = () => {
           Copyright © TRIPMATCH Inc. All Rights Reserved.
         </div>
         <div className="snsLogo">
-          <img src={insta} />
-          <img src={twit} />
-          <img src={face} />
+          <Link to="/">
+            <img
+              src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/freeIconInstagram_uviyex.png"
+              alt="인스타그램"
+            />
+          </Link>
+          <Link to="/">
+            <img
+              src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/freeIconTwitter_djkce8.png"
+              alt="트위터"
+            />
+          </Link>
+          <Link to="/">
+            <img
+              src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/freeIconFacebook_oegnua.png"
+              alt="페이스북"
+            />
+          </Link>
         </div>
       </div>
     </Footer>

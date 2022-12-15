@@ -6,7 +6,7 @@ import styled from "styled-components";
 // 화면 전체 배경색 채우기
 const AuthTemplateBlock = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   background-color: white;
   align-items: center;
@@ -20,7 +20,6 @@ const PinkBox = styled.div`
   border-radius: 0.5rem;
   max-width: 40rem;
   min-width: 25em;
-  margin: 2rem;
   .title {
     margin-top: 2rem;
     text-align: center;

@@ -1,52 +1,69 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { AuthFormBlock, Footer, StyledInput, SummitBtn } from "./AuthStyle";
+import {
+  AuthFormBlock,
+  Footer,
+  StyledInput,
+  SummitBtn,
+  ResultText,
+} from "./AuthStyle";
 
 const RegisterForm = () => {
   return (
     <AuthFormBlock>
-      <h3>회원가입</h3>
       <form>
         <div>
-          <label htmlFor="idInput">email</label>
+          <label htmlFor="emailInput">email*</label>
           <StyledInput
-            id="idInput"
+            id="emailInput"
             autoComplete="on"
             name="userEmail"
-            placeholder="이메일"
+            placeholder="이메일 주소를 입력해주세요"
           />
-          <SummitBtn>이메일 인증</SummitBtn>
+          <ResultText>{"이메일 형식이 올바르지 않습니다"}</ResultText>
+          <SummitBtn>인증번호 요청</SummitBtn>
         </div>
-        <p>{}</p>
         <div>
-          <label htmlFor="idInput">email</label>
+          <label htmlFor="authNumberInput">인증번호*</label>
           <StyledInput
-            id="idInput"
+            id="authNumberInput"
             autoComplete="off"
             name="authNumbers"
-            placeholder="인증번호"
+            placeholder="인증번호를 입력해주세요"
           />
+          <ResultText>{"인증번호가 일치하지 않습니다"}</ResultText>
           <SummitBtn>인증번호 확인</SummitBtn>
         </div>
-        <p></p>
         <div>
-          <label htmlFor="닉네임">password</label>
+          <label htmlFor="nicknameInput">닉네임*</label>
+          <StyledInput
+            id="nicknameInput"
+            autoComplete="on"
+            name="nickname"
+            placeholder="닉네임을 입력해주세요"
+          />
+          <ResultText>{"8글자 이하, 특수문자 제외"}</ResultText>
+          <label htmlFor="passwordInput">비밀번호*</label>
           <StyledInput
             id="passwordInput"
             autoComplete="off"
             name="Password"
-            placeholder="비밀번호"
+            placeholder="비밀번호를 입력해주세요"
             type="password"
           />
-          <label htmlFor="passwordInput">password</label>
+          <ResultText>
+            {"8자 이상, 20자이하, 영어,숫자,특수문자 사용 "}
+          </ResultText>
+          <label htmlFor="passwordConfirmInput">비밀번호 확인*</label>
           <StyledInput
-            id="passwordInput"
+            id="passwordConfirmInput"
             autoComplete="off"
             name="PasswordConfirm"
-            placeholder="비밀번호 확인"
+            placeholder="비밀번호를 다시 입력해주세요"
             type="password"
           />
-          <SummitBtn className="submit">회원가입</SummitBtn>
+          <ResultText>{"비밀번호가 일치하지 않습니다"}</ResultText>
+          <SummitBtn className="formSubmit">회원가입</SummitBtn>
         </div>
       </form>
       <Footer>

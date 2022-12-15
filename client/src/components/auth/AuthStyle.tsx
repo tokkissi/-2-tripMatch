@@ -1,29 +1,25 @@
 import styled from "styled-components";
 
 const AuthFormBlock = styled.div`
-  margin-top: 5rem;
+  margin-top: 1rem;
   padding: 2rem;
-  h3 {
-    font-size: 2rem;
-    margin-bottom: 3rem;
-    font-weight: 600;
-  }
+
   label {
-    display: inline-block;
-    font-size: 2rem;
-    width: 10rem;
-    margin-top: 3rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 600;
     margin-right: 1rem;
   }
 `;
 
 const StyledInput = styled.input`
   box-sizing: border-box;
-  padding: 1rem;
+  padding: 0.5rem;
   width: 100%;
-  max-width: 30rem;
-  font-size: 2rem;
-  margin: 1.5rem 0;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
   border: none;
   outline: none;
   border-bottom: 1px solid grey;
@@ -32,24 +28,30 @@ const StyledInput = styled.input`
   }
 `;
 
+const ResultText = styled.p`
+  margin-bottom: 0.8rem;
+`;
+
 const SummitBtn = styled.div`
-  font-size: 2rem;
-  display: inline-block;
+  font-size: 1.2rem;
+  font-weight: 600;
   border-radius: 0.8rem;
   text-align: center;
-  padding: 1.6rem;
-  margin: 2rem 0;
+  padding: 0.8rem;
+  margin-bottom: 1.2rem;
   background-color: ${(props) => props.theme.color.pink};
   &:hover {
     background-color: ${(props) => props.theme.color.lightblue};
   }
-  &.submit {
+  &.formSubmit {
+    margin-top: 0.5rem;
     display: block;
   }
 `;
 
 const Footer = styled.span`
-  font-size: 1.6rem;
+  font-size: 1.2rem;
+  font-weight: 600;
   display: block;
   padding: 1rem;
   text-align: right;
@@ -61,4 +63,4 @@ const Footer = styled.span`
   }
 `;
 
-export { AuthFormBlock, StyledInput, SummitBtn, Footer };
+export { AuthFormBlock, StyledInput, ResultText, SummitBtn, Footer };

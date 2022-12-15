@@ -5,7 +5,6 @@ import { AuthFormBlock, Footer, StyledInput, SummitBtn } from "./AuthStyle";
 const LoginForm = () => {
   return (
     <AuthFormBlock>
-      <h3>로그인</h3>
       <form>
         <div>
           <label htmlFor="idInput">email</label>
@@ -27,7 +26,7 @@ const LoginForm = () => {
             type="password"
           />
 
-          <SummitBtn className="submit">로그인</SummitBtn>
+          <SummitBtn className="formSubmit">로그인</SummitBtn>
         </div>
       </form>
       <Footer>

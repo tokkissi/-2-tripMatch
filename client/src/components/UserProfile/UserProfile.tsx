@@ -2,11 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import defaultImage from "./../../images/user-default.jpg";
 
-const UserProfile = () => {
+interface UserProfileProps {
+  user: any;
+}
+
+const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
   return (
     <Container>
       <ProfileImg src={defaultImage} alt="" />
-      <Nickname>nickname</Nickname>
+      <Nickname>{user.nickname}</Nickname>
     </Container>
   );
 };

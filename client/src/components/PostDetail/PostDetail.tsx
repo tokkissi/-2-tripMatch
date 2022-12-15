@@ -17,9 +17,10 @@ import {
 
 interface PostDetailProps {
   matchData?: any;
+  user: any;
 }
 
-const PostDetail: React.FC<PostDetailProps> = ({ matchData }) => {
+const PostDetail: React.FC<PostDetailProps> = ({ matchData, user }) => {
   return (
     <div>
       {matchData && (
@@ -36,7 +37,7 @@ const PostDetail: React.FC<PostDetailProps> = ({ matchData }) => {
         공주 한정식 82식당 후기입니다
       </PostTitle>
       <UserContainer>
-        <UserProfile />
+        <UserProfile user={user} />
         <Date>2022-12-12 02:19</Date>
       </UserContainer>
       {matchData && (

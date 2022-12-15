@@ -13,8 +13,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="" element={<Home />} />
-          <Route path="/free/:id" element={<FreePostDetail />} />
-          <Route path="/match/:id" element={<MatchPostDetail />} />
+          <Route path="free/:id" element={<FreePostDetail />} />
+          <Route path="match/:id" element={<MatchPostDetail />} />
         </Route>
       </Routes>
     </BrowserRouter>

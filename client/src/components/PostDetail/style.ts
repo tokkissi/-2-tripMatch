@@ -33,7 +33,7 @@ export const UserContainer = styled.div`
 
 export const MatchContainer = styled.div`
   width: 50%;
-  border: 2px solid ${Theme.color.lightblue};
+  border: 2px solid ${(props) => props.theme.color.lightblue};
   border-radius: 10px;
   margin-top: 20px;
   padding: 20px 30px;
@@ -70,7 +70,7 @@ export const Button = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: ${Theme.color.lightblue};
+  background-color: ${(props) => props.theme.color.lightblue};
   color: #333;
 
   + button {
@@ -84,7 +84,7 @@ export const MatchButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: ${Theme.color.pink};
+  background-color: ${(props) => props.theme.color.pink};
   font-size: 17px;
   color: #fff;
   font-weight: bold;

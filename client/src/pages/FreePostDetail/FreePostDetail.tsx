@@ -1,35 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PostDetail from "../../components/PostDetail/PostDetail";
 import styled from "styled-components";
-import Category from "../../components/Category/Category";
 import Comment from "../../components/Comment/Comment";
+import pointer from "../../images/temporaryIconPointer.png";
+import axios from "axios";
+
+export interface Freepost {
+  id: number;
+  author: Author;
+  region: string;
+  category: string;
+  title: string;
+  content: string;
+  comments: CommentType[];
+  createdAt: Date;
+}
+
+export interface Author {
+  id: number;
+  nickname: string;
+  profileImg: string;
+}
+
+export interface CommentType {
+  id: number;
+  user: Author;
+  comment: string;
+  createdAt: Date;
+}
 
 const FreePostDetail = () => {
-  const commentData = [
-    {
-      id: 1,
-      user: { nickname: "nick", profileImg: "" },
-      content: "제주도 추천요",
-      createdAt: "2022-12-11 16:10:02",
-    },
-    {
-      id: 2,
-      user: { nickname: "nick22", profileImg: "" },
-      content: "미국 추천요",
-      createdAt: "2022-12-11 16:10:02",
-    },
-  ];
+  const [post, setPost] = useState<Freepost | undefined>();
 
-  const userData = {
-    nickname: "nickname",
-    profileImg: "",
-  };
+  useEffect(() => {
+    const getPost = async () => {
+      const res = await axios.get("http://localhost:3001/freeposts");
+      setPost(res.data[0]);
+    };
+    getPost();
+  }, []);
 
   return (
     <Container>
-      <Category />
-      <PostDetail user={userData} />
-      <Comment comment={commentData} />
+      <div>
+        <CategoryName>
+          <Pointer src={pointer} />
+          {post?.region} &gt; {post?.category}
+        </CategoryName>
+      </div>
+      <PostDetail user={post?.author} freePost={post} />
+      <Comment comments={post?.comments} />
     </Container>
   );
 };
@@ -40,4 +60,17 @@ const Container = styled.div`
   width: 1000px;
   margin: auto;
   padding-bottom: 10vh;
+`;
+
+const CategoryName = styled.span`
+  font-size: 12px;
+  color: #747474;
+  display: flex;
+  align-items: center;
+`;
+
+const Pointer = styled.img`
+  width: 14px;
+  height: 14px;
+  margin-right: 3px;
 `;

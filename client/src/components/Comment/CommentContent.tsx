@@ -26,7 +26,7 @@ const CommentContent: React.FC<CommentContentProps> = ({ data }) => {
       {isClickUpdate ? (
         <UpdateInput defaultValue={data.content} />
       ) : (
-        <Content>{data.content}</Content>
+        <Content>{data.comment}</Content>
       )}
       <ButtonContainer>
         {isClickUpdate ? (

@@ -1,15 +1,17 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { CommentType } from "../../pages/FreePostDetail/FreePostDetail";
 import CommentContent from "./CommentContent";
 import CommentForm from "./CommentForm";
 
-const Comment: React.FC<{ comment: any }> = ({ comment }) => {
+const Comment: React.FC<{ comments?: CommentType[] }> = ({ comments }) => {
   return (
     <>
       <CommentCount>
-        <span>{comment.length}</span>개의 답변
+        <span>{comments?.length}</span>개의 답변
       </CommentCount>
-      {comment.map((comment: any) => (
+      {comments?.map((comment: any) => (
         <CommentContent data={comment} key={comment.id} />
       ))}
       <CommentForm />

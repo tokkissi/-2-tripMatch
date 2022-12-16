@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import Editor from "../Editor/Editor";
 import {
   Button,
   ButtonContainer,
@@ -15,7 +16,7 @@ const FreePostForm: React.FC<FreePostFormProps> = ({ post }) => {
   const regionRef = useRef<HTMLSelectElement>(null);
   const categoryRef = useRef<HTMLSelectElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
-  const contentRef = useRef(null);
+  //const contentRef = useRef(null);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,7 +52,7 @@ const FreePostForm: React.FC<FreePostFormProps> = ({ post }) => {
           ref={titleRef}
         />
       </TitleContainer>
-      <textarea />
+      <Editor />
       <ButtonContainer>
         <Button type="button">취소</Button>
         <Button>작성 완료</Button>

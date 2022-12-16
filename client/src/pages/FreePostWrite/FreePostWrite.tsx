@@ -3,16 +3,17 @@ import styled from "styled-components";
 import FreePostForm from "./../../components/FreePostForm/FreePostForm";
 
 const FreePostWrite = () => {
-  const postData = {
-    region: "전라도",
-    category: "숙소",
-    title: "순천 숙소 추천해주세요",
-    content: "내용",
-  };
+  // const postData = {
+  //   region: "전라도",
+  //   category: "숙소",
+  //   title: "순천 숙소 추천해주세요",
+  //   content: "내용",
+  // };
+
   return (
     <Container>
       <Title>게시글 쓰기</Title>
-      <FreePostForm post={postData} />
+      <FreePostForm />
     </Container>
   );
 };

@@ -10,6 +10,7 @@ import MyPage from "./pages/MyPage/myPage";
 import FreePostWrite from "./pages/FreePostWrite/FreePostWrite";
 import LoginPage from "./pages/Login/LoginPage";
 import RegisterPage from "./pages/Login/RegisterPage";
+import MyComment from "./pages/MyComment/myComment";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
               />
             }
           />
+          <Route path="myComment" element={<MyComment />} />
           <Route path="/free/write" element={<FreePostWrite />} />
           <Route path="/free/write/:id" element={<FreePostWrite />} />
           <Route path="login" element={<LoginPage />} />

@@ -4,21 +4,6 @@ import PostDetail from "./../../components/PostDetail/PostDetail";
 import Comment from "../../components/Comment/Comment";
 import axios from "axios";
 
-// const matchData = {
-//   status: true,
-//   hopeGender: "성별 무관",
-//   hopeAge: "20대",
-//   region: "경상도",
-//   duration: ["2022-12-14", "2022-12-15"],
-//   userCount: 4,
-//   thumbnailImg: "",
-// };
-
-// const userData = {
-//   nickname: "nickname",
-//   profileImg: "",
-// };
-
 export interface MatchPost {
   id: number;
   author: Author;
@@ -32,7 +17,7 @@ export interface MatchPost {
   duration: Date[];
   thumbnailImg: string;
   comments: Comment[];
-  createdAt: Date;
+  createdAt: string;
 }
 
 export interface Author {
@@ -45,7 +30,7 @@ export interface Comment {
   id: number;
   user: Author;
   comment: string;
-  createdAt: Date;
+  createdAt: string;
 }
 
 const MatchPostDetail = () => {
@@ -61,8 +46,6 @@ const MatchPostDetail = () => {
 
     getData();
   }, []);
-
-  console.log(post);
 
   return (
     <Container>

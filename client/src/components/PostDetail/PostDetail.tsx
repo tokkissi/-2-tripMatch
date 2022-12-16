@@ -1,5 +1,6 @@
 import React from "react";
 import { MatchPost } from "../../pages/MatchPostDetail/MatchPostDetail";
+import { Link, useLocation } from "react-router-dom";
 import UserProfile from "../UserProfile/UserProfile";
 import {
   Thumbnail,
@@ -13,12 +14,13 @@ import {
   MatchButton,
   ButtonContainer,
   Button,
-} from "./style";
+} from "./PostDetailStyle";
+import { Author, Freepost } from "../../pages/FreePostDetail/FreePostDetail";
 
 interface PostDetailProps {
   matchPost?: MatchPost;
-  freePost?: any;
-  user?: any;
+  freePost?: Freepost;
+  user?: Author;
 }
 
 const PostDetail: React.FC<PostDetailProps> = ({
@@ -26,6 +28,16 @@ const PostDetail: React.FC<PostDetailProps> = ({
   user,
   freePost,
 }) => {
+  const location = useLocation();
+
+  const getUpdatePathname = () => {
+    if (location.pathname.includes("match")) {
+      return `/match/write/${matchPost?.id}`;
+    } else {
+      return `/free/write/${freePost?.id}`;
+    }
+  };
+
   return (
     <div>
       {matchPost && (
@@ -77,8 +89,12 @@ const PostDetail: React.FC<PostDetailProps> = ({
       ></PostContent>
       {matchPost && <MatchButton>동행 신청하기</MatchButton>}
       <ButtonContainer>
-        <Button>목록</Button>
-        <Button>글수정</Button>
+        <Link to={`/`}>
+          <Button>목록</Button>
+        </Link>
+        <Link to={getUpdatePathname()} state={freePost || matchPost}>
+          <Button>글수정</Button>
+        </Link>
         <Button>글삭제</Button>
       </ButtonContainer>
     </div>

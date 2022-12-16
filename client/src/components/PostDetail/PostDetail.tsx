@@ -1,4 +1,5 @@
 import React from "react";
+import { MatchPost } from "../../pages/MatchPostDetail/MatchPostDetail";
 import UserProfile from "../UserProfile/UserProfile";
 import {
   Thumbnail,
@@ -15,63 +16,66 @@ import {
 } from "./style";
 
 interface PostDetailProps {
-  matchData?: any;
+  matchPost?: MatchPost;
   freePost?: any;
   user?: any;
 }
 
 const PostDetail: React.FC<PostDetailProps> = ({
-  matchData,
+  matchPost,
   user,
   freePost,
 }) => {
   return (
     <div>
-      {matchData && (
+      {matchPost && (
         <Thumbnail>
-          <ThumbnailImg src={matchData.thumbnailImg} />
+          <ThumbnailImg src={matchPost.thumbnailImg} />
         </Thumbnail>
       )}
       <PostTitle>
-        {matchData && (
-          <MatchStatus status={matchData.status === "모집중"}>
-            {matchData.status}
+        {matchPost && (
+          <MatchStatus status={matchPost.status === true}>
+            {matchPost.status}
           </MatchStatus>
         )}
-        {freePost?.title}
+        {freePost?.title || matchPost?.title}
       </PostTitle>
       <UserContainer>
         <UserProfile user={user} />
-        <Date>2022-12-12 02:19</Date>
+        <Date>{freePost?.createdAt || matchPost?.createdAt}</Date>
       </UserContainer>
-      {matchData && (
+      {matchPost && (
         <MatchContainer>
           <p>
             <span>지역</span>
-            {matchData.region}
+            {matchPost.region}
           </p>
           <p>
             <span>기간</span>
-            {`${matchData.duration[0]} ~ ${matchData.duration[1]}`}
+            {`${matchPost.duration[0]} ~ ${matchPost.duration[1]}`}
           </p>
           <p>
             <span>모집 인원</span>
-            {matchData.userCount}명
+            {matchPost.userCount}명
           </p>
           <p>
             <span>희망 성별</span>
-            {matchData.hopeGender}
+            {matchPost.hopeGender}
           </p>
           <p>
             <span>희망 연령대</span>
-            {matchData.hopeAge}
+            {matchPost.hopeAge}
           </p>
         </MatchContainer>
       )}
       <PostContent
-        dangerouslySetInnerHTML={freePost && { __html: freePost.content }}
+        dangerouslySetInnerHTML={
+          (freePost && { __html: freePost.content }) ||
+          (matchPost && { __html: matchPost.content })
+        }
       ></PostContent>
-      {matchData && <MatchButton>동행 신청하기</MatchButton>}
+      {matchPost && <MatchButton>동행 신청하기</MatchButton>}
       <ButtonContainer>
         <Button>목록</Button>
         <Button>글수정</Button>

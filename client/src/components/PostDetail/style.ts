@@ -19,6 +19,7 @@ export const Thumbnail = styled.div`
   height: 300px;
   overflow: hidden;
   margin-bottom: 10px;
+  background-color: #ccc;
 `;
 
 export const ThumbnailImg = styled.img`

@@ -41,6 +41,12 @@ export const Content = styled.div`
     height: 540px;
     vertical-align: middle;
 
+    thead {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+    }
+
     tr {
       display: grid;
       grid-template-columns: 1fr 120px 210px 140px;

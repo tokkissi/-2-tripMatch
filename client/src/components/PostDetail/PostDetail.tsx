@@ -1,6 +1,4 @@
 import React from "react";
-import { Freepost } from "../../pages/FreePostDetail/FreePostDetail";
-
 import UserProfile from "../UserProfile/UserProfile";
 import {
   Thumbnail,
@@ -18,7 +16,7 @@ import {
 
 interface PostDetailProps {
   matchData?: any;
-  freePost?: Freepost;
+  freePost?: any;
   user?: any;
 }
 

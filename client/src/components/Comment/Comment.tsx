@@ -1,11 +1,10 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { CommentType } from "../../pages/FreePostDetail/FreePostDetail";
+// import { CommentType } from "../../pages/FreePostDetail/FreePostDetail";
 import CommentContent from "./CommentContent";
 import CommentForm from "./CommentForm";
 
-const Comment: React.FC<{ comments?: CommentType[] }> = ({ comments }) => {
+const Comment: React.FC<{ comments?: any }> = ({ comments }) => {
   return (
     <>
       <CommentCount>

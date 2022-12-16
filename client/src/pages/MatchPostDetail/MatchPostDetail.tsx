@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PostDetail from "./../../components/PostDetail/PostDetail";
 import dummy from "../dummy.png";
+import Comment from "../../components/Comment/Comment";
 
 const MatchPostDetail = () => {
   const matchData = {
@@ -22,7 +23,7 @@ const MatchPostDetail = () => {
   return (
     <Container>
       <PostDetail matchData={matchData} user={userData} />
-      {/* <Comment comment={comments} /> */}
+      <Comment />
     </Container>
   );
 };

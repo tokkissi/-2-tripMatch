@@ -62,12 +62,16 @@ const TextArea = styled.textarea`
   }
 `;
 
-const SummitBtn = styled.div`
+const SummitBtn = styled.button`
+  width: 100%;
   font-size: 1.2rem;
   font-weight: 600;
-  border-radius: 0.8rem;
+  border-radius: 0.2rem;
+  /* border: none; */
+  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.7);
+  border: 1px solid #cfcfcf;
   text-align: center;
-  padding: 0.8rem;
+  padding: 0.4rem;
   margin-bottom: 1.2rem;
   background-color: ${(props) => props.theme.color.pink};
 

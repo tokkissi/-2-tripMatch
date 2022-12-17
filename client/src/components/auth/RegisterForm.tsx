@@ -22,7 +22,7 @@ const RegisterForm = () => {
           placeholder="이메일 주소를 입력해주세요"
         />
         <ResultText>{"이메일 형식이 올바르지 않습니다"}</ResultText>
-        <SummitBtn>인증번호 요청</SummitBtn>
+        <SummitBtn type="button">인증번호 요청</SummitBtn>
 
         <label htmlFor="authNumberInput">인증번호*</label>
         <StyledInput
@@ -32,7 +32,7 @@ const RegisterForm = () => {
           placeholder="인증번호를 입력해주세요"
         />
         <ResultText>{"인증번호가 일치하지 않습니다"}</ResultText>
-        <SummitBtn>인증번호 확인</SummitBtn>
+        <SummitBtn type="button">인증번호 확인</SummitBtn>
 
         <label htmlFor="nicknameInput">닉네임*</label>
         <StyledInput

@@ -1,8 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { AuthFormBlock, Footer, StyledInput, SummitBtn } from "./AuthStyle";
+import { AuthFormBlock, Footer, StyledInput, Button } from "./AuthStyle";
+import { useImmer } from "use-immer";
 
 const LoginForm = () => {
+  const [userState, setUserState] = useImmer({
+    email: "",
+    password: "",
+  });
+
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserState((draft) => {
+      draft.email = e.target.value;
+    });
+  };
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserState((draft) => {
+      draft.password = e.target.value;
+    });
+  };
+
   return (
     <AuthFormBlock>
       <form>
@@ -13,6 +30,8 @@ const LoginForm = () => {
             autoComplete="on"
             name="userEmail"
             placeholder="이메일"
+            onChange={onChangeEmail}
+            value={userState.email}
           />
         </div>
 
@@ -24,9 +43,11 @@ const LoginForm = () => {
             name="Password"
             placeholder="비밀번호"
             type="password"
+            onChange={onChangePassword}
+            value={userState.password}
           />
 
-          <SummitBtn className="formSubmit">로그인</SummitBtn>
+          <Button className="formSubmit">로그인</Button>
         </div>
       </form>
       <Footer>

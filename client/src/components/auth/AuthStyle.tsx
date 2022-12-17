@@ -62,7 +62,7 @@ const TextArea = styled.textarea`
   }
 `;
 
-const SummitBtn = styled.button`
+const Button = styled.button`
   width: 100%;
   font-size: 1.2rem;
   font-weight: 600;
@@ -110,6 +110,6 @@ export {
   ResultText,
   Select,
   TextArea,
-  SummitBtn,
+  Button,
   Footer,
 };

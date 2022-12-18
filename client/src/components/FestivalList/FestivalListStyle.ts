@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import FestivalList from "./FestivalList";
 
 const Container = styled.div`
   width: 60vw;
@@ -27,10 +26,29 @@ const FestivalInfo = styled.div`
   align-content: flex-start;
 
   .item {
-    width: 23%;
+    width: 21%;
     margin: 1% 1%;
+    padding: 1% 1%;
     position: relative;
-    background-color: green;
+    background-color: ${(props) => props.theme.color.lightblue};
+
+    img {
+      width: 100%;
+      height: 13vw;
+      object-fit: cover;
+      // object-position: center top;
+    }
+
+    .itemTitle {
+      height: 40px;
+      line-height: 20px;
+      margin-top: 10px;
+    }
+
+    .itemDate {
+      margin-top: 5px;
+      color: #b1b1b1;
+    }
   }
 `;
 

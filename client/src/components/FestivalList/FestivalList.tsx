@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Container, FestivalInfo } from "./FestivalListStyle";
 import { mockData } from "./mockData";
-import { Response } from "express";
 import axios from "axios";
-import { Body } from "./../../pages/MyPage/MyPageStyle";
 
 interface Item {
   addr1: string;
@@ -42,8 +40,15 @@ const FestivalList = () => {
     // const getData = async () => {
     //   const response = await axios.get(`http://apis.data.go.kr/B551011/KorService/searchFestival?numOfRows=8&pageNo=1&MobileOS=ETC&MobileApp=AppTest&arrange=C&_type=json&serviceKey=${serviceKey}&eventStartDate=${eventStartDate}`)
     // }
+    mockData.sort((a, b) => {
+      return Number(a.eventstartdate) - Number(b.eventstartdate);
+    });
     setFestivalInfo(mockData);
   }, []);
+
+  const dateFormat = (date: string) => {
+    return date.slice(0, 4) + "." + date.slice(4, 6) + "." + date.slice(6, 8);
+  };
 
   return (
     <Container>
@@ -54,7 +59,16 @@ const FestivalList = () => {
       <FestivalInfo>
         {festivalInfo &&
           festivalInfo.map((item) => {
-            return <div></div>;
+            return (
+              <div className="item" key={item.contentid}>
+                <img src={item.firstimage} />
+                <div className="itemTitle">{item.title}</div>
+                <div className="itemDate">
+                  {dateFormat(item.eventstartdate)}~
+                  {dateFormat(item.eventenddate)}
+                </div>
+              </div>
+            );
           })}
       </FestivalInfo>
     </Container>

@@ -16,7 +16,7 @@ const AuthFormBlock = styled.div`
     margin-top: 0.5rem;
     display: inline-block;
   }
-  .introP {
+  .useIntroDescription {
     font-size: 0.5rem;
     margin-bottom: 2rem;
   }
@@ -74,6 +74,7 @@ const Button = styled.button`
   padding: 0.4rem;
   margin-bottom: 1.2rem;
   background-color: ${(props) => props.theme.color.pink};
+  cursor: pointer;
 
   &:hover {
     background-color: ${(props) => props.theme.color.lightblue};

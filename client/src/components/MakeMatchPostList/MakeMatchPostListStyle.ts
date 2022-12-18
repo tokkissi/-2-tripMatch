@@ -20,16 +20,23 @@ const Container = styled.div`
   }
 `;
 
-const MatchPost = styled.div`
+const MatchPosts = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   align-content: flex-start;
 
   .item {
     width: 23%;
     margin: 1% 1%;
     position: relative;
+
+    .heart {
+      width: 10%;
+      position: absolute;
+      top: 8%;
+      left: 80%;
+      cursor: pointer;
+    }
 
     .region {
       position: absolute;
@@ -39,13 +46,6 @@ const MatchPost = styled.div`
       padding: 2px 2px;
       opacity: 0.5;
       border-radius: 10%;
-    }
-
-    .heart {
-      width: 10%;
-      position: absolute;
-      top: 8%;
-      left: 80%;
     }
 
     .itemImg {
@@ -61,4 +61,4 @@ const MatchPost = styled.div`
   }
 `;
 
-export { Container, MatchPost };
+export { Container, MatchPosts };

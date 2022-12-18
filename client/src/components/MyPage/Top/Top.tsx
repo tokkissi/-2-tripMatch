@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { UserInfo } from "../TableContent/TableContent";
+import { UserInfo } from "../TableContent/MyCommentTable";
 import { Top, TripCount, Score } from "./TopStyle";
 import axios from "axios";
 

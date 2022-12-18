@@ -41,7 +41,7 @@ export interface CommentType {
   createdAt: Date;
 }
 
-const TableContent: React.FC = () => {
+const MyCommentTable: React.FC = () => {
   const [data, setData] = useState<UserInfo[] & Post[]>([]);
   useEffect(() => {
     const postData = async () => {
@@ -87,4 +87,4 @@ const TableContent: React.FC = () => {
   );
 };
 
-export default TableContent;
+export default MyCommentTable;

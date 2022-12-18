@@ -20,16 +20,7 @@ const App = () => {
           <Route path="" element={<Home />} />
           <Route path="free/:id" element={<FreePostDetail />} />
           <Route path="match/:id" element={<MatchPostDetail />} />
-          <Route
-            path="mypage"
-            element={
-              <MyPage
-                title={"새해를 강릉에서! 같이가실 분..?"}
-                region={"강원도"}
-                duration={"2022.12.31 ~ 2023.01.12"}
-              />
-            }
-          />
+          <Route path="mypage" element={<MyPage />} />
           <Route path="myComment" element={<MyComment />} />
           <Route path="/free/write" element={<FreePostWrite />} />
           <Route path="/free/write/:id" element={<FreePostWrite />} />

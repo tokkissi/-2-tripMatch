@@ -16,7 +16,7 @@ const MyPage: React.FC<UserData> = ({ title, region, duration }) => {
     <>
       <Body>
         <Container>
-          <Top name={"doylee"} tripCount={32} score={4.5} />
+          <Top />
           <MidContainer>
             <SideBar />
             <Content>

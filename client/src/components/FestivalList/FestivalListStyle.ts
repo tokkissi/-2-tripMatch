@@ -30,7 +30,12 @@ const FestivalInfo = styled.div`
     margin: 1% 1%;
     padding: 1% 1%;
     position: relative;
-    background-color: ${(props) => props.theme.color.lightblue};
+    background: linear-gradient(
+      135deg,
+      ${(props) => props.theme.color.lightblue},
+      ${(props) => props.theme.color.lightblue},
+      ${(props) => props.theme.color.lightpink}
+    );
 
     img {
       width: 100%;

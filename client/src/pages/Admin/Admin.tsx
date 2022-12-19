@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 import { Container, MemberList, SearchBar } from "./AdminStyle";
 
 const mockData = [
@@ -70,16 +71,34 @@ const mockData = [
   },
 ];
 
+const joinDateFormat = (createdAt: string) => {
+  return (
+    createdAt.slice(0, 4) +
+    "." +
+    createdAt.slice(5, 7) +
+    "." +
+    createdAt.slice(8, 10)
+  );
+};
+
 const Admin = () => {
-  const joinDateFormat = (createdAt: string) => {
-    return (
-      createdAt.slice(0, 4) +
-      "." +
-      createdAt.slice(5, 7) +
-      "." +
-      createdAt.slice(8, 10)
-    );
+  const [members, setMembers] = useState([]);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const getMember = async (ninkname?: string) => {
+    const memberList = await axios.get("").then((res) => res.data);
+    setMembers(memberList);
+    return;
   };
+
+  const deleteMember = async (userID: string) => {
+    await axios.delete("");
+  };
+
+  useEffect(() => {
+    // getMember();
+  }, []);
+
   return (
     <Container>
       <div className="title">

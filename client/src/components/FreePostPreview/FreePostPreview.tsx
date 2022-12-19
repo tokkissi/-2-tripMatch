@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, FreePostList } from "./FreePostPreviewStyle";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const mockData = [
   {
@@ -70,6 +71,18 @@ const joinDateFormat = (createdAt: string) => {
 };
 
 const FreePostPreview = () => {
+  const [freePost, setFreePost] = useState([]);
+
+  const getFreePost = async () => {
+    const data = await axios.get("/").then((res) => res.data);
+    setFreePost(data);
+    return;
+  };
+
+  useEffect(() => {
+    // getFreePost()
+  });
+
   return (
     <Container>
       <div className="title">

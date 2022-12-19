@@ -2,31 +2,29 @@ import React, { useState, useEffect } from "react";
 import { Content, Layer } from "./TableContentStyle";
 import axios from "axios";
 
-export interface UserInfo {
-  id: number;
-  nickname: string;
-  profileImg?: string;
-  tripCount?: number;
-  score?: number;
-  posts: Post[];
-}
+// export interface UserInfo {
+//   userId: number;
+//   nickname: string;
+//   profileImg?: string;
+//   tripCount?: number;
+//   score?: number;
+//   posts: Post[];
+// }
 
 export interface Post {
-  id: number;
+  postId: number;
   author: Author;
   region: string;
-  category: string;
   title: string;
-  content: string;
   duration: DateType[];
-  comments: CommentType[];
+  // comments: CommentType[];
   createdAt: Date;
 }
 
 export interface Author {
-  id: number;
+  authorId: number;
   nickname: string;
-  profileImg: string;
+  profileImg?: string;
 }
 
 export interface DateType {
@@ -34,19 +32,21 @@ export interface DateType {
   end: any;
 }
 
-export interface CommentType {
-  id: number;
-  user: Author;
-  comment: string;
-  createdAt: Date;
-}
+// export interface CommentType {
+//   id: number;
+//   user: Author;
+//   comment: string;
+//   createdAt: Date;
+// }
 
 const MyCommentTable: React.FC = () => {
-  const [data, setData] = useState<UserInfo[] & Post[]>([]);
+  const [data, setData] = useState<Post[]>([]);
   useEffect(() => {
     const postData = async () => {
-      const fetchData = await axios.get("http://localhost:4000/userInfo");
-      setData(fetchData.data);
+      const fetchData = await axios.get(
+        "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io/commentedPost",
+      ); // http://localhost:4001/commentedPost
+      setData(fetchData.data.posts);
     };
     postData();
   }, []);
@@ -67,10 +67,10 @@ const MyCommentTable: React.FC = () => {
           </thead>
 
           <tbody>
-            {data[0]?.posts.map((item) => {
+            {data?.map((item) => {
               console.log(item);
               return (
-                <tr key={item.id}>
+                <tr key={item.postId}>
                   <td>{item.title}</td>
                   <td>{item.region}</td>
                   <td>

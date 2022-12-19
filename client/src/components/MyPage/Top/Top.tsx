@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { UserInfo } from "../TableContent/MyCommentTable";
+import { UserInfo } from "../TableContent/MyPageTable";
 import { Top, TripCount, Score } from "./TopStyle";
 import axios from "axios";
 
@@ -7,8 +7,10 @@ const MyPageTop: React.FC = () => {
   const [data, setData] = useState<UserInfo>();
   useEffect(() => {
     const postData = async () => {
-      const fetchData = await axios.get("http://localhost:4000/userInfo");
-      setData(fetchData.data[0]);
+      const fetchData = await axios.get(
+        "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io/userInfo",
+      );
+      setData(fetchData.data);
     };
     postData();
   }, []);
@@ -16,7 +18,7 @@ const MyPageTop: React.FC = () => {
   console.log(data, "H"); // userInfo를 새로 만들어야함...... 진짜 열받는다
 
   return (
-    <Top key={data?.id}>
+    <Top key={data?.userId}>
       <h1>{data?.nickname}님, 안녕하세요 !</h1>
       <TripCount>
         <span>동행 횟수</span>

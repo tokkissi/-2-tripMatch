@@ -11,7 +11,7 @@ const Container = styled.div`
   }
 `;
 
-const MatchPosts = styled.div`
+const MatchPosList = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
@@ -52,4 +52,4 @@ const MatchPosts = styled.div`
   }
 `;
 
-export { Container, MatchPosts };
+export { Container, MatchPosList };

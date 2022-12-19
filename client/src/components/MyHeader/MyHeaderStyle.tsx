@@ -33,6 +33,10 @@ const Header = styled.header`
 
     input {
       border: none;
+
+      :focus {
+        outline: white;
+      }
     }
 
     img {
@@ -42,8 +46,8 @@ const Header = styled.header`
   }
 
   .navBar img {
-    min-height: 40px;
     height: 4vh;
+    min-height: 40px;
     margin-right: 20px;
   }
 `;

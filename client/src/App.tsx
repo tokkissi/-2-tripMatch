@@ -11,6 +11,8 @@ import FreePostWrite from "./pages/FreePostWrite/FreePostWrite";
 import LoginPage from "./pages/Login/LoginPage";
 import RegisterPage from "./pages/Login/RegisterPage";
 import MyComment from "./pages/MyComment/myComment";
+import FreePostList from "./pages/FreePostList/FreePostList";
+import Admin from "./pages/Admin/Admin";
 
 const App = () => {
   return (
@@ -18,6 +20,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="" element={<Home />} />
+          <Route path="free" element={<FreePostList />} />
           <Route path="free/:id" element={<FreePostDetail />} />
           <Route path="match/:id" element={<MatchPostDetail />} />
           <Route path="mypage" element={<MyPage />} />
@@ -26,6 +29,7 @@ const App = () => {
           <Route path="/free/write/:id" element={<FreePostWrite />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
+          <Route path="admin" element={<Admin />} />
         </Route>
       </Routes>
     </BrowserRouter>

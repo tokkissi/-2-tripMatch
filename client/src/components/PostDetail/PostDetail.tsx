@@ -1,5 +1,4 @@
 import React from "react";
-import { MatchPost } from "../../pages/MatchPostDetail/MatchPostDetail";
 import { Link, useLocation } from "react-router-dom";
 import UserProfile from "../UserProfile/UserProfile";
 import {
@@ -15,12 +14,13 @@ import {
   ButtonContainer,
   Button,
 } from "./PostDetailStyle";
-import { Author, Freepost } from "../../pages/FreePostDetail/FreePostDetail";
+import type { FreepostType, AuthorType } from "./../../type/freePost";
+import type { MatchPostType } from "../../type/matchPost";
 
 interface PostDetailProps {
-  matchPost?: MatchPost;
-  freePost?: Freepost;
-  user?: Author;
+  matchPost?: MatchPostType;
+  freePost?: FreepostType;
+  user?: AuthorType;
 }
 
 const PostDetail: React.FC<PostDetailProps> = ({
@@ -30,13 +30,13 @@ const PostDetail: React.FC<PostDetailProps> = ({
 }) => {
   const location = useLocation();
 
-  const getUpdatePathname = () => {
-    if (location.pathname.includes("match")) {
-      return `/match/write/${matchPost?.id}`;
-    } else {
-      return `/free/write/${freePost?.id}`;
-    }
-  };
+  const getUpdatePathname = () =>
+    location.pathname.includes("match")
+      ? `/match/write/${matchPost?.id}`
+      : `/free/write/${freePost?.id}`;
+
+  const getListPathname = () =>
+    location.pathname.includes("match") ? "/match" : "/free";
 
   return (
     <div>
@@ -89,7 +89,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
       ></PostContent>
       {matchPost && <MatchButton>동행 신청하기</MatchButton>}
       <ButtonContainer>
-        <Link to={`/`}>
+        <Link to={getListPathname()}>
           <Button>목록</Button>
         </Link>
         <Link to={getUpdatePathname()} state={freePost || matchPost}>

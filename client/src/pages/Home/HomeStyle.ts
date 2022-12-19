@@ -17,4 +17,27 @@ const Title = styled.div`
   }
 `;
 
-export default Title;
+const Modal = styled.div`
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .modalCard {
+    width: 300px;
+    height: 100px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: #fff;
+  }
+`;
+
+export { Title, Modal };

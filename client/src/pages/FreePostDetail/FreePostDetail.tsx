@@ -28,7 +28,7 @@ const FreePostDetail = () => {
         </CategoryName>
       </div>
       <PostDetail user={post?.author} freePost={post} />
-      <Comment comments={post?.comments} />
+      {post?.comments && <Comment comments={post.comments} />}
     </Container>
   );
 };

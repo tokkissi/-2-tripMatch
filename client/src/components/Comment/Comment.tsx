@@ -4,9 +4,7 @@ import CommentContent from "./CommentContent";
 import CommentForm from "./CommentForm";
 import type { CommentType } from "./../../type/comment";
 
-const Comment: React.FC<{ comments: CommentType[] | undefined }> = ({
-  comments = [],
-}) => {
+const Comment: React.FC<{ comments: CommentType[] }> = ({ comments }) => {
   return (
     <>
       <CommentCount>

@@ -71,7 +71,7 @@ const MyCommentTable: React.FC = () => {
               console.log(item);
               return (
                 <tr key={item.postId}>
-                  <td>{item.title}</td>
+                  <td id="title">{item.title}</td>
                   <td>{item.region}</td>
                   <td>
                     {item.duration[0].start} ~ {item.duration[0].end}

@@ -58,6 +58,11 @@ export const Content = styled.div`
       white-space: nowrap;
     }
 
+    #title {
+      text-align: left;
+      padding-left: 30px;
+    }
+
     #last {
       padding-top: 7px;
     }

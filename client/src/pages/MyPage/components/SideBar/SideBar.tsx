@@ -1,4 +1,4 @@
-// import React, { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { SideBar, Box } from "./SideBarStyle";
 
@@ -7,7 +7,7 @@ const SideBarComponent: React.FC = () => {
 
   // className={color ? "color" : ""} onClick={() => setColor(!color)}
 
-  // const colorHandler = (e: any) => {
+  // const colorHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
   //   e.preventDefault();
   //   setColor(!color);
   // };

@@ -9,14 +9,13 @@ import {
   TitleInput,
 } from "./FreePostFormStyle";
 import type { FreepostType } from "./../../type/freePost";
+import { useDispatch } from "react-redux";
+import { addFreePost, updateFreePost } from "../../slice/freePost";
 
-interface FreePostFormProps {
-  post?: FreepostType;
-}
-
-const FreePostForm: React.FC<FreePostFormProps> = ({ post }) => {
+const FreePostForm = () => {
   const state = useLocation().state;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [content, setContent] = useState("");
 
@@ -29,6 +28,19 @@ const FreePostForm: React.FC<FreePostFormProps> = ({ post }) => {
     console.log(regionRef.current?.value);
     console.log(categoryRef.current?.value);
     console.log(titleRef.current?.value);
+    // if (regionRef.current && categoryRef.current && titleRef.current) {
+    //   const newObj: FreepostType = {
+    //     id: state.id,
+    //     title: "어쩌구",
+    //     region: regionRef.current?.value,
+    //     category: categoryRef.current?.value,
+    //     author: { email: "111", nickname: "111", profileImg: "" },
+    //     content,
+    //     comments: [],
+    //     createdAt: "",
+    //   };
+    //   dispatch(updateFreePost(newObj));
+    // }
   };
 
   const onClickCancle = () => {

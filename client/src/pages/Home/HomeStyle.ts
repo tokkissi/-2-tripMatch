@@ -18,25 +18,67 @@ const Title = styled.div`
 `;
 
 const Modal = styled.div`
-  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
-  position: absolute;
   z-index: 99;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   .modalCard {
-    width: 300px;
-    height: 100px;
+    width: 18vw;
+    height: 20vh;
     margin: auto;
+    padding: 2vh 1vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    background-color: #fff;
+    background-color: white;
+
+    .userInfo {
+      width: 210px;
+      margin-bottom: 5%;
+      display: grid;
+      grid-auto-columns: 1fr;
+      grid-template-columns: 0.8fr 1.7fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 0px 0px;
+      grid-template-areas:
+        "img nickname"
+        "img detailInfo";
+
+      img {
+        grid-area: img;
+        width: 3.5vw;
+        height: 3.5vw;
+        object-fit: cover;
+      }
+      .nickname {
+        grid-area: nickname;
+      }
+      .detailInfo {
+        grid-area: detailInfo;
+      }
+    }
+
+    .guide {
+      margin-top: 5%;
+      color: #b1b1b1;
+    }
+
+    .btn {
+      margin-top: 5%;
+
+      button {
+        margin: 0 5px;
+      }
+    }
   }
 `;
 

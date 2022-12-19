@@ -8,10 +8,10 @@ import {
   TitleContainer,
   TitleInput,
 } from "./FreePostFormStyle";
-import { Freepost } from "../../pages/FreePostDetail/FreePostDetail";
+import type { FreepostType } from "./../../type/freePost";
 
 interface FreePostFormProps {
-  post?: Freepost;
+  post?: FreepostType;
 }
 
 const FreePostForm: React.FC<FreePostFormProps> = ({ post }) => {

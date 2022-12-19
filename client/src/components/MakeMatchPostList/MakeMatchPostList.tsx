@@ -104,10 +104,6 @@ const MakeMatchPostList = ({ data, likes = [] }: DataProps) => {
 
   return (
     <Container>
-      <div className="title">
-        <h3>동행게시판</h3>
-        <Link to="/">더보기</Link>
-      </div>
       <MatchPosts>
         {mockData &&
           mockData.map((item) => {

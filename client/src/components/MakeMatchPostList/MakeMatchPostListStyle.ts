@@ -2,16 +2,7 @@ import styled from "styled-components";
 
 const Container = styled.div`
   width: 60vw;
-  margin: 50px auto;
-
-  .title {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-    cursor: default;
-  }
+  margin: 15px auto;
 
   a {
     color: black;

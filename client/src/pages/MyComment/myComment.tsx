@@ -1,7 +1,7 @@
 import React from "react";
 import Top from "../../components/MyPage/Top/Top";
 import SideBar from "../../components/MyPage/SideBar/SideBar";
-import TableContent from "../../components/MyPage/TableContent/MyCommentTable";
+import MyCommentTable from "../../components/MyPage/TableContent/MyCommentTable";
 import { Body, Container, MidContainer } from "./myCommentStyle";
 
 const MyComment: React.FC = () => {
@@ -12,7 +12,7 @@ const MyComment: React.FC = () => {
           <Top />
           <MidContainer>
             <SideBar />
-            <TableContent />
+            <MyCommentTable />
           </MidContainer>
         </Container>
       </Body>

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import Editor from "../Editor/Editor";
+import Editor from "../../../components/Editor/Editor";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Button,
@@ -8,12 +8,16 @@ import {
   TitleContainer,
   TitleInput,
 } from "./FreePostFormStyle";
-import type { FreepostType } from "./../../type/freePost";
+import type { FreepostType } from "../../../type/freePost";
 import { useDispatch } from "react-redux";
-import { addFreePost, updateFreePost } from "../../slice/freePost";
+import {
+  addFreePost,
+  removeFreePost,
+  updateFreePost,
+} from "../../../slice/freePost";
 
 const FreePostForm = () => {
-  const state = useLocation().state;
+  const state: FreepostType = useLocation().state;
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -45,6 +49,10 @@ const FreePostForm = () => {
 
   const onClickCancle = () => {
     state ? navigate(`/free/${state.id}`) : navigate("/");
+  };
+
+  const onDelete = () => {
+    dispatch(removeFreePost(state.id));
   };
 
   return (

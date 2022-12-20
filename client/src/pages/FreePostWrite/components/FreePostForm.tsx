@@ -15,6 +15,7 @@ import {
   removeFreePost,
   updateFreePost,
 } from "../../../slice/freePost";
+import AppSelect from "../../../components/AppSelect/AppSelect";
 
 const FreePostForm = () => {
   const state: FreepostType = useLocation().state;
@@ -54,7 +55,26 @@ const FreePostForm = () => {
   return (
     <form onSubmit={onSubmit}>
       <TitleContainer>
-        <Select defaultValue={state ? state.region : "서울"} ref={regionRef}>
+        <AppSelect
+          label=""
+          options={[
+            "서울",
+            "경기도",
+            "강원도",
+            "충청도",
+            "경상도",
+            "전라도",
+            "제주도",
+            "기타",
+          ]}
+          className="region"
+        />
+        <AppSelect
+          label=""
+          options={["맛집", "액티비티", "교통", "숙소", "기타"]}
+          className="region"
+        />
+        {/* <Select defaultValue={state ? state.region : "서울"} ref={regionRef}>
           <option value="서울">서울</option>
           <option value="경기도">경기도</option>
           <option value="강원도">강원도</option>
@@ -63,8 +83,8 @@ const FreePostForm = () => {
           <option value="전라도">전라도</option>
           <option value="제주도">제주도</option>
           <option value="기타">기타</option>
-        </Select>
-        <Select
+        </Select> */}
+        {/* <Select
           defaultValue={state ? state.category : "맛집"}
           ref={categoryRef}
         >
@@ -73,7 +93,7 @@ const FreePostForm = () => {
           <option value="교통">교통</option>
           <option value="숙소">숙소</option>
           <option value="기타">기타</option>
-        </Select>
+        </Select> */}
         <TitleInput
           type="text"
           placeholder="ex) 12월 31일 부산 해돋이 보러갈 동행 2명 구합니다"

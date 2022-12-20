@@ -16,7 +16,7 @@ const MyPageTop: React.FC = () => {
     postData();
   }, []);
 
-  console.log(data, "H"); // userInfo를 새로 만들어야함...... 진짜 열받는다
+  // console.log(data, "H");
 
   return (
     <Top key={data?.userId}>

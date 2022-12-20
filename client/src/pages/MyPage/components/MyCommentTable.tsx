@@ -44,7 +44,7 @@ const MyCommentTable: React.FC = () => {
     postData();
   }, []);
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <Content>
@@ -61,7 +61,6 @@ const MyCommentTable: React.FC = () => {
 
           <tbody>
             {data?.map((item) => {
-              console.log(item);
               return (
                 <tr key={item.postId}>
                   <td id="title">{item.title}</td>

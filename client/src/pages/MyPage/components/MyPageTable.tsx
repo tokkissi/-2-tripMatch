@@ -44,7 +44,7 @@ const MyPageTable: React.FC = () => {
     getData();
   }, []);
 
-  console.log(data);
+  // console.log(data);
 
   // const handleChangeValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
   //   const value = e.target.value;
@@ -73,7 +73,6 @@ const MyPageTable: React.FC = () => {
 
             <tbody>
               {data?.map((item) => {
-                console.log(item);
                 return (
                   <tr key={item.postId}>
                     <td id="title">{item.title}</td>

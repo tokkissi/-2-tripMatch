@@ -82,11 +82,13 @@ const PostDetail: React.FC<PostDetailProps> = ({
           )}
           {freePost?.title || matchPost?.title}
         </div>
-        <img
-          src={isLikePost ? fullHeart : emptyHeart}
-          className="heart"
-          onClick={() => onToggleLikes()}
-        />
+        {matchPost && (
+          <img
+            src={isLikePost ? fullHeart : emptyHeart}
+            className="heart"
+            onClick={() => onToggleLikes()}
+          />
+        )}
       </PostTitle>
       <UserContainer>
         <UserProfile user={user} />

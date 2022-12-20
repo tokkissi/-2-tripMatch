@@ -76,6 +76,14 @@ const Button = styled.button`
   background-color: ${(props) => props.theme.color.pink};
   cursor: pointer;
 
+  .modifyInfoBtn {
+    // 회원정보 수정 버튼
+  }
+
+  .mwithdrawalBtn {
+    // 회원 탈퇴 버튼
+  }
+
   &:hover {
     background-color: ${(props) => props.theme.color.lightblue};
   }

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+
 import {
   Div,
   Input,
@@ -6,6 +7,10 @@ import {
   RadioAndCheckBoxInput,
   RadioAndCheckBoxLabel,
   RadioAndCheckBoxDiv,
+  FileInput,
+  FileUploadName,
+  FileUploadLabel,
+  DateRange,
 } from "./AppInputStyle";
 
 interface RadioAndCheckBox {
@@ -13,10 +18,11 @@ interface RadioAndCheckBox {
   htmlValue: string;
 }
 interface AppInputProps {
-  label: string;
+  label?: string;
   type: string;
   inputWidth?: string;
   placeholder?: string;
+  accept?: string;
   className: string;
   radioAndCheckBoxList?: RadioAndCheckBox[];
 }
@@ -29,10 +35,12 @@ const AppInput: React.FC<AppInputProps> = ({
   className,
   placeholder,
 }) => {
+  const [imageUploaded, setImageUploaded] = useState<string>();
+
   if (type === "radio" || type === "checkbox") {
     return (
       <Div>
-        {label && <Label htmlFor={className}>{label}</Label>}
+        {<Label htmlFor={className}>{label}</Label>}
         {radioAndCheckBoxList?.map((object) => (
           <RadioAndCheckBoxDiv key={object.htmlValue}>
             <RadioAndCheckBoxInput
@@ -48,10 +56,50 @@ const AppInput: React.FC<AppInputProps> = ({
         ))}
       </Div>
     );
+  } else if (type === "file") {
+    const imageHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const fileName = event.target.value;
+      setImageUploaded(fileName);
+    };
+    return (
+      <Div>
+        {<Label htmlFor={className}>{label}</Label>}
+        <FileInput
+          id="file"
+          type={type}
+          placeholder={placeholder}
+          className={className}
+          accept="image/jpg,image.png,image/jpeg"
+          onChange={imageHandler}
+        />
+        <FileUploadName
+          className="uploadName"
+          placeholder="jpg,png,jpeg 이미지"
+          value={imageUploaded}
+        />
+        <FileUploadLabel htmlFor="file">업로드</FileUploadLabel>
+      </Div>
+    );
+  } else if (type === "dateRange") {
+    return (
+      <DateRange>
+        {<Label htmlFor={className}>{label}</Label>}
+        <Input type="date" className="startDatePicker" width={inputWidth} />
+        <p>~</p>
+        <Input type="date" className="endDatePicker" width={inputWidth} />
+      </DateRange>
+    );
+  } else if (type === "date") {
+    return (
+      <Div>
+        {<Label htmlFor={className}>{label}</Label>}
+        <Input type="date" className={className} width={inputWidth} />
+      </Div>
+    );
   } else {
     return (
       <Div>
-        {label && <Label htmlFor={className}>{label}</Label>}
+        {<Label htmlFor={className}>{label}</Label>}
         <Input
           type={type}
           width={inputWidth}

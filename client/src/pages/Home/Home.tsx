@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Carousel from "../../components/Carousel/Carousel";
+import Carousel from "./components/Carousel";
 import FestivalList from "../../components/FestivalList/FestivalList";
-import FreePostPreview from "../../components/FreePostPreview/FreePostPreview";
+import FreePostPreview from "./components/FreePostPreview";
 import MakeMatchPostList from "../../components/MakeMatchPostList/MakeMatchPostList";
 import { Title, ModalCard } from "./HomeStyle";
 
@@ -80,8 +80,8 @@ const Home = () => {
         </Title>
         <MakeMatchPostList />
         <FreePostPreview />
-        <FestivalList />
-        <ReviewModal />
+        <FestivalList location="home" />
+        {/* <ReviewModal /> */}
       </div>
     </div>
   );

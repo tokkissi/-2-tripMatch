@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Modal from "../../styles/Modal";
 
 const Container = styled.div`
   width: 60vw;
@@ -57,4 +58,6 @@ const FestivalInfo = styled.div`
   }
 `;
 
-export { Container, FestivalInfo };
+const ModalCard = styled(Modal)``;
+
+export { Container, FestivalInfo, ModalCard };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Container, FestivalInfo } from "./FestivalListStyle";
+import { Container, FestivalInfo, ModalCard } from "./FestivalListStyle";
 import { mockData } from "./mockData";
 import axios from "axios";
 
@@ -29,8 +29,13 @@ interface Item {
   title: string;
 }
 
-const FestivalList = () => {
+interface PageProps {
+  location: string;
+}
+
+const FestivalList: React.FC<PageProps> = ({ location }) => {
   const [festivalInfo, setFestivalInfo] = useState<Item[]>([]);
+  const home = location === "home";
   const date = new Date();
   const eventStartDate = `${date.getFullYear()}${date.getMonth() + 1}01`;
   const serviceKey =
@@ -38,29 +43,41 @@ const FestivalList = () => {
 
   useEffect(() => {
     // const getData = async () => {
-    //   const response = await axios.get(`http://apis.data.go.kr/B551011/KorService/searchFestival?numOfRows=8&pageNo=1&MobileOS=ETC&MobileApp=AppTest&arrange=C&_type=json&serviceKey=${serviceKey}&eventStartDate=${eventStartDate}`)
+    //   const response = await axios.get(`http://apis.data.go.kr/B551011/KorService/searchFestival?numOfRows={home ? 8 : 20}&pageNo=1&MobileOS=ETC&MobileApp=AppTest&arrange=C&_type=json&serviceKey=${serviceKey}&eventStartDate=${eventStartDate}`)
     // }
     mockData.sort((a, b) => {
       return Number(a.eventstartdate) - Number(b.eventstartdate);
     });
-    setFestivalInfo(mockData);
-  }, []);
+    home ? setFestivalInfo(mockData.slice(0, 8)) : setFestivalInfo(mockData); //찐데이터로 받을 때 수정해야할 식
+  }, [home]);
 
   const dateFormat = (date: string) => {
     return date.slice(0, 4) + "." + date.slice(4, 6) + "." + date.slice(6, 8);
+  };
+
+  const onClick = () => {
+    return (
+      <ModalCard>
+        <div className="modalCard"></div>
+      </ModalCard>
+    );
   };
 
   return (
     <Container>
       <div className="title">
         <h3>축제정보</h3>
-        <Link to="/">더보기</Link>
+        {location === "home" ? <Link to="/festival">더보기</Link> : false}
       </div>
       <FestivalInfo>
         {festivalInfo &&
           festivalInfo.map((item) => {
             return (
-              <div className="item" key={item.contentid}>
+              <div
+                className="item"
+                key={item.contentid}
+                onClick={() => onClick()}
+              >
                 <img src={item.firstimage} />
                 <div className="itemTitle">{item.title}</div>
                 <div className="itemDate">

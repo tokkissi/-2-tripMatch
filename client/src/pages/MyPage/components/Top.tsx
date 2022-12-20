@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { UserInfo } from "../TableContent/MyPageTable";
+import { UserInfo } from "./MyPageTable";
 import { Top, TripCount, Score } from "./TopStyle";
 import axios from "axios";
 
 const MyPageTop: React.FC = () => {
   const [data, setData] = useState<UserInfo>();
+
+  const baseUrl = "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io";
+
   useEffect(() => {
     const postData = async () => {
-      const fetchData = await axios.get(
-        "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io/userInfo",
-      );
+      const fetchData = await axios.get(baseUrl + "/userInfo");
       setData(fetchData.data);
     };
     postData();

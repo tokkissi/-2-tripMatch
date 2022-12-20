@@ -1,7 +1,7 @@
 import React from "react";
-import Top from "./components/Top/Top";
-import SideBar from "./components/SideBar/SideBar";
-import MyPageTable from "./components/TableContent/MyPageTable";
+import Top from "./components/Top";
+import SideBar from "./components/SideBar";
+import MyPageTable from "./components/MyPageTable";
 import { Body, Container, MidContainer } from "./MyPageStyle";
 
 const MyPage: React.FC = () => {

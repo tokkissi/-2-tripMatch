@@ -17,7 +17,6 @@ export interface Post {
   region: string;
   title: string;
   duration: DateType[];
-  // comments: CommentType[];
   createdAt: Date;
 }
 
@@ -32,26 +31,31 @@ export interface DateType {
   end: any;
 }
 
-// export interface CommentType {
-//   id: number;
-//   user: Author;
-//   comment: string;
-//   createdAt: Date;
-// }
-
 const MyPageTable: React.FC = () => {
   const [data, setData] = useState<Post[]>([]);
+
+  const baseUrl = "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io";
+
   useEffect(() => {
-    const postData = async () => {
-      const fetchData = await axios.get(
-        "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io/userInfo",
-      ); // http://localhost:4001/userInfo
+    const getData = async () => {
+      const fetchData = await axios.get(baseUrl + "/userInfo");
       setData(fetchData.data.posts);
     };
-    postData();
+    getData();
   }, []);
 
   console.log(data);
+
+  // const handleChangeValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   const value = e.target.value;
+  //   const putData = async () => {
+  //     const fetchData = await axios.put(baseUrl + "/userInfo");
+  //     value === "모집중" ? true : false;
+  //     fetchData.data.posts.status = value;
+  //     setData(fetchData.data.posts);
+  //   };
+  //   putData();
+  // };
 
   return (
     <>
@@ -78,7 +82,7 @@ const MyPageTable: React.FC = () => {
                       {item.duration[0].start} ~ {item.duration[0].end}
                     </td>
                     <td id="last">
-                      <select name="" id="">
+                      <select>
                         <option value="모집중">모집중</option>
                         <option value="모집마감">모집마감</option>
                       </select>

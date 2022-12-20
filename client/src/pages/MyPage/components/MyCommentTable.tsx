@@ -17,7 +17,6 @@ export interface Post {
   region: string;
   title: string;
   duration: DateType[];
-  // comments: CommentType[];
   createdAt: Date;
 }
 
@@ -32,20 +31,14 @@ export interface DateType {
   end: any;
 }
 
-// export interface CommentType {
-//   id: number;
-//   user: Author;
-//   comment: string;
-//   createdAt: Date;
-// }
-
 const MyCommentTable: React.FC = () => {
   const [data, setData] = useState<Post[]>([]);
+
+  const baseUrl = "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io";
+
   useEffect(() => {
     const postData = async () => {
-      const fetchData = await axios.get(
-        "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io/commentedPost",
-      ); // http://localhost:4001/commentedPost
+      const fetchData = await axios.get(baseUrl + "/commentedPost");
       setData(fetchData.data.posts);
     };
     postData();

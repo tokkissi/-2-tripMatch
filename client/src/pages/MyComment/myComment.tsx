@@ -1,7 +1,7 @@
 import React from "react";
-import Top from "../MyPage/components/Top/Top";
-import SideBar from "../MyPage/components/SideBar/SideBar";
-import MyCommentTable from "../MyPage/components/TableContent/MyCommentTable";
+import Top from "../MyPage/components/Top";
+import SideBar from "../MyPage/components/SideBar";
+import MyCommentTable from "../MyPage/components/MyCommentTable";
 import { Body, Container, MidContainer } from "./myCommentStyle";
 
 const MyComment: React.FC = () => {

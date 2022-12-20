@@ -40,6 +40,7 @@ export const Score = styled.div`
 
   span:first-child {
     padding-top: 7px;
+    margin-right: 3px;
   }
 
   span:last-child {

@@ -43,14 +43,14 @@ export const Content = styled.div`
     th {
       padding: 15px;
       height: 20px;
-      padding: 15px 10px 10px 23px;
+      padding: 15px 5px 10px 23px;
       text-align: center;
       vertical-align: middle;
     }
 
     td {
       cursor: pointer;
-      padding: 15px 10px 10px 23px;
+      padding: 15px 5px 10px 23px;
       height: 30px;
       text-align: center;
       vertical-align: middle;

@@ -58,6 +58,8 @@ const FestivalInfo = styled.div`
   }
 `;
 
-const ModalCard = styled(Modal)``;
+const ModalCard = styled(Modal)`
+  background-color: rgba(0, 0, 0, 0.05);
+`;
 
 export { Container, FestivalInfo, ModalCard };

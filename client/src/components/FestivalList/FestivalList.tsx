@@ -29,6 +29,10 @@ interface Item {
   title: string;
 }
 
+interface ItemObj {
+  item: Item;
+}
+
 interface PageProps {
   location: string;
 }
@@ -55,10 +59,15 @@ const FestivalList: React.FC<PageProps> = ({ location }) => {
     return date.slice(0, 4) + "." + date.slice(4, 6) + "." + date.slice(6, 8);
   };
 
-  const onClick = () => {
+  const InfoModal: React.FC<ItemObj> = ({ item }) => {
     return (
       <ModalCard>
-        <div className="modalCard"></div>
+        <div className="modalCard">
+          <div className="festivalTitle">{item.title}</div>
+          <div className="festivalDate">
+            {dateFormat(item.eventstartdate)}~{dateFormat(item.eventenddate)}
+          </div>
+        </div>
       </ModalCard>
     );
   };
@@ -73,11 +82,7 @@ const FestivalList: React.FC<PageProps> = ({ location }) => {
         {festivalInfo &&
           festivalInfo.map((item) => {
             return (
-              <div
-                className="item"
-                key={item.contentid}
-                onClick={() => onClick()}
-              >
+              <div className="item" key={item.contentid}>
                 <img src={item.firstimage} />
                 <div className="itemTitle">{item.title}</div>
                 <div className="itemDate">

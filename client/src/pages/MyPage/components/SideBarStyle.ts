@@ -19,6 +19,7 @@ export const SideBar = styled.div`
 `;
 
 export const Box = styled.button`
+  cursor: pointer;
   width: 150px;
   height: 95px;
   text-align: center;

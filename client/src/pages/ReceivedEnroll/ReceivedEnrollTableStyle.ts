@@ -25,7 +25,7 @@ export const Content = styled.div`
 
     tr {
       display: grid;
-      grid-template-columns: 1fr 120px 210px 140px;
+      grid-template-columns: 1fr 120px 1fr;
       gap: 20px;
       text-align: center;
       padding-top: 10px;
@@ -66,6 +66,25 @@ export const Content = styled.div`
 
     #last {
       padding-top: 7px;
+      margin-left: 15px;
+
+      button {
+        cursor: pointer;
+        width: 80px;
+        height: 35px;
+        margin-right: 10px;
+        border: none;
+        border-radius: 5px;
+        /* box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.11); */
+      }
+
+      button:first-child {
+        background-color: ${(props) => props.theme.color.lightblue};
+      }
+
+      button:last-child {
+        background-color: ${(props) => props.theme.color.lightpink};
+      }
     }
 
     select {

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Container, FestivalInfo, ModalCard } from "./FestivalListStyle";
 import { mockData } from "./mockData";
 import axios from "axios";
-import { closeModal, showModal } from "../../slice/deleteModal";
+import { closeModal, showModal } from "../../slice/modal";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 interface Item {

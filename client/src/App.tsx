@@ -13,6 +13,7 @@ import MyComment from "./pages/MyComment/MyComment";
 import FreePostList from "./pages/FreePostList/FreePostList";
 import Admin from "./pages/Admin/Admin";
 import ReceivedEnroll from "./pages/ReceivedEnroll/ReceivedEnroll";
+import MatchPostList from "./pages/MatchPostList/MatchPostList";
 import MatchPostWrite from "./pages/MatchPostWrite/MatchPostWrite";
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/" element={<Layout />}>
           <Route path="" element={<Home />} />
           <Route path="free" element={<FreePostList />} />
+          <Route path="match" element={<MatchPostList />} />
           <Route path="free/:id" element={<FreePostDetail />} />
           <Route path="match/:id" element={<MatchPostDetail />} />
           <Route path="/myPage/myContents" element={<MyPageContents />} />

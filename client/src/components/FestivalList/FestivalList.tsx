@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Container, FestivalInfo, ModalCard } from "./FestivalListStyle";
 import { mockData } from "./mockData";
 import axios from "axios";
+import Festival from "./../../pages/Festival/Festival";
 
 interface Item {
   addr1: string;
@@ -39,6 +40,9 @@ interface PageProps {
 
 const FestivalList: React.FC<PageProps> = ({ location }) => {
   const [festivalInfo, setFestivalInfo] = useState<Item[]>([]);
+  const [festivalModal, setFestivalModal] = useState<boolean[]>(
+    new Array(20).fill(false),
+  );
   const home = location === "home";
   const date = new Date();
   const eventStartDate = `${date.getFullYear()}${date.getMonth() + 1}01`;
@@ -72,6 +76,14 @@ const FestivalList: React.FC<PageProps> = ({ location }) => {
     );
   };
 
+  const onModal = (idx: number) => {
+    const newFestivalModal = festivalModal;
+    newFestivalModal[idx] = true;
+    console.log(newFestivalModal);
+    setFestivalModal(newFestivalModal);
+    console.log(festivalModal);
+  };
+
   return (
     <Container>
       <div className="title">
@@ -80,15 +92,22 @@ const FestivalList: React.FC<PageProps> = ({ location }) => {
       </div>
       <FestivalInfo>
         {festivalInfo &&
-          festivalInfo.map((item) => {
+          festivalInfo.map((item, idx) => {
             return (
-              <div className="item" key={item.contentid}>
+              <div
+                className="item"
+                key={item.contentid}
+                onClick={() => {
+                  onModal(idx);
+                }}
+              >
                 <img src={item.firstimage} />
                 <div className="itemTitle">{item.title}</div>
                 <div className="itemDate">
                   {dateFormat(item.eventstartdate)}~
                   {dateFormat(item.eventenddate)}
                 </div>
+                {festivalModal[idx] && <InfoModal item={item} />}
               </div>
             );
           })}

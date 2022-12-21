@@ -8,5 +8,15 @@ declare module "styled-components" {
       blue: string;
       lightblue: string;
     };
+
+    font: {
+      title: string;
+      content: string;
+      XL: string;
+      L: string;
+      M: string;
+      S: string;
+      XS: string;
+    };
   }
 }

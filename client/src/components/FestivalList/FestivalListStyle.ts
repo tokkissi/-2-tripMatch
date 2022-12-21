@@ -12,12 +12,18 @@ const Container = styled.div`
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
     cursor: default;
+    font-family: ${(props) => props.theme.font.content};
+    font-size: ${(props) => props.theme.font.L};
+    font-weight: bold;
   }
 
   a {
+    font-family: ${(props) => props.theme.font.content};
+    font-size: ${(props) => props.theme.font.M};
     color: black;
     text-decoration: none;
     cursor: pointer;
+    font-weight: normal;
   }
 `;
 

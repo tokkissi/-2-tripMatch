@@ -7,6 +7,16 @@ const Theme: DefaultTheme = {
     blue: "#c6dce4",
     lightblue: "#daeaf1",
   },
+
+  font: {
+    title: "NanumSquareNeo-Variable",
+    content: "S-CoreDream-3Light",
+    XL: "1.5rem", //24px;
+    L: "1.25rem", //20px;
+    M: "1rem",
+    S: "0.75rem", //12px;
+    XS: "0.5rem", //8px;
+  },
 };
 
 export default Theme;

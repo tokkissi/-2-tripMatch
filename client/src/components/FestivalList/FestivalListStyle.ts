@@ -86,6 +86,8 @@ const ModalCard = styled(Modal)`
     }
 
     .festivalImg {
+      min-width: 11vw;
+      min-height: 11vw;
       max-width: 12vw;
       max-height: 12vw;
       object-fit: contain;

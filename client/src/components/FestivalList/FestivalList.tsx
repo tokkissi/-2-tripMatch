@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Container, FestivalInfo, ModalCard } from "./FestivalListStyle";
 import { mockData } from "./mockData";
 import axios from "axios";
+import { closeModal, showModal } from "../../slice/deleteModal";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 interface Item {
   addr1: string;
@@ -31,18 +33,42 @@ interface Item {
 
 interface ItemObj {
   item: Item;
-  idx: number;
 }
 
 interface PageProps {
   location: string;
 }
 
+const init = {
+  addr1: "",
+  addr2: "",
+  booktour: "",
+  cat1: "",
+  cat2: "",
+  cat3: "",
+  contentid: "",
+  contenttypeid: "",
+  createdtime: "",
+  eventstartdate: "",
+  eventenddate: "",
+  firstimage: "",
+  firstimage2: "",
+  mapx: "",
+  mapy: "",
+  mlevel: "",
+  modifiedtime: "",
+  readcount: 0,
+  areacode: "",
+  sigungucode: "",
+  tel: "",
+  title: "",
+};
+
 const FestivalList: React.FC<PageProps> = ({ location }) => {
   const [festivalInfo, setFestivalInfo] = useState<Item[]>([]);
-  const [festivalModal, setFestivalModal] = useState<boolean[]>(
-    new Array(20).fill(false),
-  );
+  const [itemInfo, setItemInfo] = useState<Item>(init);
+  const isShown = useAppSelector((state) => state.modal.show);
+  const dispatch = useAppDispatch();
   const home = location === "home";
   const date = new Date();
   const eventStartDate = `${date.getFullYear()}${date.getMonth() + 1}01`;
@@ -63,13 +89,7 @@ const FestivalList: React.FC<PageProps> = ({ location }) => {
     return date.slice(0, 4) + "." + date.slice(4, 6) + "." + date.slice(6, 8);
   };
 
-  const onModal = (idx: number) => {
-    const newFestivalModal = [...festivalModal];
-    newFestivalModal[idx] = true;
-    setFestivalModal(newFestivalModal);
-  };
-
-  const InfoModal: React.FC<ItemObj> = ({ item, idx }) => {
+  const InfoModal: React.FC<ItemObj> = ({ item }) => {
     return (
       <ModalCard>
         <div className="modalCard">
@@ -78,7 +98,7 @@ const FestivalList: React.FC<PageProps> = ({ location }) => {
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671625307/free-icon-cancel-8532370_kuiqk1.png"
             onClick={(e) => {
               e.stopPropagation();
-              setFestivalModal(new Array(20).fill(false));
+              dispatch(closeModal());
             }}
           />
 
@@ -109,8 +129,10 @@ const FestivalList: React.FC<PageProps> = ({ location }) => {
               <div
                 className="item"
                 key={item.contentid}
-                onClick={() => {
-                  onModal(idx);
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setItemInfo(item);
+                  dispatch(showModal(null));
                 }}
               >
                 <img src={item.firstimage} />
@@ -119,10 +141,10 @@ const FestivalList: React.FC<PageProps> = ({ location }) => {
                   {dateFormat(item.eventstartdate)}~
                   {dateFormat(item.eventenddate)}
                 </div>
-                {festivalModal[idx] && <InfoModal item={item} idx={idx} />}
               </div>
             );
           })}
+        {!home && isShown && <InfoModal item={itemInfo} />}
       </FestivalInfo>
     </Container>
   );

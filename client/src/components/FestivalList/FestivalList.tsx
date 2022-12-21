@@ -144,7 +144,7 @@ const FestivalList: React.FC<PageProps> = ({ location }) => {
               </div>
             );
           })}
-        {!home && isShown && <InfoModal item={itemInfo} />}
+        {isShown && <InfoModal item={itemInfo} />}
       </FestivalInfo>
     </Container>
   );

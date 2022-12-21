@@ -6,17 +6,15 @@ import axios from "axios";
 const MyPageTop: React.FC = () => {
   const [data, setData] = useState<UserInfo>();
 
-  const baseUrl = "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io";
+  // const baseUrl = "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io/userInfo";
 
   useEffect(() => {
     const postData = async () => {
-      const fetchData = await axios.get(baseUrl + "/userInfo");
-      setData(fetchData.data);
+      const fetchData = await axios.get("http://localhost:4000/postUserInfo");
+      setData(fetchData.data[0]);
     };
     postData();
   }, []);
-
-  // console.log(data, "H");
 
   return (
     <Top key={data?.userId}>

@@ -12,17 +12,16 @@ export interface EnrolledPerson {
 const ReceivedEnrollTable: React.FC = () => {
   const [data, setData] = useState<EnrolledPerson[]>([]);
 
-  const baseUrl = "https://8ada489c-50d9-464f-ae66-8e0b28048eb6.mock.pstmn.io";
+  // const baseUrl = "";
+  // https://8ada489c-50d9-464f-ae66-8e0b28048eb6.mock.pstmn.io/enrolledPerson
 
   useEffect(() => {
     const getData = async () => {
-      const fetchData = await axios.get(baseUrl + "/enrolledPerson");
+      const fetchData = await axios.get("http://localhost:4001/enrolledPerson");
       setData(fetchData.data);
     };
     getData();
   }, []);
-
-  // console.log(data);
 
   return (
     <Content>

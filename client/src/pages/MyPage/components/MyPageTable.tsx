@@ -13,17 +13,10 @@ export interface UserInfo {
 
 export interface Post {
   postId: number;
-  author: Author;
   region: string;
   title: string;
   duration: DateType[];
   createdAt: Date;
-}
-
-export interface Author {
-  authorId: number;
-  nickname: string;
-  profileImg?: string;
 }
 
 export interface DateType {
@@ -34,17 +27,15 @@ export interface DateType {
 const MyPageTable: React.FC = () => {
   const [data, setData] = useState<Post[]>([]);
 
-  const baseUrl = "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io";
+  // const baseUrl = "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io/userInfo";
 
   useEffect(() => {
     const getData = async () => {
-      const fetchData = await axios.get(baseUrl + "/userInfo");
-      setData(fetchData.data.posts);
+      const fetchData = await axios.get("http://localhost:4000/postUserInfo");
+      setData(fetchData.data[0].posts);
     };
     getData();
   }, []);
-
-  // console.log(data);
 
   // const handleChangeValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
   //   const value = e.target.value;

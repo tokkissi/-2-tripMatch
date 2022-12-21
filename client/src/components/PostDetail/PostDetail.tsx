@@ -38,8 +38,8 @@ const PostDetail: React.FC<PostDetailProps> = ({
 
   const getUpdatePathname = () =>
     location.pathname.includes("match")
-      ? `/match/write/${matchPost?.id}`
-      : `/free/write/${freePost?.id}`;
+      ? `/match/write/${matchPost?.postId}`
+      : `/free/write/${freePost?.communityId}`;
 
   const getListPathname = () =>
     location.pathname.includes("match") ? "/match" : "/free";
@@ -52,7 +52,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
     <div>
       {matchPost && (
         <Thumbnail>
-          <ThumbnailImg src={matchPost.thumbnailImg} />
+          <ThumbnailImg src={matchPost.thumbnail} />
         </Thumbnail>
       )}
       <PostTitle>

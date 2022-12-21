@@ -3,7 +3,7 @@ import { FreePostType } from "./../type/freePost";
 
 const initialState: FreePostType[] = [
   {
-    id: 1,
+    communityId: "1",
     author: {
       nickname: "nick",
       profileImg: "",
@@ -68,10 +68,12 @@ export const freePostSlice = createSlice({
       state.unshift(newPost);
     },
     removeFreePost: (state, action) =>
-      state.filter((post: FreePostType) => post.id !== action.payload),
+      state.filter((post: FreePostType) => post.communityId !== action.payload),
     updateFreePost: (state, action) =>
       state.map((post) =>
-        post.id === action.payload.id ? { ...post, ...action.payload } : state,
+        post.communityId === action.payload.communityId
+          ? { ...post, ...action.payload }
+          : state,
       ),
   },
 });

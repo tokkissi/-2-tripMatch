@@ -17,25 +17,25 @@ export const freePostApi = createApi({
               "FreePost",
               ...result.map((post) => ({
                 type: "FreePost" as const,
-                id: post.id,
+                id: post.communityId,
               })),
             ]
           : ["FreePost"],
     }),
     // id에 해당하는 게시글을 불러옴
-    getFreePost: builder.query<FreePostType, number | string | undefined>({
+    getFreePost: builder.query<FreePostType, string | undefined>({
       query: (id) => `freePosts/${id}`,
       providesTags: (result, error, arg) => [{ type: "FreePost", id: arg }],
     }),
     // id에 해당하는 게시글을 업데이트
     updateFreePost: builder.mutation<FreePostType, FreePostType>({
       query: (updatedPost) => ({
-        url: `freePosts/${updatedPost.id}`,
+        url: `freePosts/${updatedPost.communityId}`,
         method: "PUT",
         body: updatedPost,
       }),
       invalidatesTags: (result, error, arg) => [
-        { type: "FreePost", id: arg.id },
+        { type: "FreePost", id: arg.communityId },
       ],
     }),
     // 게시글 추가
@@ -48,15 +48,13 @@ export const freePostApi = createApi({
       invalidatesTags: ["FreePost"],
     }),
     // id에 해당하는 게시글 삭제
-    deleteFreePost: builder.mutation<FreePostType, number | string | undefined>(
-      {
-        query: (id) => ({
-          url: `freePosts/${id}`,
-          method: "DELETE",
-        }),
-        invalidatesTags: ["FreePost"],
-      },
-    ),
+    deleteFreePost: builder.mutation<FreePostType, string | undefined>({
+      query: (id) => ({
+        url: `freePosts/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["FreePost"],
+    }),
   }),
 });
 

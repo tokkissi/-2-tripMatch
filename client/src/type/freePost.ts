@@ -1,14 +1,14 @@
 import { CommentType } from "./comment";
 
 export interface FreePostType {
-  id: number;
-  author: AuthorType;
+  communityId?: string;
+  author?: AuthorType;
   region: string;
   category: string;
   title: string;
   content: string;
-  comments: CommentType[];
-  createdAt: string;
+  comments?: CommentType[];
+  createdAt?: string;
 }
 
 export interface AuthorType {

@@ -38,14 +38,15 @@ const FreePostForm = () => {
     e.preventDefault();
     if (regionRef.current && categoryRef.current && titleRef.current && state) {
       const newObj: FreePostType = {
-        id: state.id,
+        communityId: state.communityId,
+        comments: state.comments,
+        createdAt: state.createdAt,
+        author: state.author,
+        // 여기까지의 값은 api 완성시 삭제 예정
         title: titleRef.current.value,
         region: regionRef.current.value,
         category: categoryRef.current.value,
-        author: state.author,
         content,
-        comments: state.comments,
-        createdAt: state.createdAt,
       };
       updateFreePost(newObj);
     } else if (
@@ -55,21 +56,22 @@ const FreePostForm = () => {
       !state
     ) {
       const newObj: FreePostType = {
-        id: Date.now(),
+        communityId: Date.now().toString(),
+        comments: [],
+        createdAt: "",
+        author: { email: "111", nickname: "111", profileImg: "" },
+        // 여기까지의 값은 api 완성시 삭제 예정
         title: titleRef.current.value,
         region: regionRef.current.value,
         category: categoryRef.current.value,
-        author: { email: "111", nickname: "111", profileImg: "" },
         content,
-        comments: [],
-        createdAt: "",
       };
       createFreePost(newObj);
     }
   };
 
   const onClickCancle = () => {
-    state ? navigate(`/free/${state.id}`) : navigate("/");
+    state ? navigate(`/free/${state.communityId}`) : navigate("/");
   };
 
   return (

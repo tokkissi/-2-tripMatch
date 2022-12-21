@@ -9,16 +9,16 @@ interface ModalTextType {
 
 interface ModalType {
   show: boolean;
-  element: null | ModalTextType; // [title, content, button text, cancleButton text]
+  modalText: null | ModalTextType; // [title, content, button text, cancleButton text]
 }
 
-const initialState: ModalType = { show: false, element: null };
+const initialState: ModalType = { show: false, modalText: null };
 
 export const modalSlice = createSlice({
   name: "modal",
   initialState: initialState,
   reducers: {
-    showModal: (state, action) => ({ show: true, element: action.payload }),
+    showModal: (state, action) => ({ show: true, modalText: action.payload }),
     closeModal: (state) => ({ ...state, show: false }),
   },
 });

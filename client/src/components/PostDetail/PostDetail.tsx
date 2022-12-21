@@ -33,9 +33,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
   freePost,
 }) => {
   const location = useLocation();
-  const { show: isShown, element: modalText } = useAppSelector(
-    (state) => state.modal,
-  );
+  const { show: isShown, modalText } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
 
   const [isLikePost, setIsLikePost] = useState(false);

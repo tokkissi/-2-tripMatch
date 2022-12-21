@@ -10,7 +10,7 @@ interface DeleteModalProps {
 
 const DeleteModal: React.FC<DeleteModalProps> = ({ callBackFn }) => {
   const dispatch = useAppDispatch();
-  const text = useAppSelector((state) => state.modal.element);
+  const text = useAppSelector((state) => state.modal.modalText);
 
   const onCancle = () => dispatch(closeModal());
 

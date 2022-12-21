@@ -25,7 +25,7 @@ export const Content = styled.div`
 
     tr {
       display: grid;
-      grid-template-columns: 1fr 120px 1fr;
+      grid-template-columns: 1fr 150px 280px;
       gap: 20px;
       text-align: center;
       padding-top: 10px;

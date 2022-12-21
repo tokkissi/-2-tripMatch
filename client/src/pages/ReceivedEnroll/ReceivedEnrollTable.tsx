@@ -22,7 +22,7 @@ const ReceivedEnrollTable: React.FC = () => {
     getData();
   }, []);
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <Content>
@@ -35,7 +35,7 @@ const ReceivedEnrollTable: React.FC = () => {
               <th>상태</th>
             </tr>
           </thead>
-
+          {/* 수락하면 status true, 거절하면 status false */}
           <tbody>
             {data?.map((item) => {
               return (

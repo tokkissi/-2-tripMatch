@@ -55,15 +55,21 @@ const PostDetail: React.FC<PostDetailProps> = ({
     setIsApplying(!isApplying); // 취소하거나 api 요청 실패시 바뀌지 않게 수정해야 함
     if (isApplying) {
       dispatch(
-        showModal([
-          "동행 신청 취소",
-          "동행 신청을 취소하시겠습니까?",
-          "예",
-          "아니요",
-        ]),
+        showModal({
+          title: "동행 신청 취소",
+          content: "동행 신청을 취소하시겠습니까?",
+          rightButton: "예",
+          leftButton: "아니요",
+        }),
       );
     } else {
-      dispatch(showModal(["동행 신청", "동행을 신청하시겠습니까?", "신청"]));
+      dispatch(
+        showModal({
+          title: "동행 신청",
+          content: "동행을 신청하시겠습니까?",
+          rightButton: "신청",
+        }),
+      );
     }
 
     // await axios.post('') 동행 신청 api 작성
@@ -78,7 +84,13 @@ const PostDetail: React.FC<PostDetailProps> = ({
     location.pathname.includes("match") ? "/match" : "/free";
 
   const onClickDelete = () => {
-    dispatch(showModal(["삭제", "이 게시글을 삭제하시겠습니까?", "삭제"]));
+    dispatch(
+      showModal({
+        title: "삭제",
+        content: "이 게시글을 삭제하시겠습니까?",
+        rightButton: "삭제",
+      }),
+    );
   };
 
   const onDelete = () => {
@@ -95,7 +107,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
 
   const getModalCallback = () => {
     if (modalText) {
-      switch (modalText[0]) {
+      switch (modalText.title) {
         case "삭제":
           return onDelete;
         case "동행 신청":

@@ -22,13 +22,11 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ callBackFn }) => {
   return (
     <ModalCard>
       <div className="modalCard">
-        <ModalTitle>{text && text[0]}</ModalTitle>
-        <p>{text && text[1]}</p>
+        <ModalTitle>{text && text.title}</ModalTitle>
+        <p>{text && text.content}</p>
         <ButtonContainer>
-          <button onClick={onCancle}>
-            {text && text[3] ? text[3] : "취소"}
-          </button>
-          <button onClick={onExcute}>{text && text[2]}</button>
+          <button onClick={onCancle}>{text?.leftButton || "취소"}</button>
+          <button onClick={onExcute}>{text && text.rightButton}</button>
         </ButtonContainer>
       </div>
     </ModalCard>

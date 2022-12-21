@@ -1,8 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface ModalTextType {
+  title: string;
+  content: string;
+  leftButton?: string;
+  rightButton: string;
+}
+
 interface ModalType {
   show: boolean;
-  element: null | string | string[]; // [title, content, button text, cancleButton text]
+  element: null | ModalTextType; // [title, content, button text, cancleButton text]
 }
 
 const initialState: ModalType = { show: false, element: null };

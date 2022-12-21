@@ -16,10 +16,10 @@ const PinkBox = styled.div`
   background-color: ${(props) => props.theme.color.lightpink};
   border-radius: 0.5rem;
   margin-top: 3rem;
+  margin-bottom: 4rem;
   max-width: 40rem;
   min-width: 25em;
   box-shadow: 0 4px 5px rgba(0, 0, 0, 0.6);
-  margin-bottom: 4rem;
   .title {
     margin-top: 2rem;
     text-align: center;

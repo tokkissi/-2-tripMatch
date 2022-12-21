@@ -11,11 +11,22 @@ const AuthFormBlock = styled.div`
     font-size: 1.2rem;
     font-weight: 600;
     margin-right: 1rem;
+
+    &.gender {
+      display: block;
+      margin: 1rem 0;
+    }
   }
+
+  .updateLabel {
+    display: inline-block;
+  }
+
   .gender {
     margin-top: 0.5rem;
     display: inline-block;
   }
+
   .useIntroDescription {
     font-size: 0.5rem;
     margin-bottom: 2rem;
@@ -31,6 +42,7 @@ const StyledInput = styled.input`
   border: none;
   outline: none;
   border-bottom: 1px solid grey;
+
   &:focus {
     border-bottom: 2px solid black;
   }
@@ -46,6 +58,7 @@ const Select = styled.select`
   font-size: 1.2rem;
   border-radius: 0.5rem;
   padding: 0.3rem;
+  display: block;
 `;
 
 const TextArea = styled.textarea`
@@ -67,7 +80,6 @@ const Button = styled.button`
   font-size: 1.2rem;
   font-weight: 600;
   border-radius: 0.2rem;
-  /* border: none; */
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.7);
   border: 1px solid #cfcfcf;
   text-align: center;
@@ -76,12 +88,19 @@ const Button = styled.button`
   background-color: ${(props) => props.theme.color.pink};
   cursor: pointer;
 
-  .modifyInfoBtn {
-    // 회원정보 수정 버튼
+  &.update {
+    display: inline-block;
+    width: auto;
+    border: 0.5px solid gray;
+    margin-top: 0.5rem;
+    padding: 0.1rem 0.4rem;
   }
 
-  .mwithdrawalBtn {
-    // 회원 탈퇴 버튼
+  &.withdrawalBtn {
+    margin-top: 2rem;
+    width: auto;
+    text-align: end;
+    float: right;
   }
 
   &:hover {
@@ -92,6 +111,11 @@ const Button = styled.button`
     margin-top: 0.5rem;
     display: block;
   }
+`;
+
+const GenderWrapper = styled.div`
+  display: flex;
+  margin-top: 0.5rem;
 `;
 
 const Footer = styled.span`
@@ -121,4 +145,5 @@ export {
   TextArea,
   Button,
   Footer,
+  GenderWrapper,
 };

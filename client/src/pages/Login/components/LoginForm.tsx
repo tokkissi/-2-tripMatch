@@ -1,6 +1,11 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthFormBlock, Footer, StyledInput, Button } from "./AuthStyle";
+import {
+  AuthFormBlock,
+  Footer,
+  StyledInput,
+  Button,
+} from "../../../components/Auth/AuthStyle";
 import { useImmer } from "use-immer";
 import axios from "axios";
 

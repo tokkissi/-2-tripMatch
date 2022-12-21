@@ -1,22 +1,27 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useImmer } from "use-immer";
 import {
   AuthFormBlock,
   Button,
+  GenderWrapper,
   ResultText,
   Select,
   StyledInput,
   TextArea,
-} from "../../../components/auth/AuthStyle";
+} from "../../../components/Auth/AuthStyle";
 import {
   checkConfirmPassword,
   checkIntroduce,
+  checkNickname,
   checkPassword,
-} from "../../../components/auth/validation";
+} from "../../../components/Auth/validation";
+import { showModal } from "../../../slice/deleteModal";
 import { useAppSelector } from "../../../store/hooks";
+import { UpdateModal } from "../MyPageStyle";
 import { useAppDispatch } from "./../../../store/hooks";
+import { UpdateUserinfoTitle } from "./SideBarStyle";
 
 const UpdateUserInfoFrom = () => {
   const domain = "http://localhost:5000";
@@ -33,8 +38,8 @@ const UpdateUserInfoFrom = () => {
   ];
 
   // modal slice 사용, 모달 창 열기 닫기
-  // const modal = useAppSelector((state) => state.modal);
-  // const dispatch = useAppDispatch();
+  const modal = useAppSelector((state) => state.modal);
+  const dispatch = useAppDispatch();
 
   const [userState, setUserState] = useImmer({
     email: "",
@@ -50,27 +55,31 @@ const UpdateUserInfoFrom = () => {
 
   const [validText, setValidText] = useImmer({
     password: "8~20자, 영문, 숫자, 특수문자 모두 사용",
+    nickName: "새 닉네임을 적어주세요",
     confirmPassword: "비밀번호를 다시 한 번 입력해주세요",
     introduce:
       "SNS 계정을 적어주시면 상대방의 동행 수락 가능성이 높아집니다 :)",
   });
+
+  const [selectedModal, setSelectedModal] = useImmer("");
 
   //첫 로딩 시, 기존 user정보 요청
   useEffect(() => {
     const loadUserInfo = async () => {
       // 응답 api url 추후 변경 예정
       try {
-        const res = await axios.get(`${domain}/api/main/auth/userInfo`);
+        // const res = await axios.get(`${domain}/api/main/auth/userInfo`);
+        const res = await axios.get("http://localhost:4000/userInfo");
         // 응답 코드 추후 변경 예정
         if (res.status === 200) {
           return res.data;
           // 비로그인으로 접근 시, 실패 코드
-        } else if (res.data === 401) {
+        } else if (res.status === 401) {
           alert("로그인 후 사용가능한 페이지입니다");
           navigate("/login");
         } else {
           throw new Error(
-            "/api/main/auth/userInfo 의 응답 status 코드가 201, 409 에 해당하지 않습니다",
+            "/api/main/auth/userInfo 의 응답 status 코드가 200, 401 에 해당하지 않습니다",
           );
         }
       } catch (error) {
@@ -81,14 +90,19 @@ const UpdateUserInfoFrom = () => {
 
     // api 완성 시, 주석 해제 예정
     const loadData = loadUserInfo();
-    setUserState((draft) => {
-      // draft.email = loadData.email;
-      // draft.nickName = loadData.nickName;
-      // draft.gender = loadData.gender;
-      // draft.age = loadData.age;
-      // draft.introduce = loadData.introduce;
+    loadData.then((res) => {
+      console.log(res);
+      setUserState((draft) => {
+        draft.profileImg = res.profileImg;
+        draft.email = res.email;
+        draft.nickName = res.nickName;
+        draft.gender = res.gender;
+        draft.age = res.age;
+        draft.introduce = res.introduce;
+      });
     });
-  }, [navigate, setUserState]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // userState.password 변경 시에도 userState.confirmPassword 가 변해야 하므로 useEffect 사용
   useEffect(() => {
@@ -116,47 +130,6 @@ const UpdateUserInfoFrom = () => {
     }
   }, [userState, validText.confirmPassword, validText.introduce]);
 
-  useEffect(() => {
-    const userData = {
-      password: userState.password,
-      age: userState.age,
-      introduce: userState.introduce,
-      profileImg: userState.profileImg,
-    };
-    const callUpdateAPi = async () => {
-      if (userState.fullfilled === true) {
-        const res = await axios.post(
-          `${domain}/api/main/auth/updateUserInfo`,
-          userData,
-        );
-        // 회원 정보 수정 성공 코드 추후 수정 필요
-        if (res.status === 201) {
-          // 회원 정보 수정 시 실행할 코드 내용
-          // 회원 정보 수정 실패 코드 추후 수정 필요
-        } else if (res.status === 403) {
-          // 회원 정보 수정 실패 시 실행할 코드 내용
-        } else {
-          // 그 외 예상치 못한 코드 수신 시, 콘솔로 에러 보이기. 추후 코드 내용 수정
-          console.error(
-            "/api/main/auth/updateUserInfo 의 응답 status 코드가 200, 400 에 해당하지 않습니다",
-          );
-          alert("회원 정보 수정에 실패하였습니다. 인터넷 연결을 확인해주세요");
-        }
-      } else {
-        alert(
-          "새 비밀번호와 자기소개를 입력하지 않으시면 회원정보 수정이 불가합니다",
-        );
-      }
-    };
-    callUpdateAPi();
-  }, [
-    userState.age,
-    userState.fullfilled,
-    userState.introduce,
-    userState.password,
-    userState.profileImg,
-  ]);
-
   const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserState((draft) => {
       draft.password = e.target.value;
@@ -172,9 +145,12 @@ const UpdateUserInfoFrom = () => {
     });
   };
 
-  const onChangeGender = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeNickName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserState((draft) => {
-      draft.gender = e.target.value;
+      draft.nickName = e.target.value;
+    });
+    setValidText((draft) => {
+      draft.nickName = checkNickname(e.target.value);
     });
   };
 
@@ -200,42 +176,51 @@ const UpdateUserInfoFrom = () => {
     });
   };
 
-  const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // slice로 모달 창 열기
-  };
-
   const onclickWithdrawalBtn = () => {
     // slice로 모달 창 열기
     // form 내에서 아래 api로 탈퇴 요청
+    dispatch(showModal(null));
     // const res = axios.delete(`${domain}/api/main/auth/withdrawal`, userData);
   };
 
   return (
     <div>
+      {modal.show && (
+        <UpdateModal>
+          <div className="updateModalForm">
+            <UpdateUserinfoTitle>왜 안됨</UpdateUserinfoTitle>
+          </div>
+        </UpdateModal>
+      )}
       <AuthFormBlock>
-        <form onSubmit={onSubmitForm}>
-          <label htmlFor="emailInput">email*</label>
+        <div>
+          <UpdateUserinfoTitle>회원 정보 수정</UpdateUserinfoTitle>
+          <label htmlFor="emailInput">email</label>
           <StyledInput
             id="emailInput"
             name="userEmail"
             value={userState.email}
             readOnly
-            required
           />
           <ResultText>{"이메일은 수정할 수 없습니다"}</ResultText>
 
-          <label htmlFor="nicknameInput">닉네임*</label>
+          <label className="updateLabel" htmlFor="nicknameInput">
+            닉네임
+          </label>
+          <Button className="update">수정</Button>
           <StyledInput
             id="nicknameInput"
             name="nickname"
             value={userState.nickName}
+            onChange={onChangeNickName}
             readOnly
-            required
           />
-          <ResultText>{"닉네임은 수정할 수 없습니다"}</ResultText>
+          <ResultText>{validText.nickName}</ResultText>
 
-          <label htmlFor="passwordInput">비밀번호*</label>
+          <label className="updateLabel" htmlFor="passwordInput">
+            비밀번호
+          </label>
+          <Button className="update">수정</Button>
           <StyledInput
             id="passwordInput"
             autoComplete="off"
@@ -248,7 +233,7 @@ const UpdateUserInfoFrom = () => {
           />
           <ResultText>{validText.password}</ResultText>
 
-          <label htmlFor="passwordConfirmInput">비밀번호 확인*</label>
+          <label htmlFor="passwordConfirmInput">비밀번호 확인</label>
           <StyledInput
             id="passwordConfirmInput"
             autoComplete="off"
@@ -262,30 +247,36 @@ const UpdateUserInfoFrom = () => {
           />
           <ResultText>{validText.confirmPassword}</ResultText>
 
-          <label htmlFor="passwordInput">성별*</label>
-          <label className="gender">
-            <input
-              type="radio"
-              name="gender"
-              value="남성"
-              checked={userState.gender === "남성"}
-              onChange={onChangeGender}
-              required
-            />
-            남성
-          </label>
-          <label className="gender">
-            <input
-              type="radio"
-              name="gender"
-              value="여성"
-              checked={userState.gender === "여성"}
-              onChange={onChangeGender}
-            />
-            여성
-          </label>
+          <label className="updateLabel">성별</label>
+          <GenderWrapper>
+            <label className="gender">
+              <input
+                className="gender"
+                type="radio"
+                name="gender"
+                value="남성"
+                checked={userState.gender === "남성"}
+                readOnly
+              />
+              남성
+            </label>
+            <label className="gender">
+              <input
+                className="gender"
+                type="radio"
+                name="gender"
+                value="여성"
+                checked={userState.gender === "여성"}
+                readOnly
+              />
+              여성
+            </label>
+          </GenderWrapper>
 
-          <label htmlFor="ageSelect">나이*</label>
+          <label className="updateLabel" htmlFor="ageSelect">
+            나이
+          </label>
+          <Button className="update">수정</Button>
           <Select
             id="ageSelect"
             className="ageSelect"
@@ -304,7 +295,10 @@ const UpdateUserInfoFrom = () => {
             ))}
           </Select>
 
-          <label htmlFor="introduceText">자기소개*</label>
+          <label className="updateLabel" htmlFor="introduceText">
+            자기소개
+          </label>
+          <Button className="update">수정</Button>
           <TextArea
             name="introduce"
             id="introduceText"
@@ -315,13 +309,13 @@ const UpdateUserInfoFrom = () => {
           ></TextArea>
           <p className="useIntroDescription">{validText.introduce}</p>
 
-          <Button className="modifyInfoBtn" type="submit">
-            회원정보 수정
-          </Button>
+          <UpdateUserinfoTitle className="withdrawalTitle">
+            회원 탈퇴
+          </UpdateUserinfoTitle>
           <Button className="withdrawalBtn" onClick={onclickWithdrawalBtn}>
-            회원탈퇴
+            회원 탈퇴
           </Button>
-        </form>
+        </div>
       </AuthFormBlock>
     </div>
   );

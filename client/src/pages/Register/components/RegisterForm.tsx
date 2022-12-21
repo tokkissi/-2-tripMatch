@@ -10,13 +10,13 @@ import {
   Select,
   ResultText,
   TextArea,
-} from "./AuthStyle";
+} from "../../../components/Auth/AuthStyle";
 import {
   checkConfirmPassword,
   checkIntroduce,
   checkNickname,
   checkPassword,
-} from "./validation";
+} from "../../../components/Auth/validation";
 
 const RegisterForm = () => {
   const domain = "http://localhost:5000";
@@ -391,7 +391,7 @@ const RegisterForm = () => {
         />
         <ResultText>{validText.confirmPassword}</ResultText>
 
-        <label htmlFor="passwordInput">성별*</label>
+        <label>성별*</label>
         <label className="gender">
           <input
             type="radio"

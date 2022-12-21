@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Content, Layer } from "./ReceivedEnrollTableStyle";
 import axios from "axios";
 
-export interface EnrolledPerson {
+export interface EnrolledPersonType {
   userId: number;
   nickname: string;
   postTitle: string;
@@ -10,7 +10,7 @@ export interface EnrolledPerson {
 }
 
 const ReceivedEnrollTable: React.FC = () => {
-  const [data, setData] = useState<EnrolledPerson[]>([]);
+  const [data, setData] = useState<EnrolledPersonType[]>([]);
 
   // const baseUrl = "";
   // https://8ada489c-50d9-464f-ae66-8e0b28048eb6.mock.pstmn.io/enrolledPerson

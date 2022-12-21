@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { UserInfo } from "./MyPageTable";
+import { PostUserInfo } from "../../../type/userPost";
 import { Top, TripCount, Score } from "./TopStyle";
 import axios from "axios";
 
 const MyPageTop: React.FC = () => {
-  const [data, setData] = useState<UserInfo>();
+  const [data, setData] = useState<PostUserInfo>();
 
   // const baseUrl = "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io/userInfo";
 

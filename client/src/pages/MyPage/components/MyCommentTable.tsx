@@ -1,29 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Content, Layer } from "./TableContentStyle";
+import { PostType } from "../../../type/myComments";
 import axios from "axios";
 
-export interface Post {
-  postId: number;
-  author: Author;
-  region: string;
-  title: string;
-  duration: DateType[];
-  createdAt: Date;
-}
-
-export interface Author {
-  authorId: number;
-  nickname: string;
-  profileImg?: string;
-}
-
-export interface DateType {
-  start: any;
-  end: any;
-}
-
 const MyCommentTable: React.FC = () => {
-  const [data, setData] = useState<Post[]>([]);
+  const [data, setData] = useState<PostType[]>([]);
 
   // const baseUrl = "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io/commentedPost";
 

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Container, FestivalInfo, ModalCard } from "./FestivalListStyle";
 import { mockData } from "./mockData";
 import axios from "axios";
-import Festival from "./../../pages/Festival/Festival";
 
 interface Item {
   addr1: string;
@@ -32,6 +31,7 @@ interface Item {
 
 interface ItemObj {
   item: Item;
+  idx: number;
 }
 
 interface PageProps {
@@ -63,25 +63,37 @@ const FestivalList: React.FC<PageProps> = ({ location }) => {
     return date.slice(0, 4) + "." + date.slice(4, 6) + "." + date.slice(6, 8);
   };
 
-  const InfoModal: React.FC<ItemObj> = ({ item }) => {
+  const onModal = (idx: number) => {
+    const newFestivalModal = [...festivalModal];
+    newFestivalModal[idx] = true;
+    setFestivalModal(newFestivalModal);
+  };
+
+  const InfoModal: React.FC<ItemObj> = ({ item, idx }) => {
     return (
       <ModalCard>
         <div className="modalCard">
-          <div className="festivalTitle">{item.title}</div>
-          <div className="festivalDate">
-            {dateFormat(item.eventstartdate)}~{dateFormat(item.eventenddate)}
+          <img
+            className="closeModal"
+            src="https://res.cloudinary.com/dk9scwone/image/upload/v1671625307/free-icon-cancel-8532370_kuiqk1.png"
+            onClick={(e) => {
+              e.stopPropagation();
+              setFestivalModal(new Array(20).fill(false));
+            }}
+          />
+
+          <img src={item.firstimage} className="festivalImg" />
+          <div className="info">
+            <div className="festivalTitle">{item.title}</div>
+            <div className="festivalDate">
+              {dateFormat(item.eventstartdate)}~{dateFormat(item.eventenddate)}
+            </div>
+            <div className="address">{item.addr1}</div>
+            <div className="tel">{item.tel}</div>
           </div>
         </div>
       </ModalCard>
     );
-  };
-
-  const onModal = (idx: number) => {
-    const newFestivalModal = festivalModal;
-    newFestivalModal[idx] = true;
-    console.log(newFestivalModal);
-    setFestivalModal(newFestivalModal);
-    console.log(festivalModal);
   };
 
   return (
@@ -107,7 +119,7 @@ const FestivalList: React.FC<PageProps> = ({ location }) => {
                   {dateFormat(item.eventstartdate)}~
                   {dateFormat(item.eventenddate)}
                 </div>
-                {festivalModal[idx] && <InfoModal item={item} />}
+                {festivalModal[idx] && <InfoModal item={item} idx={idx} />}
               </div>
             );
           })}

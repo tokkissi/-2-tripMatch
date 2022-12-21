@@ -43,6 +43,7 @@ const FestivalInfo = styled.div`
       ${(props) => props.theme.color.lightblue},
       ${(props) => props.theme.color.lightpink}
     );
+    cursor: pointer;
 
     img {
       width: 100%;
@@ -60,12 +61,56 @@ const FestivalInfo = styled.div`
     .itemDate {
       margin-top: 5px;
       color: #b1b1b1;
+      overflow: hidden;
     }
   }
 `;
 
 const ModalCard = styled(Modal)`
-  background-color: rgba(0, 0, 0, 0.05);
+  .modalCard {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 30vw;
+    height: 30vh;
+    position: relative;
+    cursor: default;
+
+    .closeModal {
+      width: 1vw;
+      height: 1vw;
+      position: absolute;
+      top: 1vw;
+      right: 1vw;
+      cursor: pointer;
+    }
+
+    .festivalImg {
+      max-width: 12vw;
+      max-height: 12vw;
+      object-fit: contain;
+      background-color: ${(props) => props.theme.color.lightblue};
+      border-radius: 10px;
+    }
+
+    .info {
+      height: 12vw;
+      margin: 0 1vw 0 1vw;
+
+      > * {
+        margin-top: 8px;
+      }
+
+      .festivalTitle {
+        font-size: ${(props) => props.theme.font.L};
+        font-weight: bold;
+      }
+
+      .address {
+        margin-top: 25%;
+      }
+    }
+  }
 `;
 
 export { Container, FestivalInfo, ModalCard };

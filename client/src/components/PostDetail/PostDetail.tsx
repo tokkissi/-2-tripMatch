@@ -14,7 +14,7 @@ import {
   ButtonContainer,
   Button,
 } from "./PostDetailStyle";
-import type { FreepostType, AuthorType } from "./../../type/freePost";
+import type { FreePostType, AuthorType } from "./../../type/freePost";
 import type { MatchPostType } from "../../type/matchPost";
 import DeleteModal from "./../DeleteModal/DeleteModal";
 import { useAppSelector } from "../../store/hooks";
@@ -23,7 +23,7 @@ import { showModal } from "../../slice/deleteModal";
 
 interface PostDetailProps {
   matchPost?: MatchPostType;
-  freePost?: FreepostType;
+  freePost?: FreePostType;
   user?: AuthorType;
 }
 

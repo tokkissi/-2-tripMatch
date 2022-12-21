@@ -1,6 +1,6 @@
 import { CommentType } from "./comment";
 
-export interface FreepostType {
+export interface FreePostType {
   id: number;
   author: AuthorType;
   region: string;

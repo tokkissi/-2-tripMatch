@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { FreepostType } from "./../type/freePost";
+import { FreePostType } from "./../type/freePost";
 
-const initialState: FreepostType[] = [
+const initialState: FreePostType[] = [
   {
     id: 1,
     author: {
@@ -68,7 +68,7 @@ export const freePostSlice = createSlice({
       state.unshift(newPost);
     },
     removeFreePost: (state, action) =>
-      state.filter((post: FreepostType) => post.id !== action.payload),
+      state.filter((post: FreePostType) => post.id !== action.payload),
     updateFreePost: (state, action) =>
       state.map((post) =>
         post.id === action.payload.id ? { ...post, ...action.payload } : state,

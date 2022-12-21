@@ -8,7 +8,7 @@ import {
   TitleContainer,
   TitleInput,
 } from "./FreePostFormStyle";
-import type { FreepostType } from "../../../type/freePost";
+import type { FreePostType } from "../../../type/freePost";
 import { useDispatch } from "react-redux";
 import {
   addFreePost,
@@ -18,7 +18,7 @@ import {
 import AppSelect from "../../../components/AppSelect/AppSelect";
 
 const FreePostForm = () => {
-  const state: FreepostType = useLocation().state;
+  const state: FreePostType = useLocation().state;
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -34,7 +34,7 @@ const FreePostForm = () => {
     console.log(categoryRef.current?.value);
     console.log(titleRef.current?.value);
     // if (regionRef.current && categoryRef.current && titleRef.current) {
-    //   const newObj: FreepostType = {
+    //   const newObj: FreePostType = {
     //     id: state.id,
     //     title: "어쩌구",
     //     region: regionRef.current?.value,

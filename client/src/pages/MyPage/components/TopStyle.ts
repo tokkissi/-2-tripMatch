@@ -49,6 +49,6 @@ export const Score = styled.div`
   }
 
   #scoreNum {
-    color: #ca8a8b;
+    color: #d75281;
   }
 `;

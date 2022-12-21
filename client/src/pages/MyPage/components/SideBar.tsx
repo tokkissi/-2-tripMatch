@@ -29,7 +29,7 @@ const SideBarComponent: React.FC = () => {
       {location.pathname === "/myPage/myContents" ? (
         <Box
           value="게시글 내역"
-          style={{ color: "#ca8a8b" }}
+          style={{ color: "#d75281" }}
           onClick={handleClickMypage}
         >
           게시글 내역
@@ -43,7 +43,7 @@ const SideBarComponent: React.FC = () => {
       {location.pathname === "/myPage/myComment" ? (
         <Box
           value="댓글 내역"
-          style={{ color: "#ca8a8b" }}
+          style={{ color: "#d75281" }}
           onClick={handleClickMyComment}
         >
           댓글 내역
@@ -57,7 +57,7 @@ const SideBarComponent: React.FC = () => {
       {location.pathname === "/myPage/receivedEnroll" ? (
         <Box
           value="신청받은 내역"
-          style={{ color: "#ca8a8b" }}
+          style={{ color: "#d75281" }}
           onClick={handleClickReceivedEnroll}
         >
           신청받은 내역

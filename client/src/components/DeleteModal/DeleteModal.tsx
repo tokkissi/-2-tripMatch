@@ -2,29 +2,33 @@ import React from "react";
 import Modal from "./../../styles/Modal";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "./../../store/hooks";
-import { closeModal } from "../../slice/deleteModal";
-import { removeFreePost } from "../../slice/freePost";
+import { closeModal } from "../../slice/modal";
 
 interface DeleteModalProps {
-  onDelete?: any;
+  callBackFn?: any;
 }
 
-const DeleteModal: React.FC<DeleteModalProps> = ({ onDelete }) => {
+const DeleteModal: React.FC<DeleteModalProps> = ({ callBackFn }) => {
   const dispatch = useAppDispatch();
-  const elementName = useAppSelector((state) => state.modal.element);
+  const text = useAppSelector((state) => state.modal.element);
 
   const onCancle = () => dispatch(closeModal());
 
-  // const onDelete = () => dispatch(removeFreePost());
+  const onExcute = () => {
+    callBackFn();
+    dispatch(closeModal());
+  };
 
   return (
     <ModalCard>
       <div className="modalCard">
-        <ModalTitle>{elementName} 삭제</ModalTitle>
-        <p>이 {elementName}을 삭제하시겠습니까?</p>
+        <ModalTitle>{text && text[0]}</ModalTitle>
+        <p>{text && text[1]}</p>
         <ButtonContainer>
-          <button onClick={onCancle}>취소</button>
-          <button>삭제</button>
+          <button onClick={onCancle}>
+            {text && text[3] ? text[3] : "취소"}
+          </button>
+          <button onClick={onExcute}>{text && text[2]}</button>
         </ButtonContainer>
       </div>
     </ModalCard>

@@ -9,18 +9,24 @@ import {
   TitleInput,
 } from "./FreePostFormStyle";
 import type { FreePostType } from "../../../type/freePost";
-import { useDispatch } from "react-redux";
 import {
   addFreePost,
   removeFreePost,
   updateFreePost,
 } from "../../../slice/freePost";
 import AppSelect from "../../../components/AppSelect/AppSelect";
+import {
+  useCreateFreePostMutation,
+  useUpdateFreePostMutation,
+} from "../../../slice/api";
 
 const FreePostForm = () => {
   const state: FreePostType = useLocation().state;
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const [createFreePost, { isLoading: isLoadingCreate }] =
+    useCreateFreePostMutation();
+  const [updateFreePost, { isLoading: isLoadingUpdate }] =
+    useUpdateFreePostMutation();
 
   const [content, setContent] = useState("");
 
@@ -30,22 +36,36 @@ const FreePostForm = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(regionRef.current?.value);
-    console.log(categoryRef.current?.value);
-    console.log(titleRef.current?.value);
-    // if (regionRef.current && categoryRef.current && titleRef.current) {
-    //   const newObj: FreePostType = {
-    //     id: state.id,
-    //     title: "어쩌구",
-    //     region: regionRef.current?.value,
-    //     category: categoryRef.current?.value,
-    //     author: { email: "111", nickname: "111", profileImg: "" },
-    //     content,
-    //     comments: [],
-    //     createdAt: "",
-    //   };
-    //   dispatch(updateFreePost(newObj));
-    // }
+    if (regionRef.current && categoryRef.current && titleRef.current && state) {
+      const newObj: FreePostType = {
+        id: state.id,
+        title: titleRef.current.value,
+        region: regionRef.current.value,
+        category: categoryRef.current.value,
+        author: state.author,
+        content,
+        comments: state.comments,
+        createdAt: state.createdAt,
+      };
+      updateFreePost(newObj);
+    } else if (
+      regionRef.current &&
+      categoryRef.current &&
+      titleRef.current &&
+      !state
+    ) {
+      const newObj: FreePostType = {
+        id: Date.now(),
+        title: titleRef.current.value,
+        region: regionRef.current.value,
+        category: categoryRef.current.value,
+        author: { email: "111", nickname: "111", profileImg: "" },
+        content,
+        comments: [],
+        createdAt: "",
+      };
+      createFreePost(newObj);
+    }
   };
 
   const onClickCancle = () => {
@@ -55,7 +75,7 @@ const FreePostForm = () => {
   return (
     <form onSubmit={onSubmit}>
       <TitleContainer>
-        <AppSelect
+        {/* <AppSelect
           label=""
           options={[
             "서울",
@@ -73,8 +93,8 @@ const FreePostForm = () => {
           label=""
           options={["맛집", "액티비티", "교통", "숙소", "기타"]}
           className="region"
-        />
-        {/* <Select defaultValue={state ? state.region : "서울"} ref={regionRef}>
+        /> */}
+        <Select defaultValue={state ? state.region : "서울"} ref={regionRef}>
           <option value="서울">서울</option>
           <option value="경기도">경기도</option>
           <option value="강원도">강원도</option>
@@ -83,8 +103,8 @@ const FreePostForm = () => {
           <option value="전라도">전라도</option>
           <option value="제주도">제주도</option>
           <option value="기타">기타</option>
-        </Select> */}
-        {/* <Select
+        </Select>
+        <Select
           defaultValue={state ? state.category : "맛집"}
           ref={categoryRef}
         >
@@ -93,7 +113,7 @@ const FreePostForm = () => {
           <option value="교통">교통</option>
           <option value="숙소">숙소</option>
           <option value="기타">기타</option>
-        </Select> */}
+        </Select>
         <TitleInput
           type="text"
           placeholder="ex) 12월 31일 부산 해돋이 보러갈 동행 2명 구합니다"

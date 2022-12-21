@@ -8,6 +8,7 @@ export const freePostApi = createApi({
     baseUrl: "http://localhost:3500/",
   }),
   endpoints: (builder) => ({
+    // 전체 자유게시글을 불러옴
     getAllFreePost: builder.query<FreePostType[], void>({
       query: () => "freePosts",
       providesTags: (result = [], error, arg) =>
@@ -19,12 +20,14 @@ export const freePostApi = createApi({
                 id: post.id,
               })),
             ]
-          : [{ type: "FreePost", id: "List" }],
+          : ["FreePost"],
     }),
+    // id에 해당하는 게시글을 불러옴
     getFreePost: builder.query<FreePostType, number | string | undefined>({
       query: (id) => `freePosts/${id}`,
       providesTags: (result, error, arg) => [{ type: "FreePost", id: arg }],
     }),
+    // id에 해당하는 게시글을 업데이트
     updateFreePost: builder.mutation<FreePostType, FreePostType>({
       query: (updatedPost) => ({
         url: `freePosts/${updatedPost.id}`,
@@ -35,6 +38,7 @@ export const freePostApi = createApi({
         { type: "FreePost", id: arg.id },
       ],
     }),
+    // 게시글 추가
     createFreePost: builder.mutation<FreePostType, FreePostType>({
       query: (newPost) => ({
         url: "freePosts",
@@ -43,6 +47,7 @@ export const freePostApi = createApi({
       }),
       invalidatesTags: ["FreePost"],
     }),
+    // id에 해당하는 게시글 삭제
     deleteFreePost: builder.mutation<FreePostType, number | string | undefined>(
       {
         query: (id) => ({

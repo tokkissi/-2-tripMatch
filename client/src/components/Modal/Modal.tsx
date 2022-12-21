@@ -1,14 +1,14 @@
 import React from "react";
-import Modal from "./../../styles/Modal";
+import ModalStyle from "../../styles/Modal";
 import styled from "styled-components";
-import { useAppDispatch, useAppSelector } from "./../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { closeModal } from "../../slice/modal";
 
-interface DeleteModalProps {
+interface ModalProps {
   callBackFn?: any;
 }
 
-const DeleteModal: React.FC<DeleteModalProps> = ({ callBackFn }) => {
+const Modal: React.FC<ModalProps> = ({ callBackFn }) => {
   const dispatch = useAppDispatch();
   const text = useAppSelector((state) => state.modal.modalText);
 
@@ -33,9 +33,9 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ callBackFn }) => {
   );
 };
 
-export default DeleteModal;
+export default Modal;
 
-const ModalCard = styled(Modal)`
+const ModalCard = styled(ModalStyle)`
   .modalCard {
     justify-content: space-between;
   }

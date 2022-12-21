@@ -16,7 +16,7 @@ import {
 } from "./PostDetailStyle";
 import type { FreePostType, AuthorType } from "./../../type/freePost";
 import type { MatchPostType } from "../../type/matchPost";
-import DeleteModal from "./../DeleteModal/DeleteModal";
+import Modal from "../Modal/Modal";
 import { useAppSelector } from "../../store/hooks";
 import { useAppDispatch } from "./../../store/hooks";
 import { showModal } from "../../slice/modal";
@@ -188,7 +188,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
         </Link>
         <Button onClick={onClickDelete}>글삭제</Button>
       </ButtonContainer>
-      {isShown && <DeleteModal callBackFn={getModalCallback()} />}
+      {isShown && <Modal callBackFn={getModalCallback()} />}
     </div>
   );
 };

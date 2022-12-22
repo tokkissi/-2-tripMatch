@@ -1,3 +1,5 @@
 import userSchema from "./user";
+import communitySchema from "./community";
+import commentSchema from "./comment";
 
-export { userSchema };
+export { userSchema, communitySchema, commentSchema };

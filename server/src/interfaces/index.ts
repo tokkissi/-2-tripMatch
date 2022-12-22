@@ -1,4 +1,5 @@
 import User from "./user";
-import Req from "./req";
+import Community from "./community";
+import Comment from "./comment";
 
-export { User, Req };
+export { User, Community, Comment };

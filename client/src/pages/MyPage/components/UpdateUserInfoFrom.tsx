@@ -1,5 +1,11 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, {
+  // ChangeEvent,
+  // useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import { useImmer } from "use-immer";
 import {
@@ -17,15 +23,39 @@ import {
   checkNickname,
   checkPassword,
 } from "../../../components/Auth/validation";
-import { showModal } from "../../../slice/deleteModal";
-import { useAppSelector } from "../../../store/hooks";
-import { UpdateModal } from "../MyPageStyle";
-import { useAppDispatch } from "./../../../store/hooks";
+
+import {
+  ModalButtonContainer,
+  ModalContentContainer,
+  ModalTitle,
+  // ProfileImage,
+  // ProfileInput,
+  UpdateModal,
+} from "../MyPageStyle";
 import { UpdateUserinfoTitle } from "./SideBarStyle";
 
 const UpdateUserInfoFrom = () => {
-  const domain = "http://localhost:5000";
-  const navigate = useNavigate();
+  type FormType =
+    | "nickName"
+    | "password"
+    | "age"
+    | "introduce"
+    | "profileImg"
+    | "withdrawal";
+
+  type EncodingType = {
+    nickName: "닉네임";
+    password: "비밀번호";
+    age: "나이";
+    introduce: "자기소개";
+    profileImg: "프로필 사진";
+    email: "이메일";
+    withdrawal: "회원탈퇴";
+  };
+
+  type ValidOptionType = "nickName" | "confirmPassword" | "introduce";
+
+  // const domain = "http://localhost:5000";
 
   const AgeOption = [
     { value: "default", name: "선택" },
@@ -37,9 +67,17 @@ const UpdateUserInfoFrom = () => {
     { value: "60대 이상", name: "60대 이상" },
   ];
 
-  // modal slice 사용, 모달 창 열기 닫기
-  const modal = useAppSelector((state) => state.modal);
-  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const modifiedText = useRef<string | null>(null);
+
+  const [valid, setValid] = useState(false);
+  // 모달창 활성화 여부
+  const [modal, setModal] = useState(false);
+  // 모달창 내용
+  const [modalForm, setModalForm] = useState<FormType>();
+  // 모달 외부 클릭 처리에 사용할 모달 엘리먼트
+  const modalEl = useRef<HTMLDivElement>(null);
+  // const imgInputEl = useRef<HTMLInputElement>(null);
 
   const [userState, setUserState] = useImmer({
     email: "",
@@ -50,8 +88,24 @@ const UpdateUserInfoFrom = () => {
     age: "",
     introduce: "",
     profileImg: "",
-    fullfilled: false,
   });
+
+  const krEncoding: EncodingType = {
+    nickName: "닉네임",
+    password: "비밀번호",
+    age: "나이",
+    introduce: "자기소개",
+    profileImg: "프로필 사진",
+    email: "이메일",
+    withdrawal: "회원탈퇴",
+  };
+
+  const checkTable = {
+    nickName: "사용가능한 닉네임 입니다",
+    confirmPassword: "비밀번호 확인이 완료되었습니다",
+    introduce:
+      "SNS 계정을 적어주시면 상대방의 동행 수락 가능성이 높아집니다 :)",
+  };
 
   const [validText, setValidText] = useImmer({
     password: "8~20자, 영문, 숫자, 특수문자 모두 사용",
@@ -60,8 +114,6 @@ const UpdateUserInfoFrom = () => {
     introduce:
       "SNS 계정을 적어주시면 상대방의 동행 수락 가능성이 높아집니다 :)",
   });
-
-  const [selectedModal, setSelectedModal] = useImmer("");
 
   //첫 로딩 시, 기존 user정보 요청
   useEffect(() => {
@@ -88,7 +140,6 @@ const UpdateUserInfoFrom = () => {
       }
     };
 
-    // api 완성 시, 주석 해제 예정
     const loadData = loadUserInfo();
     loadData.then((res) => {
       console.log(res);
@@ -120,15 +171,56 @@ const UpdateUserInfoFrom = () => {
     validText.password,
   ]);
 
-  useEffect(() => {
-    if (
-      validText.confirmPassword === "비밀번호 확인이 완료되었습니다" &&
-      validText.introduce ===
-        "SNS 계정을 적어주시면 상대방의 동행 수락 가능성이 높아집니다 :)"
-    ) {
-      userState.fullfilled = true;
+  // 추후 이미지 api 스펙 확정 시 다시 제작
+  // const checkFileSize = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files) {
+  //     const file = e.target.files[0];
+  //     const fileSize = file.size;
+  //     const maxSize = 10 * 1024 * 1024;
+  //     if (fileSize > maxSize) {
+  //       alert("10MB 이하의 이미지만 사용가능합니다");
+  //       return false;
+  //     }
+  //     return true;
+  //   }
+  // }, []);
+
+  // const onChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+  //   if (checkFileSize(e)) {
+  //     setUserState((draft) => {
+  //       draft.profileImg = e.target.files[0];
+  //     });
+  //   }
+  // };
+
+  const checkValidText = (option: ValidOptionType, inputText: string) => {
+    if (inputText === checkTable[option]) {
+      return true;
     }
-  }, [userState, validText.confirmPassword, validText.introduce]);
+    return false;
+  };
+
+  const onChangeNickName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 수정 버튼 클릭 시, 아래 주석 코드 실행 후, api 요청
+    // setUserState((draft) => {
+    //   draft.nickName = e.target.value;
+    // });
+    setValidText((draft) => {
+      draft.nickName = checkNickname(e.target.value);
+    });
+    if (checkValidText("nickName", validText.nickName)) {
+      if (valid === false) {
+        setValid(true);
+        modifiedText.current = e.target.value;
+        console.log("수정 api 요청 가능!");
+        console.log("커런트타겟: ", modifiedText.current);
+      }
+    } else {
+      if (valid === true) {
+        setValid(false);
+      }
+    }
+  };
 
   const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserState((draft) => {
@@ -142,15 +234,6 @@ const UpdateUserInfoFrom = () => {
   const onChangeConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserState((draft) => {
       draft.confirmPassword = e.target.value;
-    });
-  };
-
-  const onChangeNickName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserState((draft) => {
-      draft.nickName = e.target.value;
-    });
-    setValidText((draft) => {
-      draft.nickName = checkNickname(e.target.value);
     });
   };
 
@@ -176,146 +259,242 @@ const UpdateUserInfoFrom = () => {
     });
   };
 
-  const onclickWithdrawalBtn = () => {
-    // slice로 모달 창 열기
-    // form 내에서 아래 api로 탈퇴 요청
-    dispatch(showModal(null));
-    // const res = axios.delete(`${domain}/api/main/auth/withdrawal`, userData);
+  const activeModal = (reqForm: FormType) => {
+    setModal(true);
+    setValid(false);
+    setModalForm(reqForm);
+  };
+
+  // 모달창 외에 클릭 시 모달 닫기
+  const closeModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (modalEl.current !== null) {
+      if (
+        (modal && !modalEl.current) ||
+        !modalEl.current.contains(e.target as HTMLElement)
+      ) {
+        setModal(false);
+      }
+    }
   };
 
   return (
     <div>
-      {modal.show && (
-        <UpdateModal>
-          <div className="updateModalForm">
-            <UpdateUserinfoTitle>왜 안됨</UpdateUserinfoTitle>
+      {modal && (
+        <UpdateModal onClick={closeModal}>
+          <div className="updateModalForm" ref={modalEl}>
+            <ModalTitle>{modalForm && krEncoding[modalForm]}</ModalTitle>
+            <ModalContentContainer>
+              {/*변경 사항 구현부*/}
+              {modalForm === "nickName" && (
+                <>
+                  <StyledInput
+                    id="nicknameInput"
+                    name="nickname"
+                    // value={userState.nickName}
+                    onChange={onChangeNickName}
+                  />
+                  <ResultText>{validText.nickName}</ResultText>
+                </>
+              )}
+              {modalForm === "password" && (
+                <>
+                  <StyledInput
+                    id="passwordInput"
+                    autoComplete="off"
+                    name="Password"
+                    placeholder="새 비밀번호를 입력해주세요"
+                    type="password"
+                    onChange={onChangePassword}
+                    value={userState.password}
+                    required
+                  />
+                  <ResultText>{validText.password}</ResultText>
+
+                  <StyledInput
+                    id="passwordConfirmInput"
+                    autoComplete="off"
+                    name="PasswordConfirm"
+                    placeholder="새 비밀번호를 다시 입력해주세요"
+                    type="password"
+                    onChange={onChangeConfirmPassword}
+                    value={userState.confirmPassword}
+                    readOnly={userState.password === "" ? true : false}
+                    required
+                  />
+                  <ResultText>{validText.confirmPassword}</ResultText>
+                </>
+              )}
+              {modalForm === "age" && (
+                <>
+                  <Select
+                    id="ageSelect"
+                    className="ageSelect"
+                    defaultValue="default"
+                    onChange={onChangeAge}
+                    required
+                  >
+                    {AgeOption.map((option) => (
+                      <option
+                        key={option.value}
+                        value={option.value}
+                        disabled={option.value === "default" ? true : false}
+                      >
+                        {option.name}
+                      </option>
+                    ))}
+                  </Select>
+                </>
+              )}
+              {modalForm === "introduce" && (
+                <>
+                  <TextArea
+                    name="introduce"
+                    id="introduceText"
+                    rows={8}
+                    placeholder="100자 이내로 소개해주세요"
+                    onChange={onChangeIntroduce}
+                    value={userState.introduce}
+                  >
+                    {userState.introduce}
+                  </TextArea>
+                  <p className="useIntroDescription">{validText.introduce}</p>
+                </>
+              )}
+            </ModalContentContainer>
+            <ModalButtonContainer>
+              <button className="cancel" onClick={() => setModal(false)}>
+                취소
+              </button>
+              <button className="modify">수정</button>
+            </ModalButtonContainer>
           </div>
         </UpdateModal>
       )}
+
       <AuthFormBlock>
-        <div>
-          <UpdateUserinfoTitle>회원 정보 수정</UpdateUserinfoTitle>
-          <label htmlFor="emailInput">email</label>
-          <StyledInput
-            id="emailInput"
-            name="userEmail"
-            value={userState.email}
-            readOnly
-          />
-          <ResultText>{"이메일은 수정할 수 없습니다"}</ResultText>
+        <UpdateUserinfoTitle>회원 정보 수정</UpdateUserinfoTitle>
 
-          <label className="updateLabel" htmlFor="nicknameInput">
-            닉네임
+        {/* <label>프로필 사진</label>
+
+        <ProfileImage onClick={() => imgInputEl.current?.click()} />
+        <ProfileInput
+          ref={imgInputEl}
+          type="file"
+          accept="image/*"
+          onChange={onChangeImage}
+        /> */}
+
+        <label htmlFor="emailInput">email</label>
+        <StyledInput
+          id="emailInput"
+          name="userEmail"
+          value={userState.email}
+          readOnly
+        />
+        <ResultText>{"이메일은 수정할 수 없습니다"}</ResultText>
+
+        <label className="updateLabel" htmlFor="nicknameInput">
+          닉네임
+        </label>
+        <Button
+          data-name="nickName"
+          className="update"
+          onClick={() => activeModal("nickName")}
+        >
+          수정
+        </Button>
+        <StyledInput
+          id="nicknameInput"
+          name="nickname"
+          value={userState.nickName}
+          onChange={onChangeNickName}
+          readOnly
+        />
+
+        <label className="updateLabel" htmlFor="passwordInput">
+          비밀번호
+        </label>
+        <Button
+          name="test"
+          className="update"
+          onClick={() => {
+            activeModal("password");
+          }}
+        >
+          수정
+        </Button>
+        <br />
+
+        <label className="updateLabel">성별</label>
+        <GenderWrapper>
+          <label className="gender">
+            <input
+              className="gender"
+              type="radio"
+              name="gender"
+              value="남성"
+              checked={userState.gender === "남성"}
+              readOnly
+            />
+            남성
           </label>
-          <Button className="update">수정</Button>
-          <StyledInput
-            id="nicknameInput"
-            name="nickname"
-            value={userState.nickName}
-            onChange={onChangeNickName}
-            readOnly
-          />
-          <ResultText>{validText.nickName}</ResultText>
-
-          <label className="updateLabel" htmlFor="passwordInput">
-            비밀번호
+          <label className="gender">
+            <input
+              className="gender"
+              type="radio"
+              name="gender"
+              value="여성"
+              checked={userState.gender === "여성"}
+              readOnly
+            />
+            여성
           </label>
-          <Button className="update">수정</Button>
-          <StyledInput
-            id="passwordInput"
-            autoComplete="off"
-            name="Password"
-            placeholder="새 비밀번호를 입력해주세요"
-            type="password"
-            onChange={onChangePassword}
-            value={userState.password}
-            required
-          />
-          <ResultText>{validText.password}</ResultText>
+        </GenderWrapper>
+        <ResultText>{"성별은 수정할 수 없습니다"}</ResultText>
 
-          <label htmlFor="passwordConfirmInput">비밀번호 확인</label>
-          <StyledInput
-            id="passwordConfirmInput"
-            autoComplete="off"
-            name="PasswordConfirm"
-            placeholder="새 비밀번호를 다시 입력해주세요"
-            type="password"
-            onChange={onChangeConfirmPassword}
-            value={userState.confirmPassword}
-            readOnly={userState.password === "" ? true : false}
-            required
-          />
-          <ResultText>{validText.confirmPassword}</ResultText>
+        <label className="updateLabel" htmlFor="ageSelect">
+          나이
+        </label>
+        <Button className="update" onClick={() => activeModal("age")}>
+          수정
+        </Button>
+        <Select
+          id="ageSelect"
+          className="ageSelect"
+          defaultValue={userState.age}
+          disabled
+        >
+          <option value={userState.age}>{userState.age}</option>
+        </Select>
 
-          <label className="updateLabel">성별</label>
-          <GenderWrapper>
-            <label className="gender">
-              <input
-                className="gender"
-                type="radio"
-                name="gender"
-                value="남성"
-                checked={userState.gender === "남성"}
-                readOnly
-              />
-              남성
-            </label>
-            <label className="gender">
-              <input
-                className="gender"
-                type="radio"
-                name="gender"
-                value="여성"
-                checked={userState.gender === "여성"}
-                readOnly
-              />
-              여성
-            </label>
-          </GenderWrapper>
+        <label className="updateLabel" htmlFor="introduceText">
+          자기소개
+        </label>
+        <Button className="update" onClick={() => activeModal("introduce")}>
+          수정
+        </Button>
+        <TextArea
+          name="introduce"
+          id="introduceText"
+          rows={8}
+          placeholder="100자 이내로 소개해주세요"
+          onChange={onChangeIntroduce}
+          value={userState.introduce}
+          disabled
+        >
+          {userState.introduce}
+        </TextArea>
+        <p className="useIntroDescription">{validText.introduce}</p>
 
-          <label className="updateLabel" htmlFor="ageSelect">
-            나이
-          </label>
-          <Button className="update">수정</Button>
-          <Select
-            id="ageSelect"
-            className="ageSelect"
-            defaultValue="default"
-            onChange={onChangeAge}
-            required
-          >
-            {AgeOption.map((option) => (
-              <option
-                key={option.value}
-                value={option.value}
-                disabled={option.value === "default" ? true : false}
-              >
-                {option.name}
-              </option>
-            ))}
-          </Select>
-
-          <label className="updateLabel" htmlFor="introduceText">
-            자기소개
-          </label>
-          <Button className="update">수정</Button>
-          <TextArea
-            name="introduce"
-            id="introduceText"
-            rows={8}
-            placeholder="100자 이내로 소개해주세요"
-            onChange={onChangeIntroduce}
-            required
-          ></TextArea>
-          <p className="useIntroDescription">{validText.introduce}</p>
-
-          <UpdateUserinfoTitle className="withdrawalTitle">
-            회원 탈퇴
-          </UpdateUserinfoTitle>
-          <Button className="withdrawalBtn" onClick={onclickWithdrawalBtn}>
-            회원 탈퇴
-          </Button>
-        </div>
+        <UpdateUserinfoTitle className="withdrawalTitle">
+          회원 탈퇴
+        </UpdateUserinfoTitle>
+        <Button
+          className="withdrawalBtn"
+          onClick={() => activeModal("withdrawal")}
+        >
+          회원 탈퇴
+        </Button>
       </AuthFormBlock>
     </div>
   );

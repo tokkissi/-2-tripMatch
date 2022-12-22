@@ -25,6 +25,7 @@ export const MidContainer = styled.div`
   margin-left: 30px;
 `;
 
+// 컨텐츠 담을 흰색 배경의 템플릿
 export const Content = styled.div`
   width: 750px;
   height: 540px;
@@ -99,6 +100,12 @@ export const Content = styled.div`
       position: absolute;
     }
   }
+
+  &.updateConent {
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 export const Layer = styled.div`
@@ -111,18 +118,22 @@ export const Layer = styled.div`
     width: 7px;
     border-radius: 10px;
   }
+  &.userInfoForm {
+    overflow: auto;
+  }
 `;
 
 export const UpdateModal = styled(Modal)`
   justify-content: center;
+
   .updateModalForm {
     box-sizing: border-box;
-    background-color: ${(props) => props.theme.color.lightpink};
+    background-color: white;
+    padding: 2rem;
     border-radius: 0.5rem;
     margin-top: 3rem;
     margin-bottom: 4rem;
-    max-width: 40rem;
-    min-width: 25em;
+    width: 25em;
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.6);
 
     .title {
@@ -132,4 +143,57 @@ export const UpdateModal = styled(Modal)`
       font-weight: 600;
     }
   }
+`;
+
+export const ModalTitle = styled.p`
+  font-size: 1.5rem;
+  font-weight: 600;
+`;
+
+export const ModalButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+
+  button {
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: inline-block;
+    width: 5rem;
+    border: none;
+    border-radius: 0.2rem;
+    margin-top: 0.5rem;
+    padding: 0.4rem;
+    box-shadow: 0 0.1rem 0.2rem -0.1rem rgba(0, 0, 0, 0.7);
+
+    + button {
+      margin-left: 4rem;
+    }
+
+    &.modify {
+      background-color: ${(props) => props.theme.color.lightpink};
+    }
+
+    :hover {
+      background-color: ${(props) => props.theme.color.blue};
+      color: #334a52;
+    }
+  }
+`;
+
+export const ModalContentContainer = styled.div`
+  margin: 3rem 0;
+
+  select {
+    margin: 2rem auto;
+  }
+`;
+
+export const ProfileInput = styled.input`
+  display: none;
+`;
+
+export const ProfileImage = styled.div`
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
 `;

@@ -48,7 +48,7 @@ export const SideBarNav = styled(NavLink)`
 `;
 
 export const UpdateUserinfoTitle = styled.p`
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 600;
   &.withdrawalTitle {
     margin-top: 5rem;

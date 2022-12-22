@@ -1,5 +1,36 @@
 import styled from "styled-components";
 
+// 화면 전체 배경색 채우기
+const AuthTemplateBlock = styled.div`
+  width: 100%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+// form 입력할 핑크색 박스
+const PinkBox = styled.div`
+  box-sizing: border-box;
+  background-color: ${(props) => props.theme.color.lightpink};
+  border-radius: 0.5rem;
+  margin-top: 3rem;
+  margin-bottom: 4rem;
+  width: 25rem;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.6);
+
+  .title {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  &.updatePinkBox {
+    height: 90rem;
+  }
+`;
+
 const AuthFormBlock = styled.div`
   margin-top: 1rem;
   padding: 2rem;
@@ -14,7 +45,7 @@ const AuthFormBlock = styled.div`
 
     &.gender {
       display: block;
-      margin: 1rem 0;
+      margin: 1rem 2rem 1rem 0;
     }
   }
 
@@ -77,23 +108,25 @@ const TextArea = styled.textarea`
 
 const Button = styled.button`
   width: 100%;
+  color: #c91113;
   font-size: 1.2rem;
   font-weight: 600;
   border-radius: 0.2rem;
-  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.7);
-  border: 1px solid #cfcfcf;
+  box-shadow: 0 0.1rem 0.2rem -0.1rem rgba(0, 0, 0, 0.7);
+  border: 0.1rem solid gray;
   text-align: center;
-  padding: 0.4rem;
+  padding: 0.3rem;
   margin-bottom: 1.2rem;
   background-color: ${(props) => props.theme.color.pink};
+  background-color: white;
   cursor: pointer;
 
   &.update {
     display: inline-block;
     width: auto;
-    border: 0.5px solid gray;
     margin-top: 0.5rem;
     padding: 0.1rem 0.4rem;
+    box-shadow: 0 0.1rem 0.2rem -0.1rem rgba(0, 0, 0, 0.7);
   }
 
   &.withdrawalBtn {
@@ -108,7 +141,7 @@ const Button = styled.button`
   }
 
   &.formSubmit {
-    margin-top: 0.5rem;
+    margin-top: 2.5rem;
     display: block;
   }
 `;
@@ -138,6 +171,8 @@ const Footer = styled.span`
 `;
 
 export {
+  AuthTemplateBlock,
+  PinkBox,
   AuthFormBlock,
   StyledInput,
   ResultText,

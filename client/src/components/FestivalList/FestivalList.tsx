@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Container, FestivalInfo, ModalCard } from "./FestivalListStyle";
 import { mockData } from "./mockData";
 import axios from "axios";
@@ -21,7 +21,7 @@ interface PageProps {
 const FestivalList: React.FC<PageProps> = ({ location }) => {
   const [festivalInfo, setFestivalInfo] = useState<Item[]>([]);
   const [itemInfo, setItemInfo] = useState<Item>({});
-  const isShown = useAppSelector((state) => state.modal.show);
+  const { show: isShown, modalText } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
   const home = location === "home";
   const date = new Date();
@@ -79,7 +79,7 @@ const FestivalList: React.FC<PageProps> = ({ location }) => {
     <Container>
       <div className="title">
         <h3>축제정보</h3>
-        {location === "home" ? <Link to="/festival">더보기</Link> : false}
+        {location === "home" ? <Link to="/festival">더보기 &gt;</Link> : false}
       </div>
       <FestivalInfo>
         {festivalInfo &&

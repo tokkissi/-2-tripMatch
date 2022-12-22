@@ -1,14 +1,21 @@
-import Header from "./MyHeaderStyle";
+import { Header, AlertModal } from "./MyHeaderStyle";
 import { Link, useNavigate } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const MyHeader = () => {
-  const search = useRef<HTMLInputElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const [alert, setAlert] = useState(false);
 
   const onSearch = () => {
-    console.log(search.current?.value);
+    if (!searchRef.current?.value) {
+      setAlert(true);
+    } else {
+      navigate(`/search/${searchRef.current?.value}`);
+      searchRef.current.value = "";
+    }
   };
+
   return (
     <Header>
       <div className="logo">
@@ -22,13 +29,15 @@ const MyHeader = () => {
       <div className="searchBar">
         <input
           type="text"
-          ref={search}
+          ref={searchRef}
           placeholder="지역명으로 검색해 보세요."
         ></input>
         <img
           src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095050/freeIconMagnifyingglass_p7owop.png"
           alt="검색"
-          onClick={onSearch}
+          onClick={() => {
+            onSearch();
+          }}
         />
       </div>
       <div className="navBar">
@@ -58,6 +67,20 @@ const MyHeader = () => {
           />
         </Link>
       </div>
+      {alert && (
+        <AlertModal>
+          <div className="modalCard">
+            <div>검색어를 입력해 주세요.</div>
+            <button
+              onClick={() => {
+                setAlert(false);
+              }}
+            >
+              확인
+            </button>
+          </div>
+        </AlertModal>
+      )}
     </Header>
   );
 };

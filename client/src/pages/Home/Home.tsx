@@ -14,7 +14,7 @@ const Home = () => {
         <Carousel />
         <Title>
           <h3>동행게시판</h3>
-          <Link to="/">더보기</Link>
+          <Link to="/match">더보기 &gt;</Link>
         </Title>
         <MakeMatchPostList />
         <FreePostPreview />

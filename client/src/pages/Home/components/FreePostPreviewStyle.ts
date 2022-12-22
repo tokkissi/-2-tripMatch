@@ -7,15 +7,15 @@ const Container = styled.div`
   .title {
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
     padding: 15px 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
-    cursor: default;
-    font-size: ${(props) => props.theme.font.L};
 
-    a {
-      font-size: ${(props) => props.theme.font.M};
-      align-self: flex-end;
+    h3 {
+      font-size: ${(props) => props.theme.font.L};
+      font-weight: bold;
+      cursor: default;
     }
   }
 

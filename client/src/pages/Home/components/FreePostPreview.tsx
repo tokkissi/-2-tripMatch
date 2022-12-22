@@ -88,8 +88,8 @@ const FreePostPreview = () => {
   return (
     <Container>
       <div className="title">
-        <h2>자유게시판</h2>
-        <Link to="/free">더보기</Link>
+        <h3>자유게시판</h3>
+        <Link to="/free">더보기 &gt;</Link>
       </div>
       <FreePostList>
         {mockData.map((item) => {

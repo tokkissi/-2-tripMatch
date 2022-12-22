@@ -23,6 +23,11 @@ const SideBarComponent: React.FC = () => {
     navigate("/myPage/receivedEnroll");
   };
 
+  const handleClickMyEnroll = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    navigate("/myPage/myEnroll");
+  };
+
   return (
     <SideBar>
       <Box value="정보 수정">정보 수정</Box>
@@ -68,7 +73,19 @@ const SideBarComponent: React.FC = () => {
         </Box>
       )}
 
-      <Box value="신청한 내역">신청한 내역</Box>
+      {location.pathname === "/myPage/myEnroll" ? (
+        <Box
+          value="신청한 내역"
+          style={{ color: "#d75281" }}
+          onClick={handleClickMyEnroll}
+        >
+          신청한 내역
+        </Box>
+      ) : (
+        <Box value="신청한 내역" onClick={handleClickMyEnroll}>
+          신청한 내역
+        </Box>
+      )}
     </SideBar>
   );
 };

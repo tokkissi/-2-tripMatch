@@ -16,6 +16,7 @@ import ReceivedEnroll from "./pages/ReceivedEnroll/ReceivedEnroll";
 import Festival from "./pages/Festival/Festival";
 import MatchPostList from "./pages/MatchPostList/MatchPostList";
 import MatchPostWrite from "./pages/MatchPostWrite/MatchPostWrite";
+import MyEnroll from "./pages/MyEnroll/MyEnroll";
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/myPage/myContents" element={<MyPageContents />} />
           <Route path="/myPage/myComment" element={<MyComment />} />
           <Route path="/myPage/receivedEnroll" element={<ReceivedEnroll />} />
+          <Route path="/myPage/myEnroll" element={<MyEnroll />} />
           <Route path="/free/write" element={<FreePostWrite />} />
           <Route path="/free/write/:id" element={<FreePostWrite />} />
           <Route path="/match/write" element={<MatchPostWrite />} />

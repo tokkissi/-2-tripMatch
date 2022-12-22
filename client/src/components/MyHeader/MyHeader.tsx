@@ -1,7 +1,14 @@
 import Header from "./MyHeaderStyle";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 const MyHeader = () => {
+  const search = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+
+  const onSearch = () => {
+    console.log(search.current?.value);
+  };
   return (
     <Header>
       <div className="logo">
@@ -13,21 +20,26 @@ const MyHeader = () => {
         </Link>
       </div>
       <div className="searchBar">
-        <input type="text" placeholder="지역명으로 검색해 보세요."></input>
+        <input
+          type="text"
+          ref={search}
+          placeholder="지역명으로 검색해 보세요."
+        ></input>
         <img
           src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095050/freeIconMagnifyingglass_p7owop.png"
           alt="검색"
+          onClick={onSearch}
         />
       </div>
       <div className="navBar">
-        <Link to="/">
+        <Link to="/match">
           <img
             className="firstImg"
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/temporaryIconShake_jywmku.png"
             alt="동행게시판"
           />
         </Link>
-        <Link to="/">
+        <Link to="/free">
           <img
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/temporaryIconbubble_h1lmf7.png"
             alt="자유게시판"
@@ -39,7 +51,7 @@ const MyHeader = () => {
             alt="위시리스트"
           />
         </Link>
-        <Link to="/">
+        <Link to="/mypage">
           <img
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/temporaryIconHuman_j9fibe.png"
             alt="마이페이지"

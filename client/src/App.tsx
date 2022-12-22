@@ -9,7 +9,7 @@ import MyPageContents from "./pages/MyPage/MyPageContents";
 import FreePostWrite from "./pages/FreePostWrite/FreePostWrite";
 import LoginPage from "./pages/Login/LoginPage";
 import RegisterPage from "./pages/Login/RegisterPage";
-import MyComment from "./pages/MyComment/MyComment";
+import MyComment from "./pages/MyComment/myComment";
 import FreePostList from "./pages/FreePostList/FreePostList";
 import Admin from "./pages/Admin/Admin";
 import ReceivedEnroll from "./pages/ReceivedEnroll/ReceivedEnroll";

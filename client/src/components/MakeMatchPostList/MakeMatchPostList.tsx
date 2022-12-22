@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Container, MatchPosList } from "./MakeMatchPostListStyle";
 import { Link } from "react-router-dom";
+import { FilterType } from "../../type/filter";
 import axios from "axios";
 
 interface DataProps {
-  region?: string;
+  filter?: FilterType;
   data?: object[];
   likes?: string[]; //로그인 유저의 좋아요 누른 게시글의 포스트 id가 배열로 온다고 가정하고 작성함
 }
@@ -36,6 +37,7 @@ const mockData = [
     postID: "3",
     nickname: "가나다라",
     region: "전라도",
+    status: true,
     title: "제목입니다",
     like: true,
     thumbnailImg: "https://picsum.photos/600/900",
@@ -52,6 +54,7 @@ const mockData = [
     postID: "5",
     nickname: "가나다라",
     region: "제주도",
+    status: true,
     title: "제목입니다",
     like: true,
     thumbnailImg: "https://picsum.photos/600/900",
@@ -67,6 +70,7 @@ const mockData = [
   {
     postID: "7",
     nickname: "가나다라",
+    status: true,
     region: "서울",
     title: "제목입니다",
     like: true,
@@ -74,6 +78,7 @@ const mockData = [
   },
   {
     postID: "8",
+    status: true,
     nickname: "가나다라",
     region: "서울",
     title: "제목입니다",
@@ -85,7 +90,7 @@ const mockData = [
 const MakeMatchPostList: React.FC<DataProps> = ({
   data,
   likes = [],
-  region = "전체",
+  filter = {},
 }) => {
   //비회원의 경우 좋아요 없으므로 빈 배열을 디폴트로 설정
   const [likePost, setLikePost] = useState<LikePostType>({});
@@ -107,12 +112,29 @@ const MakeMatchPostList: React.FC<DataProps> = ({
     // await axios.post('') 좋아요 게시글 api 작성
   };
 
+  // mockdata를 쓰지 않으면 지워도 되는 함수
+  const checkFilter = (item: any) => {
+    const { region, status } = filter;
+
+    if (region === "전체" && status === "전체") {
+      return true;
+    } else if (region === "전체" && status !== "전체") {
+      return item.status;
+    } else if (region !== "전체" && status === "전체") {
+      return region === item.region;
+    } else {
+      return region === item.region && item.status;
+    }
+  };
+
   return (
     <Container>
       <MatchPosList>
         {mockData &&
           mockData
-            .filter((item) => region === "전체" || item.region === region)
+            .filter(
+              (item) => Object.keys(filter).length === 0 || checkFilter(item),
+            )
             .map((item) => {
               return (
                 <div className="item" key={item.postID}>

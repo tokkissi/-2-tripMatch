@@ -124,7 +124,7 @@ const FestivalList: React.FC<PageProps> = ({ location }) => {
       </div>
       <FestivalInfo>
         {festivalInfo &&
-          festivalInfo.map((item, idx) => {
+          festivalInfo.map((item) => {
             return (
               <div
                 className="item"

@@ -10,8 +10,6 @@ declare module "styled-components" {
     };
 
     font: {
-      title: string;
-      content: string;
       XL: string;
       L: string;
       M: string;

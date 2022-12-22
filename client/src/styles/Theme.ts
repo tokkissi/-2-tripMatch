@@ -9,8 +9,6 @@ const Theme: DefaultTheme = {
   },
 
   font: {
-    title: "NanumSquareNeo-Variable",
-    content: "S-CoreDream-3Light",
     XL: "1.5rem", //24px;
     L: "1.25rem", //20px;
     M: "1rem",

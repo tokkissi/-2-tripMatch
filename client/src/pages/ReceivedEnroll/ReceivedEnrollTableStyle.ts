@@ -11,6 +11,8 @@ export const Content = styled.div`
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.11);
+  font-size: ${(props) => props.theme.font.M};
+  font-weight: 600;
 
   thead {
     position: sticky;
@@ -44,6 +46,8 @@ export const Content = styled.div`
       padding: 15px;
       height: 20px;
       padding: 15px 5px 10px 23px;
+      font-size: ${(props) => props.theme.font.M};
+      font-weight: 700;
       text-align: center;
       vertical-align: middle;
     }
@@ -52,6 +56,7 @@ export const Content = styled.div`
       cursor: pointer;
       padding: 15px 5px 10px 23px;
       height: 30px;
+      font-size: ${(props) => props.theme.font.S};
       text-align: center;
       vertical-align: middle;
       overflow: hidden;
@@ -79,10 +84,16 @@ export const Content = styled.div`
       }
 
       button:first-child {
+        font-family: "S-CoreDream-3Light";
+        font-weight: 700;
+        font-size: ${(props) => props.theme.font.S};
         background-color: ${(props) => props.theme.color.lightblue};
       }
 
       button:last-child {
+        font-family: "S-CoreDream-3Light";
+        font-weight: 700;
+        font-size: ${(props) => props.theme.font.S};
         background-color: ${(props) => props.theme.color.lightpink};
       }
     }

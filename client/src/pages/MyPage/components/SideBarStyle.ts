@@ -26,6 +26,7 @@ export const Box = styled.button`
   vertical-align: middle;
   background-color: transparent;
   border: none;
-  font-size: 17px;
-  font-weight: 500;
+  font-size: ${(props) => props.theme.font.M};
+  font-family: "S-CoreDream-3Light";
+  font-weight: 700;
 `;

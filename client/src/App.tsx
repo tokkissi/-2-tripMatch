@@ -12,9 +12,9 @@ import RegisterPage from "./pages/Login/RegisterPage";
 import MyComment from "./pages/MyComment/myComment";
 import FreePostList from "./pages/FreePostList/FreePostList";
 import Admin from "./pages/Admin/Admin";
-import Festival from "./pages/Festival/Festival";
 import MatchPostList from "./pages/MatchPostList/MatchPostList";
 import MatchPostWrite from "./pages/MatchPostWrite/MatchPostWrite";
+import FestivalList from "./components/FestivalList/FestivalList";
 
 const App = () => {
   return (
@@ -34,7 +34,10 @@ const App = () => {
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="admin" element={<Admin />} />
-          <Route path="festival" element={<Festival />} />
+          <Route
+            path="festival"
+            element={<FestivalList location="festival" />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -6,6 +6,7 @@ import FestivalList from "../../components/FestivalList/FestivalList";
 import FreePostPreview from "./components/FreePostPreview";
 import MakeMatchPostList from "../../components/MakeMatchPostList/MakeMatchPostList";
 import Title from "./HomeStyle";
+import { matchMockData, freeMockData } from "./components/mockData";
 
 const Home = () => {
   return (
@@ -16,8 +17,8 @@ const Home = () => {
           <h3>동행게시판</h3>
           <Link to="/match">더보기 &gt;</Link>
         </Title>
-        <MakeMatchPostList />
-        <FreePostPreview />
+        <MakeMatchPostList data={matchMockData} />
+        <FreePostPreview freePostList={freeMockData} />
         <FestivalList location="home" />
         {/* <ReviewModal email="naver.com" /> */}
       </div>

@@ -10,8 +10,7 @@ import {
 const postsController = Router();
 
 postsController.get("/", async (req, res, next) => {
-  const { page, region, status } = req.query;
-  const { email } = req.user;
+  const { page, region, status, email } = req.query;
   try {
     const totalPage = await postService.getTotalPage(
       region as string,
@@ -22,8 +21,10 @@ postsController.get("/", async (req, res, next) => {
       region as string,
       status as string
     );
-    const postsWithLike = likeService.isLiked(posts as [], email);
-    res.status(200).json({ totalPage, posts: postsWithLike });
+    if (email) {
+      const postsWithLike = likeService.isLiked(posts as [], email as string);
+      res.status(200).json({ totalPage, posts: postsWithLike });
+    } else res.status(200).json({ totalPage, posts });
   } catch (err) {
     next(err);
   }

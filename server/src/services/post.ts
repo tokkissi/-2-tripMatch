@@ -64,6 +64,13 @@ class PostService {
   async create(body: object, author: object) {
     await this.postModel.create({ ...body, author });
   }
+  async search(keyword: string) {
+    const regex = new RegExp(`(${[...keyword].join(".*")})`);
+    const posts = await this.postModel.findByKeyword({
+      $or: [{ title: regex }, { content: regex }],
+    });
+    return posts;
+  }
 }
 
 const postService = new PostService();

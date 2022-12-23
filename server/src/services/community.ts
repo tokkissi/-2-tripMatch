@@ -28,6 +28,13 @@ class CommunityService {
   async create(body: object, author: object) {
     await this.communityModel.create({ ...body, author });
   }
+  async search(keyword: string) {
+    const regex = new RegExp(`(${[...keyword].join(".*")})`);
+    const communities = await this.communityModel.findByKeyword({
+      $or: [{ title: regex }, { content: regex }],
+    });
+    return communities;
+  }
 }
 
 const communityService = new CommunityService();

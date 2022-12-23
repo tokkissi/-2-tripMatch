@@ -35,6 +35,18 @@ class PostModel {
   async create(postInfo: object) {
     await this.postDB.create(postInfo);
   }
+  async findByKeyword(condition: object) {
+    const posts = await this.postDB
+      .find(condition, {
+        _id: 0,
+        postId: 1,
+        title: 1,
+        region: 1,
+        thumbnail: 1,
+      })
+      .sort({ createdAt: -1 });
+    return posts;
+  }
 }
 
 export default PostModel;

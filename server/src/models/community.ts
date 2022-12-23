@@ -50,6 +50,21 @@ class CommunityModel {
   async create(communityInfo: object) {
     await this.communityDB.create(communityInfo);
   }
+  async findByKeyword(condition: object) {
+    const communities = await this.communityDB
+      .find(condition, {
+        _id: 0,
+        communityId: 1,
+        title: 1,
+        region: 1,
+        category: 1,
+        author: 1,
+        createdAt: 1,
+        commentCount: 1,
+      })
+      .sort({ createdAt: -1 });
+    return communities;
+  }
 }
 
 export default CommunityModel;

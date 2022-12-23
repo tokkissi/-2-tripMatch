@@ -10,6 +10,7 @@ import {
   useGetFreePostQuery,
 } from "../../slice/freePostApi";
 import { useParams } from "react-router-dom";
+import NotFound from "../../components/NotFound/NotFound";
 
 const FreePostDetail = () => {
   //const [post, setPost] = useState<FreePostType>();
@@ -35,14 +36,20 @@ const FreePostDetail = () => {
 
   return (
     <Container>
-      <div>
-        <CategoryName>
-          <Pointer src={pointer} />
-          {post?.region} &gt; {post?.category}
-        </CategoryName>
-      </div>
-      <PostDetail user={post?.author} freePost={post} />
-      {post?.comments && <Comment comments={post.comments} />}
+      {post ? (
+        <>
+          <div>
+            <CategoryName>
+              <Pointer src={pointer} />
+              {post?.region} &gt; {post?.category}
+            </CategoryName>
+          </div>
+          <PostDetail user={post?.author} freePost={post} />
+          {post?.comments && <Comment comments={post.comments} />}
+        </>
+      ) : (
+        <NotFound />
+      )}
     </Container>
   );
 };

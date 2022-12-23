@@ -17,6 +17,7 @@ import MatchPostList from "./pages/MatchPostList/MatchPostList";
 import MatchPostWrite from "./pages/MatchPostWrite/MatchPostWrite";
 import MyEnroll from "./pages/MyEnroll/MyEnroll";
 import FestivalList from "./components/FestivalList/FestivalList";
+import Search from "./pages/Search/Search";
 import UpdateUserInfoPage from "./pages/MyPage/UpdateUserInfoPage";
 
 const App = () => {
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="admin" element={<Admin />} />
+          <Route path="search/:keyword" element={<Search />} />
           <Route
             path="festival"
             element={<FestivalList location="festival" />}

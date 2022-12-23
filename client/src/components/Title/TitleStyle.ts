@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Title = styled.div`
+const TitleStyle = styled.div`
   width: 60vw;
   margin: 50px auto 0 auto;
   display: flex;
@@ -22,4 +22,4 @@ const Title = styled.div`
   }
 `;
 
-export default Title;
+export default TitleStyle;

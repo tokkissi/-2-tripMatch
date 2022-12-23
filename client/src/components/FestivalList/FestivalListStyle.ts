@@ -3,7 +3,7 @@ import Modal from "../../styles/Modal";
 
 const Container = styled.div`
   width: 60vw;
-  margin: 70px auto 100px auto;
+  margin: 1% auto 100px auto;
 
   .title {
     display: flex;

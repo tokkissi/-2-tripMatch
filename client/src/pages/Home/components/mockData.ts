@@ -166,6 +166,58 @@ const freeMockData = [
     createdAt: "2022-11-04T04:57:01.267Z",
     content: "댓글 내용은 다음과 같다.",
   },
+  {
+    communityId: "7",
+    author: {
+      email: "111@naver.com",
+      nickname: "닉네임은여덟글자",
+      profileImg: "",
+    },
+    region: "강원도",
+    category: "숙박",
+    title: "충청도 어디어디에 구경할만한 곳 있나요?",
+    createdAt: "2022-11-04T04:57:01.267Z",
+    content: "댓글 내용은 다음과 같다.",
+  },
+  {
+    communityId: "8",
+    author: {
+      email: "111@naver.com",
+      nickname: "닉네임은여덟글자",
+      profileImg: "",
+    },
+    region: "강원도",
+    category: "숙박",
+    title: "충청도 어디어디에 구경할만한 곳 있나요?",
+    createdAt: "2022-11-04T04:57:01.267Z",
+    content: "댓글 내용은 다음과 같다.",
+  },
+  {
+    communityId: "9",
+    author: {
+      email: "111@naver.com",
+      nickname: "닉네임은여덟글자",
+      profileImg: "",
+    },
+    region: "강원도",
+    category: "숙박",
+    title: "충청도 어디어디에 구경할만한 곳 있나요?",
+    createdAt: "2022-11-04T04:57:01.267Z",
+    content: "댓글 내용은 다음과 같다.",
+  },
+  {
+    communityId: "10",
+    author: {
+      email: "111@naver.com",
+      nickname: "닉네임은여덟글자",
+      profileImg: "",
+    },
+    region: "강원도",
+    category: "숙박",
+    title: "충청도 어디어디에 구경할만한 곳 있나요?",
+    createdAt: "2022-11-04T04:57:01.267Z",
+    content: "댓글 내용은 다음과 같다.",
+  },
 ];
 
 export { matchMockData, freeMockData };

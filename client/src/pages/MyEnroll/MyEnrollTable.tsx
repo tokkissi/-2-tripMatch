@@ -79,12 +79,12 @@ const MyEnrollTable: React.FC = () => {
                         <button id="review">리뷰</button>
                         <span>여행 종료로부터 + {elapse}</span>
                       </ReviewDiv>
-                    ) : elapse < 1 ? (
-                      <button id="cancel">취소</button> // 수정 필요함 !
-                    ) : elapse > 14 && item.agreeStatus === "대기" ? (
-                      <button id="cancel">취소</button>
+                    ) : elapse < 1 && item.agreeStatus === "수락" ? (
+                      <span></span> // 여행 시작도 안했고 수락 됐을때
+                    ) : elapse < 1 && item.agreeStatus === "대기중" ? (
+                      <button id="cancel">취소</button> // 여행 시작 안했고 대기중일 때
                     ) : (
-                      <span></span>
+                      <span></span> // 여행 끝난지 한참됨
                     )}
                   </td>
                 </tr>

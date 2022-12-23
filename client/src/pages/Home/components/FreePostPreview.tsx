@@ -15,11 +15,15 @@ const joinDateFormat = (createdAt: string | undefined) => {
 
 interface FreePostProps {
   freePostList: FreePostType[];
+  location: string;
 }
 
-const FreePostPreview: React.FC<FreePostProps> = ({ freePostList }) => {
+const FreePostPreview: React.FC<FreePostProps> = ({
+  freePostList,
+  location,
+}) => {
   const [freePost, setFreePost] = useState<FreePostType[]>([]);
-  const location = useLocation().pathname;
+  // const location = useLocation().pathname;
 
   console.log("1:", Date.now());
   console.log(location);
@@ -31,7 +35,7 @@ const FreePostPreview: React.FC<FreePostProps> = ({ freePostList }) => {
 
   return (
     <Container>
-      {location === "/" && (
+      {location === "home" && (
         <div className="title">
           <h3>자유게시판</h3>
           <Link to="/free">더보기 &gt;</Link>

@@ -7,7 +7,7 @@ const Search = () => {
   return (
     <div>
       <MakeMatchPostList />
-      <FreePostPreview freePostList={freeMockData} />
+      <FreePostPreview freePostList={freeMockData} location="search" />
     </div>
   );
 };

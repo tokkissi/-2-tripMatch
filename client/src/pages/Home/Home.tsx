@@ -18,7 +18,7 @@ const Home = () => {
           <Link to="/match">더보기 &gt;</Link>
         </Title>
         <MakeMatchPostList data={matchMockData} />
-        <FreePostPreview freePostList={freeMockData} />
+        <FreePostPreview freePostList={freeMockData} location="home" />
         <FestivalList location="home" />
         {/* <ReviewModal email="naver.com" /> */}
       </div>

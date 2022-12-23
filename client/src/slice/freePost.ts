@@ -15,43 +15,43 @@ const initialState: FreePostType[] = [
     content: "<p>맛집</p><p>추천해주세요</p>",
     comments: [
       {
-        id: 2,
-        user: {
+        commentId: "2",
+        author: {
           email: "111@aaa.com",
           nickname: "nick",
           profileImg: "",
         },
-        comment: "반가워요?",
+        content: "반가워요?",
         createdAt: "2022-12-11 16:10:02",
       },
       {
-        id: 3,
-        user: {
+        commentId: "3",
+        author: {
           email: "111@aaa.com",
           nickname: "nick",
           profileImg: "",
         },
-        comment: "안녕하세요?",
+        content: "안녕하세요?",
         createdAt: "2022-12-11 16:10:02",
       },
       {
-        id: 4,
-        user: {
+        commentId: "4",
+        author: {
           email: "111@aaa.com",
           nickname: "nick",
           profileImg: "",
         },
-        comment: "밀면?",
+        content: "밀면?",
         createdAt: "2022-12-11 16:10:02",
       },
       {
-        id: 5,
-        user: {
+        commentId: "5",
+        author: {
           email: "111@aaa.com",
           nickname: "nick",
           profileImg: "",
         },
-        comment: "돼지국밥?",
+        content: "돼지국밥?",
         createdAt: "2022-12-11 16:10:02",
       },
     ],

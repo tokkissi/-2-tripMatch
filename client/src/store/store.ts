@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { freePostSlice } from "./../slice/freePost";
 import { modalSlice } from "../slice/modal";
-import { freePostApi } from "./../slice/api";
+import { freePostApi } from "../slice/freePostApi";
+
 // ...
 
 export const store = configureStore({

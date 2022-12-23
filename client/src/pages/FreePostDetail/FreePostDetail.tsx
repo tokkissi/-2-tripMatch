@@ -5,7 +5,10 @@ import Comment from "../../components/CommentList/CommentList";
 import pointer from "../../images/temporaryIconPointer.png";
 import axios from "axios";
 import type { FreePostType } from "../../type/freePost";
-import { useGetAllFreePostQuery, useGetFreePostQuery } from "../../slice/api";
+import {
+  useGetAllFreePostQuery,
+  useGetFreePostQuery,
+} from "../../slice/freePostApi";
 import { useParams } from "react-router-dom";
 
 const FreePostDetail = () => {
@@ -23,6 +26,10 @@ const FreePostDetail = () => {
   //   };
   //   getPost();
   // }, []);
+
+  const a = useGetAllFreePostQuery({ page: 1, region: "전체" });
+
+  console.log(a);
 
   console.log(post);
 

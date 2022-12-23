@@ -18,7 +18,7 @@ import AppSelect from "../../../components/AppSelect/AppSelect";
 import {
   useCreateFreePostMutation,
   useUpdateFreePostMutation,
-} from "../../../slice/api";
+} from "../../../slice/freePostApi";
 
 const FreePostForm = () => {
   const state: FreePostType = useLocation().state;

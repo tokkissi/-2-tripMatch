@@ -6,23 +6,31 @@ export const Div = styled.div`
   display: flex;
 `;
 
-export const Select = styled.select`
+export const Label = styled.label`
+  flex: none;
+  align-self: center;
+  margin-right: 15px;
+`;
+
+export const RadioAndCheckBoxInput = styled.input`
   border: 1px solid #dbdbdb;
   border-radius: 5px;
   color: #333;
-  width: 100px;
-  height: 40px;
   outline: none;
   text-indent: 10px;
-  font-family: "S-CoreDream-3Light";
 
   &:focus {
     outline: none;
-    border: 2px solid ${Theme.color.blue};
+    border: 1px solid ${Theme.color.blue};
   }
 `;
 
-export const Label = styled.label`
+export const RadioAndCheckBoxDiv = styled.div`
+  display: inline-flex;
+  height: 40px;
+`;
+
+export const RadioAndCheckBoxLabel = styled.label`
   align-self: center;
   margin-right: 15px;
 `;

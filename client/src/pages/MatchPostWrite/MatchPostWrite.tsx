@@ -1,7 +1,5 @@
-import React, { useState } from "react";
 import Editor from "../../components/Editor/Editor";
 import AppSelect from "../../components/AppSelect/AppSelect";
-import AppInput from "../../components/AppInput/AppInput";
 
 const regions = [
   "서울",
@@ -28,7 +26,18 @@ const ageList = [
   { value: "none", htmlValue: "연령대무관" },
 ];
 
-import { Container, Etc, ButtonContainer, Button } from "./MatchPostWriteStyle";
+import {
+  Container,
+  Etc,
+  ButtonContainer,
+  MatchPostAppButton,
+} from "./MatchPostWriteStyle";
+import AppInputText from "../../components/AppInputText/AppInputText";
+import AppInputRadioCheck from "../../components/AppInputRadioCheck/AppInputRadioCheck";
+import AppInputDateRange from "../../components/AppInputDateRange/AppInputDateRange";
+import AppInputFile from "../../components/AppIntpuFile/AppInputFile";
+import AppButton from "../../components/AppButton/AppButton";
+import { Link } from "react-router-dom";
 
 const MatchPostWrite = () => {
   // const [selectedGender, setSelectedGender] = useState<string>();
@@ -40,41 +49,41 @@ const MatchPostWrite = () => {
   return (
     <Container>
       <AppSelect className={"region"} options={regions} label={"지 역"} />
-      <AppInput
+      <AppInputText
         inputWidth="100%"
         type={"text"}
         label={"제 목"}
         className={"title large"}
         placeholder={"전주 여행 같이 가실 분"}
       />
-      <AppInput
+      <AppInputText
         inputWidth="5%"
         type={"number"}
         label={"모집 인원"}
         className={"peopleCount"}
       />
-      <AppInput
+      <AppInputDateRange
         inputWidth="20%"
         type={"dateRange"}
         label={"여행 기간"}
         className={"datePicker"}
       />
-      <AppInput
+      <AppInputRadioCheck
         radioAndCheckBoxList={genderList}
         type={"radio"}
         label={"희망 성별"}
         className={"gender"}
       />
-      <AppInput
+      <AppInputRadioCheck
         radioAndCheckBoxList={ageList}
         type={"checkbox"}
         label={"희망 연령대"}
         className={"age"}
       />
       <Etc>
-        <AppInput type={"file"} label={"사진 첨부"} className={"file"} />
+        <AppInputFile type={"file"} label={"사진 첨부"} className={"file"} />
       </Etc>
-      <AppInput
+      <AppInputText
         inputWidth="20%"
         type={"text"}
         label={"연락 수단"}
@@ -87,8 +96,20 @@ const MatchPostWrite = () => {
         }}
       />
       <ButtonContainer>
-        <Button>취소</Button>
-        <Button>작성 완료</Button>
+        <Link to="/match">
+          <MatchPostAppButton
+            width={"120px"}
+            className={"cancelBtn"}
+            type={"button"}
+            text={"취소"}
+          />
+        </Link>
+        <MatchPostAppButton
+          width={"120px"}
+          className={"finishBtn"}
+          type={"button"}
+          text={"작성 완료"}
+        />
       </ButtonContainer>
     </Container>
   );

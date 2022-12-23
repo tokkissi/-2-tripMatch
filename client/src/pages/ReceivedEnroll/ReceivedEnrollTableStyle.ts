@@ -27,7 +27,7 @@ export const Content = styled.div`
 
     tr {
       display: grid;
-      grid-template-columns: 1fr 120px 210px 140px;
+      grid-template-columns: 1fr 150px 280px;
       gap: 20px;
       text-align: center;
       padding-top: 10px;
@@ -45,7 +45,7 @@ export const Content = styled.div`
     th {
       padding: 15px;
       height: 20px;
-      padding: 15px 20px 10px 23px;
+      padding: 15px 5px 10px 23px;
       font-size: ${(props) => props.theme.font.M};
       font-weight: 700;
       text-align: center;
@@ -54,7 +54,7 @@ export const Content = styled.div`
 
     td {
       cursor: pointer;
-      padding: 15px 20px 10px 23px;
+      padding: 15px 5px 10px 23px;
       height: 30px;
       font-size: ${(props) => props.theme.font.S};
       text-align: center;
@@ -71,6 +71,31 @@ export const Content = styled.div`
 
     #last {
       padding-top: 7px;
+      margin-left: 15px;
+
+      button {
+        cursor: pointer;
+        width: 80px;
+        height: 35px;
+        margin-right: 10px;
+        border: none;
+        border-radius: 5px;
+        /* box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.11); */
+      }
+
+      button:first-child {
+        font-family: "S-CoreDream-3Light";
+        font-weight: 700;
+        font-size: ${(props) => props.theme.font.S};
+        background-color: ${(props) => props.theme.color.lightblue};
+      }
+
+      button:last-child {
+        font-family: "S-CoreDream-3Light";
+        font-weight: 700;
+        font-size: ${(props) => props.theme.font.S};
+        background-color: ${(props) => props.theme.color.lightpink};
+      }
     }
 
     select {
@@ -79,9 +104,6 @@ export const Content = styled.div`
       height: 30px;
       border: none;
       padding: 5px;
-      font-family: "S-CoreDream-3Light";
-      font-size: ${(props) => props.theme.font.S};
-      font-weight: 600;
     }
 
     option {

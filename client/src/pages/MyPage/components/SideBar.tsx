@@ -8,12 +8,19 @@ const SideBarComponent: React.FC = () => {
 
   const handleClickMypage = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    navigate("/mypage");
+    navigate("/myPage/myContents");
   };
 
   const handleClickMyComment = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    navigate("/myComment");
+    navigate("/myPage/myComment");
+  };
+
+  const handleClickReceivedEnroll = (
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    e.preventDefault();
+    navigate("/myPage/receivedEnroll");
   };
 
   return (
@@ -24,7 +31,7 @@ const SideBarComponent: React.FC = () => {
       {location.pathname === "/mypage" ? (
         <Box
           value="게시글 내역"
-          style={{ color: "#ca8a8b" }}
+          style={{ color: "#d75281" }}
           onClick={handleClickMypage}
         >
           게시글 내역
@@ -35,10 +42,10 @@ const SideBarComponent: React.FC = () => {
         </Box>
       )}
 
-      {location.pathname === "/myComment" ? (
+      {location.pathname === "/myPage/myComment" ? (
         <Box
           value="댓글 내역"
-          style={{ color: "#ca8a8b" }}
+          style={{ color: "#d75281" }}
           onClick={handleClickMyComment}
         >
           댓글 내역
@@ -49,7 +56,20 @@ const SideBarComponent: React.FC = () => {
         </Box>
       )}
 
-      <Box value="신청받은 내역">신청받은 내역</Box>
+      {location.pathname === "/myPage/receivedEnroll" ? (
+        <Box
+          value="신청받은 내역"
+          style={{ color: "#d75281" }}
+          onClick={handleClickReceivedEnroll}
+        >
+          신청받은 내역
+        </Box>
+      ) : (
+        <Box value="신청받은 내역" onClick={handleClickReceivedEnroll}>
+          신청받은 내역
+        </Box>
+      )}
+
       <Box value="신청한 내역">신청한 내역</Box>
     </SideBar>
   );

@@ -74,7 +74,9 @@ const FreePostPreview = () => {
   const [freePost, setFreePost] = useState([]);
 
   const getFreePost = async () => {
-    const data = await axios.get("/").then((res) => res.data);
+    const data = await axios
+      .get("/api/main/communities")
+      .then((res) => res.data);
     setFreePost(data);
     return;
   };
@@ -87,7 +89,7 @@ const FreePostPreview = () => {
     <Container>
       <div className="title">
         <h2>자유게시판</h2>
-        <Link to="/">더보기</Link>
+        <Link to="/free">더보기</Link>
       </div>
       <FreePostList>
         {mockData.map((item) => {

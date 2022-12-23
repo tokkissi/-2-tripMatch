@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import type { CommentType } from "../type/comment";
-import { axiosBaseQuery } from "./freePostApi";
+import { axiosBaseQuery } from "./axiosBaseQuery";
 
 export const commentApi = createApi({
   reducerPath: "commentApi",

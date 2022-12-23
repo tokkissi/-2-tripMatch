@@ -31,5 +31,5 @@ const ProfileImg = styled.img`
 `;
 
 const Nickname = styled.p`
-  font-size: 14px;
+  font-size: ${(props) => props.theme.font.M};
 `;

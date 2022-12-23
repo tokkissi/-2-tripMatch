@@ -28,6 +28,7 @@ export interface Duration {
 
 const MyEnrollTable: React.FC = () => {
   const [data, setData] = useState<Post[]>([]);
+  // const [state, setState] = useState<string>("수락");
 
   useEffect(() => {
     const getData = async () => {
@@ -49,26 +50,26 @@ const MyEnrollTable: React.FC = () => {
               <th>취소 / 리뷰</th>
             </tr>
           </thead>
-          <tbody>
-            {data?.map((item) => {
-              const today = Date.now();
-              const tripEnd = item.duration[0].end;
-              const dateTripEnd = new Date(tripEnd);
-              const tripEndTime = dateTripEnd.getTime();
-              const elapse = Number(
-                ((today - tripEndTime) / 1000 / 60 / 60 / 24).toFixed(0),
-              );
 
-              // 1. 수락해서 여행 종료되고 시간이 지나 리뷰 버튼이 없는경우
-              // 2. 신청 상태가 거절일 때 버튼 아예 없애기
-              // 3. 여행 종료 후 일주일 이내일 때 리뷰 버튼 보여주기
-              // 4. 대기 상태일 때 취소 버튼 보여주기
+          {data?.map((item) => {
+            const today = Date.now();
+            const tripEnd = item.duration[0].end;
+            const dateTripEnd = new Date(tripEnd);
+            const tripEndTime = dateTripEnd.getTime();
+            const elapse = Number(
+              ((today - tripEndTime) / 1000 / 60 / 60 / 24).toFixed(0),
+            );
 
-              return (
-                <tr key={item.author[0].authorId}>
+            // 1. 수락해서 여행 종료되고 시간이 지나 리뷰 버튼이 없는경우
+            // 2. 신청 상태가 거절일 때 버튼 아예 없애기
+            // 3. 여행 종료 후 일주일 이내일 때 리뷰 버튼 보여주기
+            // 4. 대기 상태일 때 취소 버튼 보여주기
+
+            return (
+              <tbody key={item.postId}>
+                <tr>
                   <td id="title">{item.title}</td>
                   <td>{item.author[0].nickname}</td>
-                  {}
                   <td>{item.agreeStatus}</td>
                   <td id="last">
                     {elapse >= 1 &&
@@ -87,9 +88,21 @@ const MyEnrollTable: React.FC = () => {
                     )}
                   </td>
                 </tr>
-              );
-            })}
-          </tbody>
+
+                {item.agreeStatus === "수락" ? (
+                  <tr id="agreeContact">
+                    <td id="contact">
+                      <span>
+                        동행자와 연락해보세요 :) {item.author[0].contactInfo}
+                      </span>
+                    </td>
+                  </tr>
+                ) : (
+                  ""
+                )}
+              </tbody>
+            );
+          })}
         </table>
       </Layer>
     </Content>

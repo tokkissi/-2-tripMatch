@@ -11,6 +11,7 @@ class CommunityModel {
   async findTen(page: number, condition: object) {
     const communities = await this.communityDB
       .find(condition, {
+        _id: 0,
         communityId: 1,
         title: 1,
         region: 1,
@@ -28,6 +29,7 @@ class CommunityModel {
     const community = await this.communityDB.findOne(
       { communityId },
       {
+        _id: 0,
         communityId: 1,
         title: 1,
         content: 1,

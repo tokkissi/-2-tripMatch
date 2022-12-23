@@ -6,7 +6,7 @@ const commentController = Router();
 commentController.post("/", async (req, res, next) => {
   const { email } = req.user;
   try {
-    const author = userService.getAuthor(email);
+    const author = await userService.getAuthor(email);
     await commentService.create(req.body, author);
     res.status(201).end();
   } catch (err) {

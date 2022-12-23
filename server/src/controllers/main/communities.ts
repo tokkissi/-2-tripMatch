@@ -53,7 +53,7 @@ communitiesController.delete("/:communityId", async (req, res, next) => {
 communitiesController.post("/community", async (req, res, next) => {
   const { email } = req.user;
   try {
-    const author = userService.getAuthor(email);
+    const author = await userService.getAuthor(email);
     await communityService.create(req.body, author);
     res.status(201).end();
   } catch (err) {

@@ -93,7 +93,10 @@ const MyEnrollTable: React.FC = () => {
                   <tr id="agreeContact">
                     <td id="contact">
                       <span>
-                        동행자와 연락해보세요 :) {item.author[0].contactInfo}
+                        동행자와 연락해보세요 :)
+                        <span id="contactInfo">
+                          {item.author[0].contactInfo}
+                        </span>
                       </span>
                     </td>
                   </tr>

@@ -21,6 +21,8 @@ export const Content = styled.div`
   }
 
   tbody {
+    display: flex;
+    flex-direction: column;
     height: auto;
     border-bottom: 2px solid #f2f2f2;
   }
@@ -99,7 +101,7 @@ export const Content = styled.div`
     #agreeContact {
       display: grid;
       grid-template-columns: 1fr;
-      height: 20px;
+      height: 60px;
       padding: 5px;
 
       #contact {
@@ -108,13 +110,18 @@ export const Content = styled.div`
         justify-content: center;
         padding: 5px;
         margin: 10px auto 0 auto;
-        width: 500px;
+        width: 630px;
         height: 30px;
         background-color: #fff2f5;
         border-radius: 5px;
 
         span {
           text-align: center;
+
+          #contactInfo {
+            margin-left: 10px;
+            color: #1c5570;
+          }
         }
       }
     }

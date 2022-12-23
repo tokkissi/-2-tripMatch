@@ -31,6 +31,7 @@ import {
   // ProfileImage,
   // ProfileInput,
   UpdateModal,
+  WithdrawalText,
 } from "../MyPageStyle";
 import { UpdateUserinfoTitle } from "./SideBarStyle";
 
@@ -53,7 +54,7 @@ const UpdateUserInfoFrom = () => {
     withdrawal: "회원탈퇴";
   };
 
-  type ValidOptionType = "nickName" | "confirmPassword" | "introduce";
+  type ActiveDataType = "nickName" | "password" | "age" | "introduce";
 
   // const domain = "http://localhost:5000";
 
@@ -68,8 +69,11 @@ const UpdateUserInfoFrom = () => {
   ];
 
   const navigate = useNavigate();
-  const modifiedText = useRef<string | null>(null);
 
+  // 모달 수정 전 데이터
+  const originData = useRef<string | null>(null);
+  const activeData = useRef<ActiveDataType | null>(null);
+  // 수정 가능 여부
   const [valid, setValid] = useState(false);
   // 모달창 활성화 여부
   const [modal, setModal] = useState(false);
@@ -120,7 +124,8 @@ const UpdateUserInfoFrom = () => {
     const loadUserInfo = async () => {
       // 응답 api url 추후 변경 예정
       try {
-        // const res = await axios.get(`${domain}/api/main/auth/userInfo`);
+        // 추후 api 구현 시 아래 api로 주석 해제 하여 교체 예정
+        // const res = await axios.get(`${domain}/api/main/myPage`);
         const res = await axios.get("http://localhost:4000/userInfo");
         // 응답 코드 추후 변경 예정
         if (res.status === 200) {
@@ -130,13 +135,12 @@ const UpdateUserInfoFrom = () => {
           alert("로그인 후 사용가능한 페이지입니다");
           navigate("/login");
         } else {
-          throw new Error(
-            "/api/main/auth/userInfo 의 응답 status 코드가 200, 401 에 해당하지 않습니다",
-          );
+          throw new Error(`에러코드 ${res.status}. 수정에 실패하였습니다`);
         }
       } catch (error) {
-        alert("유저 정보 가져오기가 실패했습니다");
+        alert("회원 정보 로딩에 실패했습니다");
         console.error(error);
+        navigate("/login");
       }
     };
 
@@ -193,32 +197,18 @@ const UpdateUserInfoFrom = () => {
   //   }
   // };
 
-  const checkValidText = (option: ValidOptionType, inputText: string) => {
-    if (inputText === checkTable[option]) {
-      return true;
-    }
-    return false;
-  };
-
   const onChangeNickName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // 수정 버튼 클릭 시, 아래 주석 코드 실행 후, api 요청
-    // setUserState((draft) => {
-    //   draft.nickName = e.target.value;
-    // });
+    // 폐기 예정
+    setUserState((draft) => {
+      draft.nickName = e.target.value;
+    });
     setValidText((draft) => {
       draft.nickName = checkNickname(e.target.value);
     });
-    if (checkValidText("nickName", validText.nickName)) {
-      if (valid === false) {
-        setValid(true);
-        modifiedText.current = e.target.value;
-        console.log("수정 api 요청 가능!");
-        console.log("커런트타겟: ", modifiedText.current);
-      }
+    if (checkNickname(e.target.value) === checkTable.nickName) {
+      setValid(true);
     } else {
-      if (valid === true) {
-        setValid(false);
-      }
+      setValid(false);
     }
   };
 
@@ -235,12 +225,24 @@ const UpdateUserInfoFrom = () => {
     setUserState((draft) => {
       draft.confirmPassword = e.target.value;
     });
+    if (
+      checkConfirmPassword(
+        e.target.value,
+        userState.password,
+        validText.password,
+      ) === checkTable.confirmPassword
+    ) {
+      setValid(true);
+    } else {
+      setValid(false);
+    }
   };
 
   const onChangeAge = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setUserState((draft) => {
       draft.age = e.target.value;
     });
+    setValid(true);
   };
 
   const onChangeIntroduce = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -257,6 +259,11 @@ const UpdateUserInfoFrom = () => {
     setValidText((draft) => {
       draft.introduce = checkResult;
     });
+    if (checkIntroduce(e.target.value) === checkTable.introduce) {
+      setValid(true);
+    } else {
+      setValid(false);
+    }
   };
 
   const activeModal = (reqForm: FormType) => {
@@ -277,6 +284,93 @@ const UpdateUserInfoFrom = () => {
     }
   };
 
+  // 모달 취소버튼, 모달 수정 버튼 실패 시 수정한 데이터 원상복구
+  const restoreState = () => {
+    // 비밀번호는 originData 가 null 일 수 있다
+    if (activeData.current === "password") {
+      setUserState((draft) => {
+        draft.password = "";
+        draft.confirmPassword = "";
+      });
+    }
+    if (originData.current !== null) {
+      if (activeData.current === "nickName") {
+        setUserState((draft) => {
+          draft.nickName = originData.current as string;
+        });
+      } else if (activeData.current === "age") {
+        setUserState((draft) => {
+          draft.age = originData.current as string;
+        });
+      } else if (activeData.current === "introduce") {
+        setUserState((draft) => {
+          draft.introduce = originData.current as string;
+        });
+      }
+    }
+    setValid(false);
+  };
+
+  const onClickModifyBtn = async () => {
+    if (activeData.current !== null) {
+      if (valid) {
+        const sendOj = {
+          [activeData.current]: userState[activeData.current],
+        };
+        console.log("수정 요청 api 실행됨!", sendOj);
+        // api 완성 시, 주석 해제
+        // try {
+        //   const res = await axios.put(`${domain}/api/main/auth/update`, sendOj);
+        //   if (res.status === 200) {
+        //     alert("수정 완료!");
+        //   } else {
+        //     throw new Error(`에러코드 ${res.status}. 수정에 실패하였습니다`);
+        //   }
+        // } catch (error) {
+        //   alert("수정 실패");
+        //   console.error(error);
+        // }
+
+        // valid === false 의 경우
+      } else {
+        // 기존 데이터와 같은데 api 요청 시, api 요청 없이 수정 성공 보여주기
+        if (originData.current === userState[activeData.current]) {
+          alert("수정 완료!");
+
+          // validation 실패, 수정 실패
+        } else {
+          alert(
+            `수정 실패! ${
+              validText[activeData.current as keyof typeof validText]
+            }`,
+          );
+          restoreState();
+        }
+      }
+      setModal(false);
+    }
+  };
+
+  // api 구현 시 주석 해제 예정
+  const onClickWithdrawal = async () => {
+    // try {
+    //   const res = await axios.delete(`${domain}/api/main/auth/delete`);
+    //   if (res.status === 200) {
+    //     alert("회원탈퇴가 완료되었습니다");
+    //   } else {
+    //     throw new Error(`에러코드 ${res.status}. 수정에 실패하였습니다`);
+    //   }
+    // } catch (error) {
+    //   alert("회원탈퇴에 실패하였습니다");
+    //   console.error(error);
+    // }
+  };
+
+  const onClickCancelBtn = () => {
+    setModal(false);
+    restoreState();
+  };
+
   return (
     <div>
       {modal && (
@@ -290,7 +384,7 @@ const UpdateUserInfoFrom = () => {
                   <StyledInput
                     id="nicknameInput"
                     name="nickname"
-                    // value={userState.nickName}
+                    value={userState.nickName}
                     onChange={onChangeNickName}
                   />
                   <ResultText>{validText.nickName}</ResultText>
@@ -298,30 +392,32 @@ const UpdateUserInfoFrom = () => {
               )}
               {modalForm === "password" && (
                 <>
-                  <StyledInput
-                    id="passwordInput"
-                    autoComplete="off"
-                    name="Password"
-                    placeholder="새 비밀번호를 입력해주세요"
-                    type="password"
-                    onChange={onChangePassword}
-                    value={userState.password}
-                    required
-                  />
-                  <ResultText>{validText.password}</ResultText>
+                  <form>
+                    <StyledInput
+                      id="passwordInput"
+                      autoComplete="off"
+                      name="Password"
+                      placeholder="새 비밀번호를 입력해주세요"
+                      type="password"
+                      onChange={onChangePassword}
+                      value={userState.password}
+                      required
+                    />
+                    <ResultText>{validText.password}</ResultText>
 
-                  <StyledInput
-                    id="passwordConfirmInput"
-                    autoComplete="off"
-                    name="PasswordConfirm"
-                    placeholder="새 비밀번호를 다시 입력해주세요"
-                    type="password"
-                    onChange={onChangeConfirmPassword}
-                    value={userState.confirmPassword}
-                    readOnly={userState.password === "" ? true : false}
-                    required
-                  />
-                  <ResultText>{validText.confirmPassword}</ResultText>
+                    <StyledInput
+                      id="passwordConfirmInput"
+                      autoComplete="off"
+                      name="PasswordConfirm"
+                      placeholder="새 비밀번호를 다시 입력해주세요"
+                      type="password"
+                      onChange={onChangeConfirmPassword}
+                      value={userState.confirmPassword}
+                      readOnly={userState.password === "" ? true : false}
+                      required
+                    />
+                    <ResultText>{validText.confirmPassword}</ResultText>
+                  </form>
                 </>
               )}
               {modalForm === "age" && (
@@ -360,12 +456,26 @@ const UpdateUserInfoFrom = () => {
                   <p className="useIntroDescription">{validText.introduce}</p>
                 </>
               )}
+              {modalForm === "withdrawal" && (
+                <>
+                  <WithdrawalText>정말로 회원탈퇴 하시겠습니까?</WithdrawalText>
+                </>
+              )}
             </ModalContentContainer>
             <ModalButtonContainer>
-              <button className="cancel" onClick={() => setModal(false)}>
+              <button className="cancel" onClick={onClickCancelBtn}>
                 취소
               </button>
-              <button className="modify">수정</button>
+              <button
+                className="modify"
+                onClick={
+                  originData.current === "withdrawal"
+                    ? onClickWithdrawal
+                    : onClickModifyBtn
+                }
+              >
+                {originData.current === "withdrawal" ? "탈퇴" : "수정"}
+              </button>
             </ModalButtonContainer>
           </div>
         </UpdateModal>
@@ -399,7 +509,11 @@ const UpdateUserInfoFrom = () => {
         <Button
           data-name="nickName"
           className="update"
-          onClick={() => activeModal("nickName")}
+          onClick={() => {
+            originData.current = userState.nickName;
+            activeModal("nickName");
+            activeData.current = "nickName";
+          }}
         >
           수정
         </Button>
@@ -419,6 +533,7 @@ const UpdateUserInfoFrom = () => {
           className="update"
           onClick={() => {
             activeModal("password");
+            activeData.current = "password";
           }}
         >
           수정
@@ -455,7 +570,14 @@ const UpdateUserInfoFrom = () => {
         <label className="updateLabel" htmlFor="ageSelect">
           나이
         </label>
-        <Button className="update" onClick={() => activeModal("age")}>
+        <Button
+          className="update"
+          onClick={() => {
+            originData.current = userState.age;
+            activeModal("age");
+            activeData.current = "age";
+          }}
+        >
           수정
         </Button>
         <Select
@@ -470,7 +592,14 @@ const UpdateUserInfoFrom = () => {
         <label className="updateLabel" htmlFor="introduceText">
           자기소개
         </label>
-        <Button className="update" onClick={() => activeModal("introduce")}>
+        <Button
+          className="update"
+          onClick={() => {
+            originData.current = userState.introduce;
+            activeModal("introduce");
+            activeData.current = "introduce";
+          }}
+        >
           수정
         </Button>
         <TextArea
@@ -491,7 +620,10 @@ const UpdateUserInfoFrom = () => {
         </UpdateUserinfoTitle>
         <Button
           className="withdrawalBtn"
-          onClick={() => activeModal("withdrawal")}
+          onClick={() => {
+            originData.current = "withdrawal";
+            activeModal("withdrawal");
+          }}
         >
           회원 탈퇴
         </Button>

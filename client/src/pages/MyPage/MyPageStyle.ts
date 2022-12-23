@@ -197,3 +197,9 @@ export const ProfileImage = styled.div`
   width: 5rem;
   height: 5rem;
 `;
+
+export const WithdrawalText = styled.p`
+  font-size: large;
+  font-weight: 600;
+  color: red;
+`;

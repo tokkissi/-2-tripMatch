@@ -80,8 +80,8 @@ export const Content = styled.div`
 
       button {
         cursor: pointer;
-        width: 70px;
-        height: 30px;
+        width: 80px;
+        height: 33px;
         border-radius: 5px;
         border: none;
       }
@@ -110,7 +110,7 @@ export const Content = styled.div`
         justify-content: center;
         padding: 5px;
         margin: 10px auto 0 auto;
-        width: 630px;
+        width: 650px;
         height: 30px;
         background-color: #fff2f5;
         border-radius: 5px;
@@ -121,6 +121,7 @@ export const Content = styled.div`
           #contactInfo {
             margin-left: 10px;
             color: #1c5570;
+            font-weight: 600;
           }
         }
       }

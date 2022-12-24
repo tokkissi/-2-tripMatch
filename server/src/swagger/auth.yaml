@@ -240,3 +240,5 @@
                 x-access-token:
                   type: string
                   description: 갱신된 JWT
+      "401":
+        description: 다시 로그인 요청

@@ -39,6 +39,18 @@ authController.post("/login", async (req, res, next) => {
     next(err);
   }
 });
+authController.get("/refresh", async (req, res, next) => {
+  let accessToken = req.headers["x-access-token"];
+  if (!accessToken || accessToken === "null") return next(new Error("401"));
+  accessToken = String(accessToken).split("Bearer ")[1];
+  const refresh = String(req.headers["refresh"]);
+  try {
+    const newToken = await userService.refresh(accessToken, refresh);
+    res.status(200).json(newToken);
+  } catch (err) {
+    next(new Error("401"));
+  }
+});
 authController.get("/:email", async (req, res, next) => {
   const { email } = req.params;
   try {
@@ -60,18 +72,6 @@ authController.put("/update", loginCheck, async (req, res, next) => {
   try {
     await userService.update(req.email, req.body);
     res.status(200).end();
-  } catch (err) {
-    next(err);
-  }
-});
-authController.get("/refresh", async (req, res, next) => {
-  let accessToken = req.headers["x-access-token"];
-  if (!accessToken || accessToken === "null") return next(new Error("401"));
-  accessToken = String(accessToken).split("Bearer ")[1];
-  const refresh = String(req.headers["refresh"]);
-  try {
-    const newToken = await userService.refresh(accessToken, refresh);
-    res.status(200).json(newToken);
   } catch (err) {
     next(err);
   }

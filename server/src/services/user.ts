@@ -73,7 +73,6 @@ class UserService {
       matchCount: 1,
       matchPoint: 1,
     });
-    console.log(user);
     if (!user) throw new Error("204");
     return user;
   }
@@ -84,9 +83,7 @@ class UserService {
     await this.userModel.updateOne(email, body);
   }
   async refresh(accessToken: string, refresh: string) {
-    const checkRefresh = await jwt.verify(refresh);
-    console.log(checkRefresh);
-    // if(checkRefresh 만료) 401
+    await jwt.verify(refresh);
     const decoded = jwt.decode(accessToken);
     const correct = await redis.get(decoded.email);
     if (refresh !== correct) throw new Error("401");

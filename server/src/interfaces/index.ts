@@ -1,4 +1,9 @@
 import User from "./user";
-import Req from "./req";
+import Community from "./community";
+import Comment from "./comment";
+import Post from "./post";
+import Like from "./like";
+import Match from "./match";
+import Notice from "./notice";
 
-export { User, Req };
+export { User, Community, Comment, Post, Like, Match, Notice };

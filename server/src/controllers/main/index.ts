@@ -5,6 +5,9 @@ import commentController from "./comment";
 import postsController from "./posts";
 import likesController from "./likes";
 import searchController from "./search";
+import noticesController from "./notices";
+import matchesController from "./matches";
+import mypageController from "./mypage";
 
 const mainController = Router();
 
@@ -14,5 +17,8 @@ mainController.use("/comment", commentController);
 mainController.use("/posts", postsController);
 mainController.use("/likes", likesController);
 mainController.use("/search", searchController);
+mainController.use("/notices", noticesController);
+mainController.use("/matches", matchesController);
+mainController.use("/mypage", mypageController);
 
 export default mainController;

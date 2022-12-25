@@ -17,6 +17,7 @@ class CommunityService {
   }
   async getCommunity(communityId: string) {
     const community = await this.communityModel.findOne(communityId);
+    if (!community) throw new Error("204");
     return community;
   }
   async update(communityId: string, body: object) {
@@ -34,6 +35,10 @@ class CommunityService {
       $or: [{ title: regex }, { content: regex }],
     });
     return communities;
+  }
+  async checkAuthor(communityId: string, email: string) {
+    const community = await this.communityModel.findOne(communityId);
+    if (community?.author.email !== email) throw new Error("403");
   }
 }
 

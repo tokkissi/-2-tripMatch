@@ -19,6 +19,7 @@ import MyEnroll from "./pages/MyEnroll/MyEnroll";
 import FestivalList from "./components/FestivalList/FestivalList";
 import Search from "./pages/Search/Search";
 import UpdateUserInfoPage from "./pages/MyPage/UpdateUserInfoPage";
+import WishListPage from "./pages/WishList/WishListPage";
 
 const App = () => {
   return (
@@ -30,16 +31,17 @@ const App = () => {
           <Route path="match" element={<MatchPostList />} />
           <Route path="free/:id" element={<FreePostDetail />} />
           <Route path="match/:id" element={<MatchPostDetail />} />
-          <Route path="/myPage/myContents" element={<MyPageContents />} />
-          <Route path="/mypage/userInfo" element={<UpdateUserInfoPage />} />
-          <Route path="/myPage/myComment" element={<MyComment />} />
-          <Route path="/myPage/receivedEnroll" element={<ReceivedEnroll />} />
-          <Route path="/myPage/myEnroll" element={<MyEnroll />} />
+          <Route path="/mypage/mycontents" element={<MyPageContents />} />
+          <Route path="/mypage/userinfo" element={<UpdateUserInfoPage />} />
+          <Route path="/mypage/mycomment" element={<MyComment />} />
+          <Route path="/mypage/receivedenroll" element={<ReceivedEnroll />} />
+          <Route path="/mypage/myenroll" element={<MyEnroll />} />
           <Route path="/free/write" element={<FreePostWrite />} />
           <Route path="/free/write/:id" element={<FreePostWrite />} />
           <Route path="/match/write" element={<MatchPostWrite />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/wishList" element={<WishListPage />} />
           <Route path="admin" element={<Admin />} />
           <Route path="search/:keyword" element={<Search />} />
           <Route

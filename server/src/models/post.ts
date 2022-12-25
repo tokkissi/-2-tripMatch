@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { postSchema } from "./schemas";
 
 class PostModel {
-  private postDB = mongoose.model("communities", postSchema);
+  private postDB = mongoose.model("posts", postSchema);
 
   async countPages(condition: object) {
     const total = await this.postDB.countDocuments(condition);
@@ -45,6 +45,13 @@ class PostModel {
         thumbnail: 1,
       })
       .sort({ createdAt: -1 });
+    return posts;
+  }
+  async findByAuthor(email: string) {
+    const posts = await this.postDB.find(
+      { "author.email": email },
+      { _id: 0, postId: 1, title: 1, region: 1, duration: 1, status: 1 }
+    );
     return posts;
   }
 }

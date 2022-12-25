@@ -14,7 +14,7 @@ export const freePostApi = createApi({
     // query params 로 page, region을 보냄
     // 예시 : useGetAllFreePostQuery({page: 1, region: ""})
     getAllFreePost: builder.query<
-      FreePostType[],
+      { totalPage: number; communities: FreePostType[] },
       { page: number; region: string }
     >({
       query: ({ page, region }) => {
@@ -24,11 +24,11 @@ export const freePostApi = createApi({
           params: { page, region },
         };
       },
-      providesTags: (result = [], error, arg) =>
+      providesTags: (result, error, arg) =>
         result
           ? [
               "FreePost",
-              ...result.map((post) => ({
+              ...result.communities.map((post) => ({
                 type: "FreePost" as const,
                 id: post.communityId,
               })),

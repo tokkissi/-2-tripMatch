@@ -3,7 +3,10 @@ import PostDetail from "../../components/PostDetail/PostDetail";
 import styled from "styled-components";
 import Comment from "../../components/CommentList/CommentList";
 import pointer from "../../images/temporaryIconPointer.png";
-import { useGetFreePostQuery } from "../../slice/freePostApi";
+import {
+  useGetAllFreePostQuery,
+  useGetFreePostQuery,
+} from "../../slice/freePostApi";
 import { useParams } from "react-router-dom";
 import NotFound from "../../components/NotFound/NotFound";
 import { FreePostType } from "./../../type/freePost";
@@ -12,6 +15,8 @@ const FreePostDetail = () => {
   const { id } = useParams();
   const postquery = useGetFreePostQuery(id);
   //const { data: post, isLoading, isError } = postquery;
+  const a = useGetAllFreePostQuery({ page: 1, region: "전체" });
+  console.log(a);
 
   const post: FreePostType = {
     communityId: "1",
@@ -69,9 +74,9 @@ const FreePostDetail = () => {
     createdAt: "2022-12-11 16:10:02",
   };
 
-  // if (isError) {
-  //   return <NotFound />;
-  // }
+  if (!post) {
+    return <NotFound />;
+  }
 
   return (
     <Container>
@@ -79,11 +84,11 @@ const FreePostDetail = () => {
         <div>
           <CategoryName>
             <Pointer src={pointer} />
-            {post?.region} &gt; {post?.category}
+            {post.region} &gt; {post.category}
           </CategoryName>
         </div>
-        <PostDetail user={post?.author} freePost={post} />
-        {post?.comments && <Comment comments={post.comments} />}
+        <PostDetail user={post.author} freePost={post} />
+        {post.comments && <Comment comments={post.comments} />}
       </>
     </Container>
   );

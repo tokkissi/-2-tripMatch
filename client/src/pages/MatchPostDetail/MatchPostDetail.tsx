@@ -26,15 +26,15 @@ const MatchPostDetail = () => {
     getData();
   }, []);
 
-  // if (isError) {
-  //   return <NotFound />;
-  // }
+  if (!post) {
+    return <NotFound />;
+  }
 
   return (
     <Container>
       <>
-        <PostDetail matchPost={post} user={post?.author} />
-        {post?.comments && <Comment comments={post?.comments} />}
+        <PostDetail matchPost={post} user={post.author} />
+        {post.comments && <Comment comments={post.comments} />}
       </>
     </Container>
   );

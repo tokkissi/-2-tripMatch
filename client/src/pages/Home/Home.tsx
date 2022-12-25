@@ -7,6 +7,7 @@ import MakeMatchPostList from "../../components/MakeMatchPostList/MakeMatchPostL
 import { matchMockData, freeMockData } from "./components/mockData";
 import Title from "../../components/Title/Title";
 import { useUpdateImgMutation } from "../../slice/uploadImgApi";
+import { useGetAllMatchPostQuery } from "../../slice/matchPostApi";
 
 const Home = () => {
   // useUpdateImgMutation을 import하여 사용해 주세요.
@@ -20,10 +21,16 @@ const Home = () => {
 
   //useRef 사용하고 싶었는데 타입과 싸우다가 포기하고 useState로... useRef로 성공하신 분들은 알려주세요ㅠㅠ
   const [img, setImg] = useState<File | string>("");
-  const [updateImg, { error, isLoading }] = useUpdateImgMutation();
+  const [updateImg, { error: UploadImgError, isLoading: UploadImgIsLoading }] =
+    useUpdateImgMutation();
+  // const {
+  //   data: MatchPost,
+  //   error: MatchPostError,
+  //   isLoading: MatchPostIsLoading,
+  // } = useGetAllMatchPostQuery({ page: 1, region: "", status: "" });
 
   return (
-    <div>
+    <>
       {/* 사진 업로드 input 예시 */}
       <input
         name="photo"
@@ -53,8 +60,8 @@ const Home = () => {
       >
         업로드하기
       </button>
-      {error && <div>에러</div>}
-      {isLoading && <div>로딩중...</div>}
+      {UploadImgError && <div>에러</div>}
+      {UploadImgIsLoading && <div>로딩중...</div>}
       {/* 예시는 여기까지 */}
 
       <Carousel />
@@ -63,7 +70,7 @@ const Home = () => {
       <FreePostPreview freePostList={freeMockData} location="/" />
       <FestivalList location="/" />
       {/* <ReviewModal email="naver.com" /> */}
-    </div>
+    </>
   );
 };
 

@@ -28,10 +28,8 @@ communitiesController.get("/:communityId", async (req, res, next) => {
 });
 communitiesController.put("/:communityId", async (req, res, next) => {
   const { communityId } = req.params;
-  const { email } = req.user;
   try {
-    const community = await communityService.getCommunity(communityId);
-    if (community?.author.email !== email) return next("403");
+    await communityService.checkAuthor(communityId, req.email);
     await communityService.update(communityId, req.body);
     res.status(200).end();
   } catch (err) {
@@ -40,10 +38,8 @@ communitiesController.put("/:communityId", async (req, res, next) => {
 });
 communitiesController.delete("/:communityId", async (req, res, next) => {
   const { communityId } = req.params;
-  const { email } = req.user;
   try {
-    const community = await communityService.getCommunity(communityId);
-    if (community?.author.email !== email) return next("403");
+    await communityService.checkAuthor(communityId, req.email);
     await communityService.delete(communityId);
     res.status(200).end();
   } catch (err) {
@@ -51,9 +47,8 @@ communitiesController.delete("/:communityId", async (req, res, next) => {
   }
 });
 communitiesController.post("/community", async (req, res, next) => {
-  const { email } = req.user;
   try {
-    const author = await userService.getAuthor(email);
+    const author = await userService.getAuthor(req.email);
     await communityService.create(req.body, author);
     res.status(201).end();
   } catch (err) {

@@ -1,4 +1,5 @@
 import errorHandler from "./errorHandler";
-import checkTokens from "./checkTokens";
+import loginCheck from "./loginCheck";
+import adminCheck from "./adminCheck";
 
-export { errorHandler, checkTokens };
+export { errorHandler, loginCheck, adminCheck };

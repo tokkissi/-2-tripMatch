@@ -45,7 +45,8 @@ const MyEnrollTable: React.FC = () => {
     getData();
   }, []);
 
-  const onCancel = () => {
+  const onCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     setCancel(!isCancel);
     if (isCancel) {
       dispatch(

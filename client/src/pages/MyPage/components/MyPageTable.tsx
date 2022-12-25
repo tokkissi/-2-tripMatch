@@ -5,6 +5,7 @@ import axios from "axios";
 
 const MyPageTable: React.FC = () => {
   const [data, setData] = useState<PostType[]>([]);
+  const [status, setStatus] = useState(true);
 
   // const baseUrl = "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io/userInfo";
 
@@ -18,14 +19,32 @@ const MyPageTable: React.FC = () => {
 
   // const handleChangeValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
   //   const value = e.target.value;
+  //   // const id = data[0].postId;
+
+  //   const upDateData = {
+  //     postId: data[0].postId,
+  //     title: data[0].title,
+  //     status: value === "모집중" ? setStatus(status) : setStatus(!status),
+  //   };
+
   //   const putData = async () => {
-  //     const fetchData = await axios.put(baseUrl + "/userInfo");
-  //     value === "모집중" ? true : false;
-  //     fetchData.data.posts.status = value;
-  //     setData(fetchData.data.posts);
+  //     const fetchData = await axios.put(
+  //       "http://localhost:4000/postUserInfo",
+  //       upDateData,
+  //     );
+  //     setData(fetchData.data[0]);
   //   };
   //   putData();
   // };
+
+  // axios({
+  //   url: "http://localhost:4000/postUserInfo",
+  //   method: "put",
+  //   data: {
+  //     postId: 1,
+  //     status: false,
+  //   },
+  // });
 
   return (
     <>

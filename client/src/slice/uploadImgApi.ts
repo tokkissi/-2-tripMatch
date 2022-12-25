@@ -5,9 +5,9 @@ export const updateImgApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://api.cloudinary.com/v1_1/dk9scwone/image/",
   }),
-  tagTypes: ["Post"],
+  tagTypes: ["Img"],
   endpoints: (builder) => ({
-    updateImg: builder.mutation<string, Object>({
+    updateImg: builder.mutation<string, FormData>({
       query: (formData) => ({
         url: "upload",
         method: "POST",

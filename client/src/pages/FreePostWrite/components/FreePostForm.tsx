@@ -63,7 +63,7 @@ const FreePostForm = () => {
   };
 
   const onClickCancle = () => {
-    state ? navigate(`/free/${state.communityId}`) : navigate("/");
+    state ? navigate(`/free/${state.communityId}`) : navigate("/free");
   };
 
   return (

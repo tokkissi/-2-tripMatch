@@ -13,21 +13,21 @@ export const matchPostApi = createApi({
     // query params 로 page, region, status를 보냄
     // 예시 : useGetAllFreePostQuery({page: 1, region: "", status: ""})
     getAllMatchPost: builder.query<
-      MatchPostType[],
-      { page: number; region: string; status: string }
+      { totalPage: number; posts: MatchPostType[] },
+      { page: number; region?: string; status?: string; email?: string }
     >({
-      query: ({ page, region }) => {
+      query: ({ page, region, status, email }) => {
         return {
           url: "api/main/posts",
           method: "get",
-          params: { page, region, status },
+          params: { page, region, status, email },
         };
       },
-      providesTags: (result = [], error, arg) =>
+      providesTags: (result, error, arg) =>
         result
           ? [
               "MatchPost",
-              ...result.map((post) => ({
+              ...result.posts.map((post) => ({
                 type: "MatchPost" as const,
                 id: post.postId,
               })),
@@ -70,6 +70,14 @@ export const matchPostApi = createApi({
       }),
       invalidatesTags: ["MatchPost"],
     }),
+    applyMatch: builder.mutation<null, string>({
+      query: (postId) => ({
+        url: "api/main/matches/match",
+        method: "POST",
+        body: { postId },
+      }),
+    }),
+    //cancelMatch: builder.mutation<null, string>({})
   }),
 });
 

@@ -90,7 +90,7 @@ interface LikePostType {
 // ];
 
 const MakeMatchPostList: React.FC<DataProps> = ({ data, filter = {} }) => {
-  //비회원의 경우 좋아요 없으므로 빈 배열을 디폴트로 설정
+  //회원 로그인 후 함수 재정비
   const [matchPost, setMatchPost] = useState<MatchPostType[]>([]);
   const fullHeart =
     "https://res.cloudinary.com/dk9scwone/image/upload/v1671341657/fullheart_adk06q.png";
@@ -128,8 +128,8 @@ const MakeMatchPostList: React.FC<DataProps> = ({ data, filter = {} }) => {
   return (
     <Container>
       <MatchPosList>
-        {data &&
-          data
+        {matchPost &&
+          matchPost
             .filter(
               (item) => Object.keys(filter).length === 0 || checkFilter(item),
             )

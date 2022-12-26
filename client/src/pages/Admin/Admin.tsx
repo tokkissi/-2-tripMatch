@@ -6,74 +6,81 @@ import { showModal } from "../../slice/modal";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { Container, Management, MemberList, SearchBar } from "./AdminStyle";
 
-const mockData = [
-  {
-    email: "111@naver.com",
-    nickname: "쥰",
-    role: "관리자",
-    createdAt: "2022-11-04T04:57:01.267Z",
-  },
-  {
-    email: "111@naver.com",
-    nickname: "김지윤",
-    role: "관리자",
-    createdAt: "2022-11-04T04:57:01.267Z",
-  },
-  {
-    email: "longlongemail@naver.com",
-    nickname: "듐듐",
-    role: "회원",
-    createdAt: "2022-11-04T04:57:01.267Z",
-  },
-  {
-    email: "111@naver.com",
-    nickname: "최대길이닉네임임",
-    role: "회원",
-    createdAt: "2022-11-04T04:57:01.267Z",
-  },
-  {
-    email: "tripMatch1234@naver.com",
-    nickname: "최대길이닉네임임",
-    role: "회원",
-    createdAt: "2022-11-04T04:57:01.267Z",
-  },
-  {
-    email: "111@naver.com",
-    nickname: "최대길이닉네임임",
-    role: "회원",
-    createdAt: "2022-11-04T04:57:01.267Z",
-  },
-  {
-    email: "111@naver.com",
-    nickname: "최대길이닉네임임",
-    role: "회원",
-    createdAt: "2022-11-04T04:57:01.267Z",
-  },
-  {
-    email: "111@naver.com",
-    nickname: "최대길이닉네임임",
-    role: "회원",
-    createdAt: "2022-11-04T04:57:01.267Z",
-  },
-  {
-    email: "111@naver.com",
-    nickname: "최대길이닉네임임",
-    role: "회원",
-    createdAt: "2022-11-04T04:57:01.267Z",
-  },
-  {
-    email: "jjyy5017@naver.com",
-    nickname: "최대길이닉네임임",
-    role: "회원",
-    createdAt: "2022-11-04T04:57:01.267Z",
-  },
-  {
-    email: "111@naver.com",
-    nickname: "최대길이닉네임임",
-    role: "회원",
-    createdAt: "2022-11-04T04:57:01.267Z",
-  },
-];
+// const mockData = [
+//   {
+//     email: "111@naver.com",
+//     nickname: "쥰",
+//     role: "관리자",
+//     createdAt: "2022-11-04T04:57:01.267Z",
+//   },
+//   {
+//     email: "111@naver.com",
+//     nickname: "김지윤",
+//     role: "관리자",
+//     createdAt: "2022-11-04T04:57:01.267Z",
+//   },
+//   {
+//     email: "longlongemail@naver.com",
+//     nickname: "듐듐",
+//     role: "회원",
+//     createdAt: "2022-11-04T04:57:01.267Z",
+//   },
+//   {
+//     email: "111@naver.com",
+//     nickname: "최대길이닉네임임",
+//     role: "회원",
+//     createdAt: "2022-11-04T04:57:01.267Z",
+//   },
+//   {
+//     email: "tripMatch1234@naver.com",
+//     nickname: "최대길이닉네임임",
+//     role: "회원",
+//     createdAt: "2022-11-04T04:57:01.267Z",
+//   },
+//   {
+//     email: "111@naver.com",
+//     nickname: "최대길이닉네임임",
+//     role: "회원",
+//     createdAt: "2022-11-04T04:57:01.267Z",
+//   },
+//   {
+//     email: "111@naver.com",
+//     nickname: "최대길이닉네임임",
+//     role: "회원",
+//     createdAt: "2022-11-04T04:57:01.267Z",
+//   },
+//   {
+//     email: "111@naver.com",
+//     nickname: "최대길이닉네임임",
+//     role: "회원",
+//     createdAt: "2022-11-04T04:57:01.267Z",
+//   },
+//   {
+//     email: "111@naver.com",
+//     nickname: "최대길이닉네임임",
+//     role: "회원",
+//     createdAt: "2022-11-04T04:57:01.267Z",
+//   },
+//   {
+//     email: "jjyy5017@naver.com",
+//     nickname: "최대길이닉네임임",
+//     role: "회원",
+//     createdAt: "2022-11-04T04:57:01.267Z",
+//   },
+//   {
+//     email: "111@naver.com",
+//     nickname: "최대길이닉네임임",
+//     role: "회원",
+//     createdAt: "2022-11-04T04:57:01.267Z",
+//   },
+// ];
+
+interface UserType {
+  email: string;
+  nickname: string;
+  createdAt: string;
+  role: string;
+}
 
 const joinDateFormat = (createdAt: string) => {
   return (
@@ -86,7 +93,7 @@ const joinDateFormat = (createdAt: string) => {
 };
 
 const Admin = () => {
-  const [members, setMembers] = useState([]);
+  const [members, setMembers] = useState<UserType[]>([]);
   const searchRef = useRef<HTMLInputElement>(null);
   const { show: isShown, modalText } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
@@ -148,8 +155,8 @@ const Admin = () => {
         </SearchBar>
       </div>
       <MemberList>
-        {mockData &&
-          mockData.map((member) => {
+        {members &&
+          members.map((member) => {
             return (
               <div className="member" key={member.email}>
                 <div className="name">

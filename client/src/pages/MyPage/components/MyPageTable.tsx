@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Content, Layer } from "./TableContentStyle";
 import { PostType } from "../../../type/userPost";
 import axios from "axios";
@@ -6,6 +6,7 @@ import axios from "axios";
 const MyPageTable: React.FC = () => {
   const [data, setData] = useState<PostType[]>([]);
   const [status, setStatus] = useState(true);
+  const selectRef = useRef<HTMLSelectElement>(null);
 
   // const baseUrl = "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io/userInfo";
 
@@ -17,34 +18,35 @@ const MyPageTable: React.FC = () => {
     getData();
   }, []);
 
-  // const handleChangeValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   const value = e.target.value;
-  //   // const id = data[0].postId;
+  const handleChangeValue = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault();
 
-  //   const upDateData = {
-  //     postId: data[0].postId,
-  //     title: data[0].title,
-  //     status: value === "모집중" ? setStatus(status) : setStatus(!status),
-  //   };
+    const value = e.target.value;
+    console.log(value);
+    const boolean = value === "모집중" ? true : false;
+    console.log(boolean);
 
-  //   const putData = async () => {
-  //     const fetchData = await axios.put(
-  //       "http://localhost:4000/postUserInfo",
-  //       upDateData,
-  //     );
-  //     setData(fetchData.data[0]);
-  //   };
-  //   putData();
-  // };
+    try {
+      await axios
+        .put("http://localhost:4000/postUserInfo", { status: boolean })
+        .then((res) => console.log(res));
+    } catch (err: unknown) {
+      console.log(err);
+    }
 
-  // axios({
-  //   url: "http://localhost:4000/postUserInfo",
-  //   method: "put",
-  //   data: {
-  //     postId: 1,
-  //     status: false,
-  //   },
-  // });
+    // const upDateData = {
+    //   status: value === "모집중" ? setStatus(status) : setStatus(!status),
+    // };
+
+    // const putData = async () => {
+    //   const fetchData = await axios.put("http://localhost:4000/postUserInfo", {
+    //     status: value === "모집중" ? setStatus(status) : setStatus(!status),
+    //   });
+
+    //   setData(fetchData.data[0]);
+    // };
+    // putData();
+  };
 
   return (
     <>
@@ -70,7 +72,7 @@ const MyPageTable: React.FC = () => {
                       {item.duration[0].start} ~ {item.duration[0].end}
                     </td>
                     <td id="last">
-                      <select>
+                      <select onChange={handleChangeValue}>
                         <option value="모집중">모집중</option>
                         <option value="모집마감">모집마감</option>
                       </select>

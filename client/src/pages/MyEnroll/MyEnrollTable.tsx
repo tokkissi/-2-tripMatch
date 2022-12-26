@@ -5,6 +5,7 @@ import Modal from "../../components/Modal/Modal";
 import { showModal } from "../../slice/modal";
 import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import ReviewModal from "../Home/reviewModal";
 
 export interface Post {
   postId: number;
@@ -18,12 +19,13 @@ export interface Post {
 
 export interface Author {
   authorId: number;
+  profileImg?: string;
   email: string;
   nickname: string;
   gender: string;
   age: number;
-  contactInfo: string;
-  score: number;
+  contactInfo?: string;
+  score?: number;
 }
 
 export interface Duration {
@@ -34,6 +36,7 @@ export interface Duration {
 const MyEnrollTable: React.FC = () => {
   const [data, setData] = useState<Post[]>([]);
   const [isCancel, setCancel] = useState(false);
+  const [isReview, setReview] = useState(false);
   const dispatch = useAppDispatch();
   const { show: isShown, modalText } = useAppSelector((state) => state.modal);
 
@@ -64,6 +67,11 @@ const MyEnrollTable: React.FC = () => {
     if (modalText?.title === "동행 신청 취소") {
       return onCancel;
     }
+  };
+
+  const onReview = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setReview(!isReview);
   };
 
   return (
@@ -104,7 +112,15 @@ const MyEnrollTable: React.FC = () => {
                     elapse <= 7 &&
                     item.agreeStatus === "수락" ? (
                       <ReviewDiv>
-                        <button id="review">리뷰</button>
+                        <button id="review" onClick={onReview}>
+                          리뷰
+                        </button>
+                        {isReview && (
+                          <ReviewModal
+                            email={item.author[0].email}
+                            setReview={setReview}
+                          />
+                        )}
                         <span>여행 종료로부터 + {elapse}</span>
                       </ReviewDiv>
                     ) : elapse < 1 && item.agreeStatus === "수락" ? (

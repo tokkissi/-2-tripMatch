@@ -2,6 +2,19 @@ import { useState, useRef, ChangeEvent, LegacyRef } from "react";
 import Editor from "../../components/Editor/Editor";
 import { useUpdateImgMutation } from "../../slice/uploadImgApi";
 import AppSelect from "../../components/AppSelect/AppSelect";
+import {
+  Container,
+  ButtonContainer,
+  MatchPostAppButton,
+  DateRange,
+} from "./MatchPostWriteStyle";
+import AppInputText from "../../components/AppInputText/AppInputText";
+import AppInputRadioCheck from "../../components/AppInputRadioCheck/AppInputRadioCheck";
+import AppInputFile from "../../components/AppInputFile/AppInputFile";
+import { Link, useNavigate } from "react-router-dom";
+import { Editor as ToastEditor } from "@toast-ui/react-editor";
+import { MatchPostType } from "../../type/matchPost";
+import { useCreateMatchPostMutation } from "../../slice/matchPostApi";
 
 const regions = [
   "서울",
@@ -28,20 +41,6 @@ const ageList = [
   { value: "none", htmlValue: "연령대무관" },
 ];
 
-import {
-  Container,
-  ButtonContainer,
-  MatchPostAppButton,
-  DateRange,
-} from "./MatchPostWriteStyle";
-import AppInputText from "../../components/AppInputText/AppInputText";
-import AppInputRadioCheck from "../../components/AppInputRadioCheck/AppInputRadioCheck";
-import AppInputFile from "../../components/AppInputFile/AppInputFile";
-import { Link, useNavigate } from "react-router-dom";
-import { Editor as ToastEditor } from "@toast-ui/react-editor";
-import { MatchPostType } from "../../type/matchPost";
-import { useCreateMatchPostMutation } from "../../slice/matchPostApi";
-
 const MatchPostWrite = () => {
   const navigate = useNavigate();
 
@@ -54,7 +53,7 @@ const MatchPostWrite = () => {
   const contentRef: LegacyRef<ToastEditor> = useRef(null);
 
   const [gender, setGender] = useState<string>("남성");
-  const [ages, setAges] = useState<any[]>([]);
+  const [ages, setAges] = useState<string[]>([]);
   const [imageUploaded, setImageUploaded] = useState<File>();
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
@@ -102,7 +101,7 @@ const MatchPostWrite = () => {
       userCount: peopleCnt,
       duration: [startDate, endDate],
       hopeGender: gender,
-      hopeAge: ages[0], // age는 여러개가 되어야함. api에서 수정한 후 수정할 예정
+      hopeAge: ages,
       thumbnail: Object.values(image)[15],
       contact: contact,
       content: content,

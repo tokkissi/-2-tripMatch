@@ -31,11 +31,11 @@ const FreePostDetail = () => {
         <div>
           <CategoryName>
             <Pointer src={pointer} />
-            {post!.community.region} &gt; {post!.community.category}
+            {post?.community.region} &gt; {post?.community.category}
           </CategoryName>
         </div>
-        <PostDetail user={post!.community.author} freePost={post!.community} />
-        <Comment comments={post!.comments} />
+        <PostDetail user={post?.community.author} freePost={post?.community} />
+        {post?.comments && <Comment comments={post?.comments} />}
       </>
     </Container>
   );

@@ -38,8 +38,8 @@ const MatchPostDetail = () => {
   return (
     <Container>
       <>
-        <PostDetail matchPost={post!.post} user={post!.post.author} />
-        <Comment comments={post!.comments} />
+        <PostDetail matchPost={post?.post} user={post?.post.author} />
+        {post?.comments && <Comment comments={post?.comments} />}
       </>
     </Container>
   );

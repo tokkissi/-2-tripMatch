@@ -49,8 +49,8 @@ export const freePostApi = createApi({
     }),
     // id에 해당하는 게시글을 업데이트 {communityId, title, content, region, category}
     updateFreePost: builder.mutation<null, FreePostType>({
-      query: (updatedPost) => ({
-        url: `main/communities/${updatedPost.communityId}`,
+      query: ({ communityId, ...updatedPost }) => ({
+        url: `main/communities/${communityId}`,
         method: "PUT",
         data: updatedPost,
       }),

@@ -25,19 +25,20 @@ interface PostDetailProps {
   matchPost?: MatchPostType;
   freePost?: FreePostType;
   user?: AuthorType;
+  isApplying?: boolean;
 }
 
 const PostDetail: React.FC<PostDetailProps> = ({
   matchPost,
   user,
   freePost,
+  isApplying,
 }) => {
   const location = useLocation();
-  const { show: isShown, modalText } = useAppSelector((state) => state.modal);
+
   const dispatch = useAppDispatch();
 
   const [isLikePost, setIsLikePost] = useState(false);
-  const [isApplying, setIsApplying] = useState(false);
 
   const [isAuthor, setIsAuthor] = useState(false);
 
@@ -96,33 +97,6 @@ const PostDetail: React.FC<PostDetailProps> = ({
         rightButton: "삭제",
       }),
     );
-  };
-
-  const onDelete = () => {
-    console.log("삭제");
-  };
-
-  const onApply = () => {
-    console.log("동행 신청");
-    setIsApplying(!isApplying);
-  };
-
-  const onApplyCancle = () => {
-    console.log("동행 취소");
-    setIsApplying(!isApplying);
-  };
-
-  const getModalCallback = () => {
-    if (modalText) {
-      switch (modalText.title) {
-        case "삭제":
-          return onDelete;
-        case "동행 신청":
-          return onApply;
-        case "동행 신청 취소":
-          return onApplyCancle;
-      }
-    }
   };
 
   return (
@@ -184,7 +158,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
         }
       ></PostContent>
       {matchPost && (
-        <MatchButton onClick={onClickApply} isApplying={isApplying}>
+        <MatchButton onClick={onClickApply} isApplying={isApplying!}>
           {isApplying ? "동행 신청 중" : "동행 신청하기"}
         </MatchButton>
       )}
@@ -201,7 +175,6 @@ const PostDetail: React.FC<PostDetailProps> = ({
           </>
         )}
       </ButtonContainer>
-      {isShown && <Modal callBackFn={getModalCallback()} />}
     </div>
   );
 };

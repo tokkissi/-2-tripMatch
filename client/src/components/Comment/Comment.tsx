@@ -16,9 +16,10 @@ import {
 
 interface CommentProps {
   comment: CommentType;
+  setDeleteCommentId: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Comment: React.FC<CommentProps> = ({ comment }) => {
+const Comment: React.FC<CommentProps> = ({ comment, setDeleteCommentId }) => {
   const [isClickUpdate, setIsClickUpdate] = useState<boolean>(false);
   const [commentInput, setCommentInput] = useState("");
   const [isAuthor, setIsAuthor] = useState(false);
@@ -34,6 +35,7 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
     }
     if (isSuccess) {
       setIsClickUpdate(true);
+      window.location.reload();
     }
   }, [isError, isSuccess]);
 
@@ -45,7 +47,16 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
 
   const onClickCancle = () => setIsClickUpdate(false);
 
-  const onClickDelete = () => dispatch(showModal("댓글"));
+  const onClickDelete = () => {
+    dispatch(
+      showModal({
+        title: "댓글 삭제",
+        content: "이 댓글을 삭제하시겠습니까?",
+        rightButton: "삭제",
+      }),
+    );
+    setDeleteCommentId(comment.commentId);
+  };
 
   const onClickUpdateCompleted = () => {
     onUpdateComment({

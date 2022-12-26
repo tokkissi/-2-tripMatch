@@ -2,7 +2,7 @@ import { CommentType } from "./comment";
 import { AuthorType } from "./freePost";
 
 export interface MatchPostType {
-  postId: string;
+  postId?: string;
   author?: AuthorType;
   region: string;
   userCount: number;

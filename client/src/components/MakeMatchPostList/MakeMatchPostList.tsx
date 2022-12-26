@@ -8,7 +8,7 @@ import { matchMockData } from "../../pages/Home/components/mockData";
 
 interface DataProps {
   filter?: FilterType;
-  data?: MatchPostType[];
+  data: MatchPostType[];
   likes?: MatchPostType[];
 }
 
@@ -89,36 +89,25 @@ interface LikePostType {
 //   },
 // ];
 
-const MakeMatchPostList: React.FC<DataProps> = ({
-  data,
-  likes = [],
-  filter = {},
-}) => {
+const MakeMatchPostList: React.FC<DataProps> = ({ data, filter = {} }) => {
   //비회원의 경우 좋아요 없으므로 빈 배열을 디폴트로 설정
-  const [likePost, setLikePost] = useState<LikePostType>({});
+  const [matchPost, setMatchPost] = useState<MatchPostType[]>([]);
   const fullHeart =
     "https://res.cloudinary.com/dk9scwone/image/upload/v1671341657/fullheart_adk06q.png";
   const emptyHeart =
     "https://res.cloudinary.com/dk9scwone/image/upload/v1671341657/emptyheart_ra2kqf.png";
 
   useEffect(() => {
-    const newLikePost: LikePostType = {};
-    data?.forEach((item) => {
-      likes.forEach((likeItem) => {
-        if (likeItem.postId === item.postId) {
-          newLikePost[item.postId] = false;
-          return;
-        } else {
-          newLikePost[item.postId] = true;
-        }
-      });
-    });
-    setLikePost(newLikePost);
-  }, [data, likes]);
+    setMatchPost(data);
+  }, [data]);
 
-  const toggleLikes = async (postId: string) => {
-    setLikePost({ ...likePost, [postId]: !likePost[postId] });
-    // await axios.post('') 좋아요 게시글 api 작성
+  const toggleLikes = async (idx: number) => {
+    const newData = data;
+    newData[idx].like = !data[idx];
+    setMatchPost(newData);
+    await axios.post("http://localhost:5000/api/main/likes/like", {
+      postId: data[idx].postId,
+    });
   };
 
   // mockdata를 쓰지 않으면 지워도 되는 함수
@@ -144,14 +133,20 @@ const MakeMatchPostList: React.FC<DataProps> = ({
             .filter(
               (item) => Object.keys(filter).length === 0 || checkFilter(item),
             )
-            .map((item) => {
+            .map((item, idx) => {
               return (
                 <div className="item" key={item.postId}>
-                  <img
-                    src={likePost[item.postId] ? fullHeart : emptyHeart}
-                    className="heart"
-                    onClick={() => toggleLikes(item.postId)}
-                  />
+                  {item.like ? (
+                    <img
+                      src={item.like ? fullHeart : emptyHeart}
+                      className="heart"
+                      onClick={() => {
+                        toggleLikes(idx);
+                      }}
+                    />
+                  ) : (
+                    <img src={emptyHeart} className="heart" />
+                  )}
                   <Link to="/">
                     <span className="region">{item.region}</span>
                     <img src={item.thumbnail} className="itemImg" />

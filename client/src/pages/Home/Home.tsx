@@ -9,13 +9,20 @@ import Title from "../../components/Title/Title";
 import { useUpdateImgMutation } from "../../slice/uploadImgApi";
 import { useGetAllMatchPostQuery } from "../../slice/matchPostApi";
 import NotFound from "../../components/NotFound/NotFound";
+import { useGetAllFreePostQuery } from "../../slice/freePostApi";
 
 const Home = () => {
   const {
     data: matchData,
-    isError,
-    isLoading,
+    isError: matchError,
+    isLoading: matchLoading,
   } = useGetAllMatchPostQuery({ page: 1 });
+
+  const {
+    data: freeData,
+    isError: freeError,
+    isLoading: freeLoading,
+  } = useGetAllFreePostQuery({ page: 1 });
 
   // useUpdateImgMutation을 import하여 사용해 주세요.
   // input에서 파일을 선택했을 때 바로 updateImg 함수를 적용하지 마세요.
@@ -73,9 +80,12 @@ const Home = () => {
 
       <Carousel />
       <Title title="동행게시판" location="/" />
-      <MakeMatchPostList data={matchMockData} likes={matchMockData} />
-      {/* {matchData ? <MakeMatchPostList data={matchData.posts} /> : <NotFound />} */}
-      <FreePostPreview freePostList={freeMockData} location="/" />
+      {matchData ? <MakeMatchPostList data={matchData.posts} /> : <NotFound />}
+      {freeData ? (
+        <FreePostPreview freePostList={freeData?.communities} location="/" />
+      ) : (
+        <NotFound />
+      )}
       <FestivalList location="/" />
     </>
   );

@@ -7,7 +7,7 @@ export const freePostApi = createApi({
   reducerPath: "freePostApi",
   tagTypes: ["FreePost"],
   baseQuery: axiosBaseQuery({
-    baseUrl: "http://localhost:5000/",
+    baseUrl: "http://34.64.156.80:3003/api/",
   }),
   endpoints: (builder) => ({
     // 전체 자유게시글을 불러옴
@@ -20,7 +20,7 @@ export const freePostApi = createApi({
     >({
       query: ({ page, region }) => {
         return {
-          url: "api/main/communities",
+          url: "main/communities",
           method: "get",
           params: { page, region },
         };
@@ -42,7 +42,7 @@ export const freePostApi = createApi({
       string | undefined
     >({
       query: (communityId) => ({
-        url: `api/main/communities/${communityId}`,
+        url: `main/communities/${communityId}`,
         method: "get",
       }),
       providesTags: (result, error, arg) => [{ type: "FreePost", id: arg }],
@@ -50,7 +50,7 @@ export const freePostApi = createApi({
     // id에 해당하는 게시글을 업데이트 {communityId, title, content, region, category}
     updateFreePost: builder.mutation<null, FreePostType>({
       query: (updatedPost) => ({
-        url: `api/main/communities/${updatedPost.communityId}`,
+        url: `main/communities/${updatedPost.communityId}`,
         method: "PUT",
         data: updatedPost,
       }),
@@ -61,7 +61,7 @@ export const freePostApi = createApi({
     // 게시글 추가 {title,content,region,category}
     createFreePost: builder.mutation<null, any>({
       query: (newPost) => ({
-        url: "api/main/communities/community",
+        url: "main/communities/community",
         method: "POST",
         data: newPost,
       }),
@@ -70,7 +70,7 @@ export const freePostApi = createApi({
     // id에 해당하는 게시글 삭제 useDeleteFreePost(id)
     deleteFreePost: builder.mutation<null, string | undefined>({
       query: (communityId) => ({
-        url: `api/main/communities/${communityId}`,
+        url: `main/communities/${communityId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["FreePost"],

@@ -7,7 +7,7 @@ export const matchPostApi = createApi({
   reducerPath: "matchPostApi",
   tagTypes: ["MatchPost"],
   baseQuery: axiosBaseQuery({
-    baseUrl: "http://localhost:5000/",
+    baseUrl: "http://34.64.156.80:3003/api/",
   }),
   endpoints: (builder) => ({
     // 전체 동행게시글을 불러옴
@@ -20,7 +20,7 @@ export const matchPostApi = createApi({
     >({
       query: ({ page, region, status, email }) => {
         return {
-          url: "api/main/posts",
+          url: "main/posts",
           method: "get",
           params: { page, region, status, email },
         };
@@ -42,7 +42,7 @@ export const matchPostApi = createApi({
       string | undefined
     >({
       query: (postId) => ({
-        url: `api/main/posts/${postId}`,
+        url: `main/posts/${postId}`,
         method: "get",
       }),
       providesTags: (result, error, arg) => [{ type: "MatchPost", id: arg }],
@@ -61,7 +61,7 @@ export const matchPostApi = createApi({
     // 게시글 추가
     createMatchPost: builder.mutation<MatchPostType, MatchPostType>({
       query: (newPost) => ({
-        url: "api/main/posts/post",
+        url: "main/posts/post",
         method: "POST",
         data: newPost,
       }),
@@ -70,14 +70,14 @@ export const matchPostApi = createApi({
     // id에 해당하는 게시글 삭제
     deleteMatchPost: builder.mutation<MatchPostType, string | undefined>({
       query: (postId) => ({
-        url: `api/main/posts/${postId}`,
+        url: `main/posts/${postId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["MatchPost"],
     }),
     applyMatch: builder.mutation<null, string>({
       query: (postId) => ({
-        url: "api/main/matches/match",
+        url: "main/matches/match",
         method: "POST",
         data: { postId },
       }),

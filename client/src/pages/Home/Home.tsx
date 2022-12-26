@@ -8,8 +8,15 @@ import { matchMockData, freeMockData } from "./components/mockData";
 import Title from "../../components/Title/Title";
 import { useUpdateImgMutation } from "../../slice/uploadImgApi";
 import { useGetAllMatchPostQuery } from "../../slice/matchPostApi";
+import NotFound from "../../components/NotFound/NotFound";
 
 const Home = () => {
+  const {
+    data: matchData,
+    isError,
+    isLoading,
+  } = useGetAllMatchPostQuery({ page: 1 });
+
   // useUpdateImgMutation을 import하여 사용해 주세요.
   // input에서 파일을 선택했을 때 바로 updateImg 함수를 적용하지 마세요.
   // input onChange에 함수를 걸어버리시면 사용자가 input에서 사진을 바꿀 때마다(사용자가 어떤 사진을 올릴지 고민할 때...) 클라우드에 업로드 됩니다.
@@ -66,10 +73,10 @@ const Home = () => {
 
       <Carousel />
       <Title title="동행게시판" location="/" />
-      <MakeMatchPostList data={matchMockData} />
+      <MakeMatchPostList data={matchMockData} likes={matchMockData} />
+      {/* {matchData ? <MakeMatchPostList data={matchData.posts} /> : <NotFound />} */}
       <FreePostPreview freePostList={freeMockData} location="/" />
       <FestivalList location="/" />
-      {/* <ReviewModal email="naver.com" /> */}
     </>
   );
 };

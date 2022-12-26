@@ -19,12 +19,13 @@ export const axiosBaseQuery =
       const result = await axios({ url: baseUrl + url, method, data, params });
 
       if (result.status === 204) {
-        throw new Error();
+        throw new Error("204 에러입니다.");
       }
 
       return { data: result.data };
     } catch (axiosError) {
       const err = axiosError as AxiosError;
+
       return {
         error: {
           status: err.response?.status,

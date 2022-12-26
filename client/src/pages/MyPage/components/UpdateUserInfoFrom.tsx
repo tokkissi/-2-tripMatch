@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, {
   ChangeEvent,
   useCallback,
@@ -34,8 +33,7 @@ import {
   WithdrawalText,
 } from "./UpdateInfoStyle";
 import { UpdateUserinfoTitle } from "./SideBarStyle";
-
-const baseUrl = "http://localhost:5000";
+import authAxios from "../../../axios/authAxios";
 
 const UpdateUserInfoFrom = () => {
   type FormType =
@@ -124,8 +122,7 @@ const UpdateUserInfoFrom = () => {
     const loadUserInfo = async () => {
       // 응답 api url 추후 변경 예정
       try {
-        const res = await axios.get(`${baseUrl}/api/main/myPage`);
-        // const res = await axios.get("http://localhost:4000/userInfo"); // 테스트용 json서버
+        const res = await authAxios.get(`/api/main/mypage`);
         // 응답 코드 추후 변경 예정
         if (res.status === 200) {
           return res.data;
@@ -149,7 +146,7 @@ const UpdateUserInfoFrom = () => {
       setUserState((draft) => {
         draft.profileImg = res.profileImg;
         draft.email = res.email;
-        draft.nickName = res.nickName;
+        draft.nickName = res.nickname;
         draft.gender = res.gender;
         draft.age = res.age;
         draft.introduce = res.introduce;
@@ -317,10 +314,7 @@ const UpdateUserInfoFrom = () => {
         console.log("수정 요청 api 실행됨!", sendOj);
         // api 완성 시, 주석 해제
         try {
-          const res = await axios.put(
-            `${baseUrl}/api/main/auth/update`,
-            sendOj,
-          );
+          const res = await authAxios.put(`/api/main/auth/update`, sendOj);
           if (res.status === 200) {
             alert("수정 완료!");
           } else {
@@ -354,7 +348,7 @@ const UpdateUserInfoFrom = () => {
   // api 구현 시 주석 해제 예정
   const onClickWithdrawal = async () => {
     try {
-      const res = await axios.delete(`${baseUrl}/api/main/auth/delete`);
+      const res = await authAxios.delete(`/api/main/auth/delete`);
       if (res.status === 200) {
         alert("회원탈퇴가 완료되었습니다");
       } else {

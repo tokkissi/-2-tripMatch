@@ -34,6 +34,36 @@ paths:
     $ref: "./communities.yaml#/~1communities~1{communityId}"
   /api/main/communities/community:
     $ref: "./communities.yaml#/~1communities~1community"
+  /api/main/likes:
+    $ref: "./likes.yaml#/~1likes"
+  /api/main/likes/like:
+    $ref: "./likes.yaml#/~1likes~1like"
+  /api/main/matches/match:
+    $ref: "./matches.yaml#/~1matches~1match"
+  /api/main/matches/{matchId}:
+    $ref: "./matches.yaml#/~1matches~1{matchId}"
+  /api/main/mypage:
+    $ref: "./mypage.yaml#/~1mypage"
+  /api/main/mypage/comments:
+    $ref: "./mypage.yaml#/~1mypage~1comments"
+  /api/main/mypage/myEnroll:
+    $ref: "./mypage.yaml#/~1mypage~1myEnroll"
+  /api/main/mypage/receivedEnroll:
+    $ref: "./mypage.yaml#/~1mypage~1receivedEnroll"
+  /api/main/mypage/posts:
+    $ref: "./mypage.yaml#/~1mypage~1posts"
+  /api/main/notices:
+    $ref: "./notices.yaml#/~1notices"
+  /api/main/notices/{noticeId}:
+    $ref: "./notices.yaml#/~1notices~1{noticeId}"
+  /api/main/posts:
+    $ref: "./posts.yaml#/~1posts"
+  /api/main/posts/{postId}:
+    $ref: "./posts.yaml#/~1posts~1{postId}"
+  /api/main/posts/post:
+    $ref: "./posts.yaml#/~1posts~1post"
+  /api/main/search:
+    $ref: "./search.yaml#/~1search"
 components:
   schemas:
     status:
@@ -209,7 +239,9 @@ components:
           type: string
           description: 희망 성별
         hopeAge:
-          type: string
+          type: array
+          items:
+            type: string
           description: 희망 나이
         userCount:
           type: number

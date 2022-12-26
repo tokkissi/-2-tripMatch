@@ -2,9 +2,6 @@ import { useState, useRef, ChangeEvent, LegacyRef } from "react";
 import Editor from "../../components/Editor/Editor";
 import { useUpdateImgMutation } from "../../slice/uploadImgApi";
 import AppSelect from "../../components/AppSelect/AppSelect";
-import axios from "axios";
-
-const domain = "http://localhost:5000";
 
 const regions = [
   "서울",
@@ -42,9 +39,13 @@ import AppInputRadioCheck from "../../components/AppInputRadioCheck/AppInputRadi
 import AppInputFile from "../../components/AppInputFile/AppInputFile";
 import { Link, useNavigate } from "react-router-dom";
 import { Editor as ToastEditor } from "@toast-ui/react-editor";
+import { MatchPostType } from "../../type/matchPost";
+import { useCreateMatchPostMutation } from "../../slice/matchPostApi";
 
 const MatchPostWrite = () => {
   const navigate = useNavigate();
+
+  const [createMatchPost] = useCreateMatchPostMutation();
 
   const regionRef = useRef<HTMLSelectElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
@@ -80,10 +81,10 @@ const MatchPostWrite = () => {
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
-    const imgData = new FormData(); //formdata 객체 생성
-    imgData.append("file", imageUploaded || ""); //객체에 파일값 넣음
-    imgData.append("upload_preset", "tripMatch"); //클라우디너리 설정값이므로 반드시 넣어주세요.
-    imgData.append("cloud_name", "dk9scwone"); //클라우디너리 설정값이므로 반드시 넣어주세요.
+    const imgData = new FormData();
+    imgData.append("file", imageUploaded || "");
+    imgData.append("upload_preset", "tripMatch");
+    imgData.append("cloud_name", "dk9scwone");
 
     const image = await updateImg(imgData).unwrap();
     if (!image) {
@@ -91,21 +92,23 @@ const MatchPostWrite = () => {
     }
     const region = regionRef.current!.value;
     const title = titleRef.current!.value;
-    const peopleCnt = peopleCntRef.current!.value;
+    const peopleCnt = Number(peopleCntRef.current!.value);
     const contact = contactRef.current!.value;
-    const content = contentRef.current?.getInstance().getHTML();
-    axios
-      .post(`${domain}/api/main/posts/post`, {
-        region: region,
-        title: title,
-        userCount: peopleCnt,
-        duration: [startDate, endDate],
-        hopeGender: gender,
-        hopeAge: ages[0], // age는 여러개가 되어야함. api에서 수정한 후 수정할 예정
-        thumbnail: Object.values(image)[15],
-        contact: contact,
-        content: content,
-      })
+    const content = contentRef.current?.getInstance().getHTML() || "";
+
+    const matchPost: MatchPostType = {
+      title: title,
+      region: region,
+      userCount: peopleCnt,
+      duration: [startDate, endDate],
+      hopeGender: gender,
+      hopeAge: ages[0], // age는 여러개가 되어야함. api에서 수정한 후 수정할 예정
+      thumbnail: Object.values(image)[15],
+      contact: contact,
+      content: content,
+    };
+
+    createMatchPost(matchPost)
       .then(() => {
         navigate("/match");
       })

@@ -7,28 +7,18 @@ import styled from "styled-components";
 interface EditorProps {
   placeholder?: string;
   initialValue?: string;
-  setContent: React.Dispatch<React.SetStateAction<string>>;
+  contentRef: React.RefObject<ToastEditor>;
 }
 
 const Editor: React.FC<EditorProps> = ({
   placeholder,
   initialValue,
-  setContent,
+  contentRef,
 }) => {
-  const contentRef: LegacyRef<ToastEditor> = useRef(null);
-
-  const getValue = () => {
-    const data = contentRef.current?.getInstance();
-    const html = contentRef.current?.getInstance().getHTML(); // 작성한 내용을 가져옴
-    //console.log(data); // editor의 속성을 모두 가져옴
-    html && setContent(html);
-  };
-
   return (
     <Container>
       <ToastEditor
         ref={contentRef}
-        onChange={getValue}
         placeholder={placeholder || "내용을 작성해주세요."}
         initialValue={initialValue || " "}
         previewStyle="vertical"

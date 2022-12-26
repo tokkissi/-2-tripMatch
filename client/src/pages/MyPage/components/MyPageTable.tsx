@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Content, Layer } from "./TableContentStyle";
 import { PostType } from "../../../type/userPost";
+import authAxios from "../../../axios/authAxios";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -10,14 +11,21 @@ const MyPageTable: React.FC = () => {
   // const selectRef = useRef<HTMLSelectElement>(null);
 
   // const baseUrl = "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io/userInfo";
+  const baseUrl = "34.64.156.80:3003";
 
   useEffect(() => {
     const getData = async () => {
-      const fetchData = await axios.get("http://localhost:4000/postUserInfo");
-      setData(fetchData.data[0].posts);
+      try {
+        const fetchData = await authAxios.get(`/api/main/mypage/posts`);
+
+        setData(fetchData.data);
+      } catch (err: unknown) {
+        console.error(err);
+      }
     };
+    console.log(data);
     getData();
-  }, []);
+  }, [data]);
 
   const handleChangeValue = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
@@ -27,13 +35,13 @@ const MyPageTable: React.FC = () => {
     const boolean = value === "모집중" ? true : false;
     console.log(boolean);
 
-    try {
-      await axios
-        .put("http://localhost:4000/postUserInfo", { status: boolean })
-        .then((res) => res.data);
-    } catch (err: unknown) {
-      console.log(err);
-    }
+    // try {
+    //   await authAxios
+    //     .put("http://localhost:4000/postUserInfo", { status: boolean })
+    //     .then((res) => res.data);
+    // } catch (err: unknown) {
+    //   console.log(err);
+    // }
 
     // const upDateData = {
     //   status: value === "모집중" ? setStatus(status) : setStatus(!status),
@@ -74,7 +82,7 @@ const MyPageTable: React.FC = () => {
                     </td>
                     <td>{item.region}</td>
                     <td>
-                      {item.duration[0].start} ~ {item.duration[0].end}
+                      {item.duration[0]} ~ {item.duration[1]}
                     </td>
                     <td id="last">
                       <select onChange={handleChangeValue}>

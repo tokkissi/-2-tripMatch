@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { PostUserInfo } from "../../../type/userPost";
 import { Top, TripCount, Score } from "./TopStyle";
 import axios from "axios";
+import authAxios from "../../../axios/authAxios";
 
 const MyPageTop: React.FC = () => {
   const [data, setData] = useState<PostUserInfo>();

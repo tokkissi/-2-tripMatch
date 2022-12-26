@@ -1,5 +1,3 @@
-import { DateType } from "./duration";
-
 export interface PostUserInfo {
   userId: number;
   nickname: string;
@@ -10,9 +8,9 @@ export interface PostUserInfo {
 }
 
 export interface PostType {
-  postId: number;
-  region: string;
+  postId: string;
   title: string;
-  duration: DateType[];
-  createdAt: Date;
+  region: string;
+  status: boolean;
+  duration: string[];
 }

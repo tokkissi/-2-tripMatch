@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Content, Layer } from "./TableContentStyle";
 import { PostType } from "../../../type/userPost";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const MyPageTable: React.FC = () => {
   const [data, setData] = useState<PostType[]>([]);
   const [status, setStatus] = useState(true);
-  const selectRef = useRef<HTMLSelectElement>(null);
+  // const selectRef = useRef<HTMLSelectElement>(null);
 
   // const baseUrl = "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io/userInfo";
 
@@ -29,7 +30,7 @@ const MyPageTable: React.FC = () => {
     try {
       await axios
         .put("http://localhost:4000/postUserInfo", { status: boolean })
-        .then((res) => console.log(res));
+        .then((res) => res.data);
     } catch (err: unknown) {
       console.log(err);
     }
@@ -66,7 +67,11 @@ const MyPageTable: React.FC = () => {
               {data?.map((item) => {
                 return (
                   <tr key={item.postId}>
-                    <td id="title">{item.title}</td>
+                    <td id="title">
+                      <Link to={`/mypage/mycontents/${item.postId}`}>
+                        {item.title}
+                      </Link>
+                    </td>
                     <td>{item.region}</td>
                     <td>
                       {item.duration[0].start} ~ {item.duration[0].end}

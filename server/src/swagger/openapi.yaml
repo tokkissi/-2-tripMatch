@@ -6,7 +6,7 @@ info:
   license:
     name: KJ
 servers:
-  - url: http://localhost:5000/
+  - url: http://localhost:3003/
 paths:
   /api/main/auth/email:
     $ref: "./auth.yaml#/~1auth~1email"
@@ -64,6 +64,14 @@ paths:
     $ref: "./posts.yaml#/~1posts~1post"
   /api/main/search:
     $ref: "./search.yaml#/~1search"
+  /api/admin/notices/{noticeId}:
+    $ref: "./admin.yaml#/~1notices~1{noticeId}"
+  /api/admin/notices/notice:
+    $ref: "./admin.yaml#/~1notices~1notice"
+  /api/admin/users:
+    $ref: "./admin.yaml#/~1users"
+  /api/admin/users/{email}:
+    $ref: "./admin.yaml#/~1users~1{email}"
 components:
   schemas:
     status:

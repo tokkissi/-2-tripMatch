@@ -1,6 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import type { FreePostType } from "../type/freePost";
 import { axiosBaseQuery } from "./axiosBaseQuery";
+import { CommentType } from "./../type/comment";
 
 export const freePostApi = createApi({
   reducerPath: "freePostApi",
@@ -36,7 +37,10 @@ export const freePostApi = createApi({
           : ["FreePost"],
     }),
     // id에 해당하는 게시글을 불러옴
-    getFreePost: builder.query<FreePostType, string | undefined>({
+    getFreePost: builder.query<
+      { comments: CommentType[]; community: FreePostType },
+      string | undefined
+    >({
       query: (communityId) => ({
         url: `api/main/communities/${communityId}`,
         method: "get",
@@ -48,18 +52,18 @@ export const freePostApi = createApi({
       query: (updatedPost) => ({
         url: `api/main/communities/${updatedPost.communityId}`,
         method: "PUT",
-        body: updatedPost,
+        data: updatedPost,
       }),
       invalidatesTags: (result, error, arg) => [
         { type: "FreePost", id: arg.communityId },
       ],
     }),
     // 게시글 추가 {title,content,region,category}
-    createFreePost: builder.mutation<null, FreePostType>({
+    createFreePost: builder.mutation<null, any>({
       query: (newPost) => ({
         url: "api/main/communities/community",
         method: "POST",
-        body: newPost,
+        data: newPost,
       }),
       invalidatesTags: ["FreePost"],
     }),

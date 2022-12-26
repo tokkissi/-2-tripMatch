@@ -1,6 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import type { MatchPostType } from "./../type/matchPost";
 import { axiosBaseQuery } from "./axiosBaseQuery";
+import { CommentType } from "./../type/comment";
 
 export const matchPostApi = createApi({
   reducerPath: "matchPostApi",
@@ -36,7 +37,10 @@ export const matchPostApi = createApi({
           : ["MatchPost"],
     }),
     // id에 해당하는 게시글을 불러옴
-    getMatchPost: builder.query<MatchPostType, string | undefined>({
+    getMatchPost: builder.query<
+      { post: MatchPostType; comments: CommentType[] },
+      string | undefined
+    >({
       query: (postId) => ({
         url: `api/main/posts/${postId}`,
         method: "get",
@@ -48,7 +52,7 @@ export const matchPostApi = createApi({
       query: (updatedPost) => ({
         url: `api/main/posts/${updatedPost.postId}`,
         method: "PUT",
-        body: updatedPost,
+        data: updatedPost,
       }),
       invalidatesTags: (result, error, arg) => [
         { type: "MatchPost", id: arg.postId },
@@ -59,7 +63,7 @@ export const matchPostApi = createApi({
       query: (newPost) => ({
         url: "api/main/posts/post",
         method: "POST",
-        body: newPost,
+        data: newPost,
       }),
       invalidatesTags: ["MatchPost"],
     }),
@@ -75,7 +79,7 @@ export const matchPostApi = createApi({
       query: (postId) => ({
         url: "api/main/matches/match",
         method: "POST",
-        body: { postId },
+        data: { postId },
       }),
     }),
     //cancelMatch: builder.mutation<null, string>({})

@@ -1,4 +1,4 @@
-import React, { LegacyRef, useRef } from "react";
+import React from "react";
 import { Editor as ToastEditor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/i18n/ko-kr";
@@ -7,13 +7,15 @@ import styled from "styled-components";
 interface EditorProps {
   placeholder?: string;
   initialValue?: string;
-  contentRef: React.RefObject<ToastEditor>;
+  contentRef?: React.RefObject<ToastEditor>;
+  setContent?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Editor: React.FC<EditorProps> = ({
   placeholder,
   initialValue,
   contentRef,
+  setContent,
 }) => {
   return (
     <Container>

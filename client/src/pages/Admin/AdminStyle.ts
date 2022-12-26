@@ -32,6 +32,7 @@ const SearchBar = styled.div`
 
   input {
     border: none;
+    font-family: "S-CoreDream-3Light";
 
     :focus {
       outline: white;

@@ -36,12 +36,34 @@ const MatchPostDetail = () => {
   const [onDeleteComment, { isError: isErrorDeleteComment }] =
     useDeleteCommentMutation();
 
-  const [onApplyMatch, { isError: isErrorApplyMatch }] =
-    useApplyMatchMutation();
+  const [
+    onApplyMatch,
+    { isError: isErrorApplyMatch, isSuccess: isSuccessApplyMatch },
+  ] = useApplyMatchMutation();
   const [onCancleMatch, { isError: isErrorCancleMatch }] =
     useCancelMatchMutation();
 
   const { show: isShown, modalText } = useAppSelector((state) => state.modal);
+
+  // 페이지 첫 렌더링시 동행 신청중인 글인지 확인함
+  useEffect(() => {
+    const getMatchPost = async () => {
+      const result = await authAxios.get(
+        "http://34.64.156.80:3003/api/main/mypage/myEnroll",
+      );
+
+      if (result.data) {
+        const currentMatch = result.data.find(
+          (post: { postId: string }) => post.postId === id,
+        );
+
+        currentMatch && setIsApplying(true);
+        currentMatch && setMatchId(currentMatch.matchId);
+      }
+    };
+
+    sessionStorage.getItem("x-access-token") && getMatchPost();
+  }, [id]);
 
   useEffect(() => {
     const getMatchPost = async () => {
@@ -57,11 +79,12 @@ const MatchPostDetail = () => {
         currentMatch && setIsApplying(true);
         currentMatch && setMatchId(currentMatch.matchId);
       }
-      console.log("dd");
     };
 
-    sessionStorage.getItem("x-access-token") && getMatchPost();
-  }, [id]);
+    isSuccessApplyMatch && getMatchPost();
+  }, [id, isSuccessApplyMatch]);
+
+  console.log(isSuccessApplyMatch);
 
   const onClickApplyMatch = () => {
     console.log("동행 신청");
@@ -74,6 +97,8 @@ const MatchPostDetail = () => {
     onCancleMatch(matchId);
     setIsApplying(!isApplying);
   };
+
+  console.log(matchId);
 
   const onClickDeletePost = () => {
     console.log("삭제");

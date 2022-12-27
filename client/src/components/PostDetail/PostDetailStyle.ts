@@ -33,6 +33,7 @@ export const Thumbnail = styled.div`
   overflow: hidden;
   margin-bottom: 10px;
   background-color: #ccc;
+  position: relative;
 `;
 
 export const ThumbnailImg = styled.img`
@@ -66,6 +67,7 @@ export const PostContent = styled.article`
   padding: 40px 0;
   font-size: ${(props) => props.theme.font.M};
   line-height: 1.7;
+  font-family: "S-CoreDream-3Light";
 `;
 
 export const Date = styled.p`
@@ -78,7 +80,10 @@ export const ButtonContainer = styled.div`
   justify-content: end;
 
   a {
-    margin-right: 15px;
+    margin-left: 15px;
+  }
+  & > button {
+    margin-left: 15px;
   }
 `;
 
@@ -91,6 +96,10 @@ export const Button = styled.button`
   background-color: ${(props) => props.theme.color.lightblue};
   color: #333;
   font-family: "S-CoreDream-3Light";
+
+  &:hover {
+    background-color: ${(props) => props.theme.color.blue};
+  }
 `;
 
 export const MatchButton = styled.button<{ isApplying: boolean }>`

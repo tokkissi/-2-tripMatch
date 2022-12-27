@@ -1,12 +1,12 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import type { MatchPostType } from "./../type/matchPost";
-import { axiosBaseQuery } from "./axiosBaseQuery";
+import { authAxiosBaseQuery, axiosBaseQuery } from "./axiosBaseQuery";
 import { CommentType } from "./../type/comment";
 
 export const matchPostApi = createApi({
   reducerPath: "matchPostApi",
   tagTypes: ["MatchPost"],
-  baseQuery: axiosBaseQuery({
+  baseQuery: authAxiosBaseQuery({
     baseUrl: "http://34.64.156.80:3003/api/",
   }),
   endpoints: (builder) => ({
@@ -88,6 +88,23 @@ export const matchPostApi = createApi({
         method: "delete",
       }),
     }),
+    addLike: builder.mutation<string, string>({
+      query: (postId) => ({
+        url: `main/likes/like`,
+        method: "post",
+        data: {
+          postId: postId,
+        },
+      }),
+      invalidatesTags: ["MatchPost"],
+    }),
+    deleteLike: builder.mutation<string, string>({
+      query: (postId) => ({
+        url: `main/likes/like?postId=${postId}`,
+        method: "delete",
+      }),
+      invalidatesTags: ["MatchPost"],
+    }),
   }),
 });
 
@@ -99,4 +116,6 @@ export const {
   useDeleteMatchPostMutation,
   useApplyMatchMutation,
   useCancelMatchMutation,
+  useAddLikeMutation,
+  useDeleteLikeMutation,
 } = matchPostApi;

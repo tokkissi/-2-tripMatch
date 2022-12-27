@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useUpdateCommentMutation } from "../../slice/commentApi";
 import { showModal } from "../../slice/modal";
 import { useAppDispatch } from "../../store/hooks";
+import { dateFormat } from "../../util/dateFormatting";
 import { Button } from "../CommentList/CommentListStyle";
 import UserProfile from "../UserProfile/UserProfile";
 import type { CommentType } from "./../../type/comment";
@@ -45,7 +46,7 @@ const Comment: React.FC<CommentProps> = ({ comment, setDeleteCommentId }) => {
   }, [comment.author.email]);
 
   useEffect(() => {
-    setIsAdmin(sessionStorage.getItem("role") === "admin");
+    setIsAdmin(sessionStorage.getItem("roleToken") === "admin");
   }, []);
 
   const onClickUpdate = () => setIsClickUpdate(true);
@@ -70,11 +71,31 @@ const Comment: React.FC<CommentProps> = ({ comment, setDeleteCommentId }) => {
     });
   };
 
+  const getButtonsForUserType = () => {
+    if (isAuthor) {
+      return isClickUpdate ? (
+        <>
+          <Button onClick={onClickUpdateCompleted}>수정 완료</Button>
+          <Button onClick={onClickCancle}>취소</Button>
+        </>
+      ) : (
+        <>
+          <Button onClick={onClickUpdate}>수정</Button>
+          <Button onClick={onClickDelete}>삭제</Button>
+        </>
+      );
+    } else if (!isAuthor && isAdmin) {
+      return <Button onClick={onClickDelete}>삭제</Button>;
+    } else if (!isAuthor && !isAdmin) {
+      return;
+    }
+  };
+
   return (
     <Container key={comment.commentId}>
       <ProfileContainer>
         <UserProfile user={comment.author} />
-        <Date>({comment.createdAt})</Date>
+        <Date>({dateFormat(comment.createdAt)})</Date>
       </ProfileContainer>
       {isClickUpdate ? (
         <UpdateInput
@@ -84,21 +105,7 @@ const Comment: React.FC<CommentProps> = ({ comment, setDeleteCommentId }) => {
       ) : (
         <Content>{comment.content}</Content>
       )}
-      {isAuthor || isAdmin ? (
-        <ButtonContainer>
-          {isClickUpdate ? (
-            <>
-              <Button onClick={onClickUpdateCompleted}>수정 완료</Button>
-              <Button onClick={onClickCancle}>취소</Button>
-            </>
-          ) : (
-            <>
-              <Button onClick={onClickUpdate}>수정</Button>
-              <Button onClick={onClickDelete}>삭제</Button>
-            </>
-          )}
-        </ButtonContainer>
-      ) : null}
+      <ButtonContainer>{getButtonsForUserType()}</ButtonContainer>
     </Container>
   );
 };

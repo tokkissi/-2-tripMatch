@@ -16,7 +16,7 @@ const CommentList: React.FC<CommentListProps> = ({
 }) => {
   const [commentInput, setCommentInput] = useState("");
 
-  const [onCreateComment, { isError, isLoading }] = useCreateCommentMutation();
+  const [onCreateComment, { isError }] = useCreateCommentMutation();
 
   const location = useLocation();
 
@@ -50,10 +50,15 @@ const CommentList: React.FC<CommentListProps> = ({
           setDeleteCommentId={setDeleteCommentId}
         />
       ))}
-      <Form onSubmit={onSubmitComment}>
-        <Textarea rows={5} onChange={(e) => setCommentInput(e.target.value)} />
-        <Button commentForm>작성</Button>
-      </Form>
+      {sessionStorage.getItem("x-access-token") && (
+        <Form onSubmit={onSubmitComment}>
+          <Textarea
+            rows={5}
+            onChange={(e) => setCommentInput(e.target.value)}
+          />
+          <Button commentForm>작성</Button>
+        </Form>
+      )}
     </>
   );
 };

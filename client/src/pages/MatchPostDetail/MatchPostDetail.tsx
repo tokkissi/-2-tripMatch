@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import PostDetail from "./../../components/PostDetail/PostDetail";
 import Comment from "../../components/CommentList/CommentList";
@@ -16,12 +16,14 @@ import {
 import { useAppSelector } from "../../store/hooks";
 import Modal from "../../components/Modal/Modal";
 import { useDeleteCommentMutation } from "../../slice/commentApi";
+import ThumbnailModal from "./components/ThumbnailModal";
 
 const MatchPostDetail = () => {
   // const [post, setPost] = useState<MatchPostType>();
   const [isApplying, setIsApplying] = useState(false);
   const [deleteCommentId, setDeleteCommentId] = useState("");
   const [matchId, setMatchId] = useState("");
+  const [openThumbnail, setOpenThumbnail] = useState(false);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -100,6 +102,10 @@ const MatchPostDetail = () => {
     }
   };
 
+  const onToggleThumbnail = useCallback(() => {
+    setOpenThumbnail(!openThumbnail);
+  }, [openThumbnail]);
+
   if (isError) {
     return <NotFound />;
   }
@@ -121,6 +127,10 @@ const MatchPostDetail = () => {
         />
       )}
       {isShown && <Modal callBackFn={getModalCallback()} />}
+      <button onClick={() => setOpenThumbnail(true)}></button>
+      {openThumbnail && (
+        <ThumbnailModal onToggleThumbnail={onToggleThumbnail} />
+      )}
     </Container>
   );
 };

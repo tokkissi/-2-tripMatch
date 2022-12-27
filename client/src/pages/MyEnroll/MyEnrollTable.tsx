@@ -1,51 +1,45 @@
 import React, { useEffect, useState } from "react";
 import { Content, Layer, ReviewDiv } from "./MyEnrollTableStyle";
-// import ReviewModal from "../Home/reviewModal";
 import Modal from "../../components/Modal/Modal";
 import { showModal } from "../../slice/modal";
 import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import ReviewModal from "../Home/reviewModal";
+import authAxios from "../../axios/authAxios";
 
-export interface Post {
-  postId: number;
+export interface Enroll {
+  matchId: string;
+  postId: string;
   title: string;
-  duration: Duration[];
-  postStatus: boolean;
+  duration: string[];
+  status: string;
+  contact: string;
   author: Author[];
-  agreeStatus: string;
-  reviewStatus: boolean;
 }
 
 export interface Author {
-  authorId: number;
-  profileImg?: string;
+  profileImg: string;
   email: string;
   nickname: string;
-  gender: string;
-  age: number;
-  contactInfo?: string;
-  score?: number;
-}
-
-export interface Duration {
-  start: Date;
-  end: Date;
 }
 
 const MyEnrollTable: React.FC = () => {
-  const [data, setData] = useState<Post[]>([]);
+  const [data, setData] = useState<Enroll[]>([]);
   const [isCancel, setCancel] = useState(false);
   const [isReview, setReview] = useState(false);
   const dispatch = useAppDispatch();
   const { show: isShown, modalText } = useAppSelector((state) => state.modal);
 
   useEffect(() => {
-    const getData = async () => {
-      const fetchData = await axios.get("http://localhost:4000/myEnroll");
-      setData(fetchData.data[0].posts);
+    const enrollData = async () => {
+      try {
+        const fetchData = await authAxios.get("/api/main/mypage/myEnroll");
+        setData(fetchData.data);
+      } catch (err: unknown) {
+        console.error(err);
+      }
     };
-    getData();
+    enrollData();
   }, []);
 
   const onCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -87,75 +81,73 @@ const MyEnrollTable: React.FC = () => {
             </tr>
           </thead>
 
-          {data?.map((item) => {
-            const today = Date.now();
-            const tripEnd = item.duration[0].end;
-            const dateTripEnd = new Date(tripEnd);
-            const tripEndTime = dateTripEnd.getTime();
-            const elapse = Number(
-              ((today - tripEndTime) / 1000 / 60 / 60 / 24).toFixed(0),
-            );
+          {data &&
+            data.map((item) => {
+              const today = Date.now();
+              const tripEnd = item.duration[1];
+              const dateTripEnd = new Date(tripEnd);
+              const tripEndTime = dateTripEnd.getTime();
+              const elapse = Number(
+                ((today - tripEndTime) / 1000 / 60 / 60 / 24).toFixed(0),
+              );
 
-            // 1. 수락해서 여행 종료되고 시간이 지나 리뷰 버튼이 없는경우
-            // 2. 신청 상태가 거절일 때 버튼 아예 없애기
-            // 3. 여행 종료 후 일주일 이내일 때 리뷰 버튼 보여주기
-            // 4. 대기 상태일 때 취소 버튼 보여주기
+              // 1. 수락해서 여행 종료되고 시간이 지나 리뷰 버튼이 없는경우
+              // 2. 신청 상태가 거절일 때 버튼 아예 없애기
+              // 3. 여행 종료 후 일주일 이내일 때 리뷰 버튼 보여주기
+              // 4. 대기 상태일 때 취소 버튼 보여주기
 
-            return (
-              <tbody key={item.postId}>
-                <tr>
-                  <td id="title">{item.title}</td>
-                  <td>{item.author[0].nickname}</td>
-                  <td>{item.agreeStatus}</td>
-                  <td id="last">
-                    {elapse >= 1 &&
-                    elapse <= 7 &&
-                    item.agreeStatus === "수락" ? (
-                      <ReviewDiv>
-                        <button id="review" onClick={onReview}>
-                          리뷰
-                        </button>
-                        {isReview && (
-                          <ReviewModal
-                            email={item.author[0].email}
-                            setReview={setReview}
-                          />
-                        )}
-                        <span>여행 종료로부터 + {elapse}</span>
-                      </ReviewDiv>
-                    ) : elapse < 1 && item.agreeStatus === "수락" ? (
-                      <span></span> // 여행 시작도 안했고 수락 됐을때
-                    ) : elapse < 1 && item.agreeStatus === "대기중" ? (
-                      <div>
-                        <button id="cancel" onClick={onCancel}>
-                          취소
-                        </button>
-                        {isShown && <Modal callBackFn={handleCancel} />}
-                      </div>
-                    ) : (
-                      // 여행 시작 안했고 대기중일 때
-                      <span></span> // 여행 끝난지 한참됨
-                    )}
-                  </td>
-                </tr>
-
-                {item.agreeStatus === "수락" ? (
-                  <tr id="agreeContact">
-                    <td id="contact">
-                      <span>
-                        동행자와 연락해보세요 :)
-                        <span id="contactInfo">
-                          {item.author[0].contactInfo}
-                        </span>
-                      </span>
+              return (
+                <tbody key={item.postId}>
+                  <tr>
+                    <td id="title">{item.title}</td>
+                    <td>{item.author[0].nickname}</td>
+                    <td>{item.status}</td>
+                    <td id="last">
+                      {elapse >= 1 && elapse <= 7 && item.status === "수락" ? (
+                        <ReviewDiv>
+                          <button id="review" onClick={onReview}>
+                            리뷰
+                          </button>
+                          {isReview && (
+                            <ReviewModal
+                              email={item.author[0].email}
+                              setReview={setReview}
+                            />
+                          )}
+                          <span>여행 종료로부터 + {elapse}</span>
+                        </ReviewDiv>
+                      ) : elapse < 1 && item.status === "수락" ? (
+                        <span></span> // 여행 시작도 안했고 수락 됐을때
+                      ) : elapse < 1 && item.status === "대기중" ? (
+                        <div>
+                          <button id="cancel" onClick={onCancel}>
+                            취소
+                          </button>
+                          {isShown && <Modal callBackFn={handleCancel} />}
+                        </div>
+                      ) : (
+                        // 여행 시작 안했고 대기중일 때
+                        <span></span>
+                        // 여행 끝난지 한참됨
+                      )}
                     </td>
                   </tr>
-                ) : (
-                  ""
-                )}
-              </tbody>
-            );
-          })}
+
+                  {item.status === "수락" ? (
+                    <tr id="agreeContact">
+                      <td id="contact">
+                        <span>
+                          동행자와 연락해보세요 :)
+                          <span id="contactInfo">{item.contact}</span>
+                        </span>
+                      </td>
+                    </tr>
+                  ) : (
+                    ""
+                  )}
+                </tbody>
+              );
+            })}
         </table>
       </Layer>
     </Content>

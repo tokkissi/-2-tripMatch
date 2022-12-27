@@ -7,10 +7,10 @@ import { Link } from "react-router-dom";
 
 const MyPageTable: React.FC = () => {
   const [data, setData] = useState<PostType[]>([]);
-  const [status, setStatus] = useState(true);
+  // const [status, setStatus] = useState(true);
   // const selectRef = useRef<HTMLSelectElement>(null);
 
-  //const baseUrl = "34.64.156.80:3003";
+  //const baseUrl = "http://34.64.156.80:3003";
 
   useEffect(() => {
     const getData = async () => {

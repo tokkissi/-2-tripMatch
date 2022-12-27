@@ -48,8 +48,14 @@ const Admin = () => {
   };
 
   const roleChange = async (email: string, role: string) => {
+    let newRole = "";
+    if (role === "회원") {
+      newRole = "admin";
+    } else {
+      newRole = "user";
+    }
     await axios
-      .put(`/api/admin/users/${email}`, { role: role })
+      .put(`/api/admin/users/${email}`, { role: newRole })
       .then()
       .catch((err) => console.log(err));
   };

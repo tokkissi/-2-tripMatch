@@ -61,6 +61,9 @@ const ReceivedEnrollTable: React.FC = () => {
                   </tr>
                 );
               })}
+            <tr>
+              <td></td>
+            </tr>
           </tbody>
         </table>
       </Layer>

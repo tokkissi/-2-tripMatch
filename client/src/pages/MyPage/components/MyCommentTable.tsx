@@ -47,12 +47,15 @@ const MyCommentTable: React.FC = () => {
                     </td>
                     <td>{item.region}</td>
                     <td>
-                      {item.duration[0]} ~ {item.duration[0]}
+                      {item.duration[0]} ~ {item.duration[1]}
                     </td>
                     <td id="last">{item.author.nickname}</td>
                   </tr>
                 );
               })}
+            <tr>
+              <td></td>
+            </tr>
           </tbody>
         </table>
       </Layer>

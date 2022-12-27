@@ -23,6 +23,7 @@ const Comment: React.FC<CommentProps> = ({ comment, setDeleteCommentId }) => {
   const [isClickUpdate, setIsClickUpdate] = useState<boolean>(false);
   const [commentInput, setCommentInput] = useState("");
   const [isAuthor, setIsAuthor] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const [onUpdateComment, { isError, isSuccess }] = useUpdateCommentMutation();
 
@@ -42,6 +43,10 @@ const Comment: React.FC<CommentProps> = ({ comment, setDeleteCommentId }) => {
   useEffect(() => {
     setIsAuthor(sessionStorage.getItem("email") === comment.author.email);
   }, [comment.author.email]);
+
+  useEffect(() => {
+    setIsAdmin(sessionStorage.getItem("role") === "admin");
+  }, []);
 
   const onClickUpdate = () => setIsClickUpdate(true);
 
@@ -79,7 +84,7 @@ const Comment: React.FC<CommentProps> = ({ comment, setDeleteCommentId }) => {
       ) : (
         <Content>{comment.content}</Content>
       )}
-      {isAuthor && (
+      {isAuthor || isAdmin ? (
         <ButtonContainer>
           {isClickUpdate ? (
             <>
@@ -93,7 +98,7 @@ const Comment: React.FC<CommentProps> = ({ comment, setDeleteCommentId }) => {
             </>
           )}
         </ButtonContainer>
-      )}
+      ) : null}
     </Container>
   );
 };

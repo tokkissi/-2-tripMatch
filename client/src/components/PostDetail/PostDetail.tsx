@@ -24,6 +24,7 @@ import { showModal } from "../../slice/modal";
 import axios from "axios";
 import { dateFormat } from "../../util/dateFormatting";
 import ProfileModal from "../ProfileModal/ProfileModal";
+import authAxios from "../../axios/authAxios";
 
 interface PostDetailProps {
   matchPost?: MatchPostType;
@@ -61,11 +62,11 @@ const PostDetail: React.FC<PostDetailProps> = ({
   useEffect(() => {
     const fetchLikePost = async () => {
       if (isLikePost && clickLikePost) {
-        await axios.post("http://34.64.156.80:3003/api/main/likes/like", {
+        await authAxios.post("http://34.64.156.80:3003/api/main/likes/like", {
           postId: id,
         });
       } else if (!isLikePost && clickLikePost) {
-        await axios.delete("http://34.64.156.80:3003/api/main/likes/like", {
+        await authAxios.delete("http://34.64.156.80:3003/api/main/likes/like", {
           params: { postId: id },
         });
       }
@@ -76,7 +77,9 @@ const PostDetail: React.FC<PostDetailProps> = ({
   // 이미 좋아요를 누른 게시글이면 setIsLikePost(true)
   useEffect(() => {
     const getLikePost = async () => {
-      const result = await axios.get("http://34.64.156.80:3003/api/main/likes");
+      const result = await authAxios.get(
+        "http://34.64.156.80:3003/api/main/likes",
+      );
 
       if (result.data) {
         const currentLike = result.data.find(
@@ -97,7 +100,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
     setIsAdmin(sessionStorage.getItem("role") === "admin");
   }, [freePost, matchPost]);
 
-  const onToggleLikes = async () => {
+  const onToggleLikes = () => {
     setIsLikePost(!isLikePost);
     setClickLikePost(true);
   };

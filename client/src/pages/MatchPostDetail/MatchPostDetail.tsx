@@ -17,6 +17,7 @@ import { useAppSelector } from "../../store/hooks";
 import Modal from "../../components/Modal/Modal";
 import { useDeleteCommentMutation } from "../../slice/commentApi";
 import ThumbnailModal from "./components/ThumbnailModal";
+import authAxios from "../../axios/authAxios";
 
 const MatchPostDetail = () => {
   // const [post, setPost] = useState<MatchPostType>();
@@ -44,7 +45,7 @@ const MatchPostDetail = () => {
 
   useEffect(() => {
     const getMatchPost = async () => {
-      const result = await axios.get(
+      const result = await authAxios.get(
         "http://34.64.156.80:3003/api/main/mypage/myEnroll",
       );
 
@@ -128,7 +129,6 @@ const MatchPostDetail = () => {
         />
       )}
       {isShown && <Modal callBackFn={getModalCallback()} />}
-      <button onClick={() => setOpenThumbnail(true)}></button>
       {openThumbnail && (
         <ThumbnailModal
           onToggleThumbnail={onToggleThumbnail}

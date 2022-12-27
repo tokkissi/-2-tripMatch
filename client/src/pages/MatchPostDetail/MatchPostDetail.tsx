@@ -1,16 +1,13 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import PostDetail from "./../../components/PostDetail/PostDetail";
 import Comment from "../../components/CommentList/CommentList";
-import axios from "axios";
-import type { MatchPostType } from "../../type/matchPost";
 import NotFound from "../../components/NotFound/NotFound";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   useApplyMatchMutation,
   useCancelMatchMutation,
   useDeleteMatchPostMutation,
-  useGetAllMatchPostQuery,
   useGetMatchPostQuery,
 } from "../../slice/matchPostApi";
 import { useAppSelector } from "../../store/hooks";
@@ -30,18 +27,13 @@ const MatchPostDetail = () => {
   const navigate = useNavigate();
 
   const postquery = useGetMatchPostQuery(id);
-  const { data: matchPost, isLoading, isError } = postquery;
-  const [onDeletePost, { isError: isErrorDeletePost }] =
-    useDeleteMatchPostMutation();
-  const [onDeleteComment, { isError: isErrorDeleteComment }] =
-    useDeleteCommentMutation();
+  const { data: matchPost, isError } = postquery;
+  const [onDeletePost] = useDeleteMatchPostMutation();
+  const [onDeleteComment] = useDeleteCommentMutation();
 
-  const [
-    onApplyMatch,
-    { isError: isErrorApplyMatch, isSuccess: isSuccessApplyMatch },
-  ] = useApplyMatchMutation();
-  const [onCancleMatch, { isError: isErrorCancleMatch }] =
-    useCancelMatchMutation();
+  const [onApplyMatch, { isSuccess: isSuccessApplyMatch }] =
+    useApplyMatchMutation();
+  const [onCancleMatch] = useCancelMatchMutation();
 
   const { show: isShown, modalText } = useAppSelector((state) => state.modal);
 
@@ -84,24 +76,17 @@ const MatchPostDetail = () => {
     isSuccessApplyMatch && getMatchPost();
   }, [id, isSuccessApplyMatch]);
 
-  console.log(isSuccessApplyMatch);
-
   const onClickApplyMatch = () => {
-    console.log("동행 신청");
     onApplyMatch(id!);
     setIsApplying(!isApplying);
   };
 
   const onClickCancleMatch = () => {
-    console.log("동행 취소");
     onCancleMatch(matchId);
     setIsApplying(!isApplying);
   };
 
-  console.log(matchId);
-
   const onClickDeletePost = () => {
-    console.log("삭제");
     onDeletePost(id);
     navigate("/match");
   };

@@ -19,6 +19,12 @@ const Container = styled.div`
     text-decoration: none;
     cursor: pointer;
   }
+
+  .showAll {
+    margin-top: 2%;
+    text-align: right;
+    cursor: pointer;
+  }
 `;
 
 const SearchBar = styled.div`

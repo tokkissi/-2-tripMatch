@@ -51,7 +51,7 @@ export const freePostApi = createApi({
     updateFreePost: builder.mutation<null, FreePostType>({
       query: ({ communityId, ...updatedPost }) => ({
         url: `main/communities/${communityId}`,
-        method: "PUT",
+        method: "put",
         data: updatedPost,
       }),
       invalidatesTags: (result, error, arg) => [
@@ -62,7 +62,7 @@ export const freePostApi = createApi({
     createFreePost: builder.mutation<null, any>({
       query: (newPost) => ({
         url: "main/communities/community",
-        method: "POST",
+        method: "post",
         data: newPost,
       }),
       invalidatesTags: ["FreePost"],
@@ -71,7 +71,7 @@ export const freePostApi = createApi({
     deleteFreePost: builder.mutation<null, string | undefined>({
       query: (communityId) => ({
         url: `main/communities/${communityId}`,
-        method: "DELETE",
+        method: "delete",
       }),
       invalidatesTags: ["FreePost"],
     }),

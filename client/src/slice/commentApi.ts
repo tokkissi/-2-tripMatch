@@ -16,7 +16,7 @@ export const commentApi = createApi({
     >({
       query: ({ commentId, ...content }) => ({
         url: `main/comment/${commentId}`,
-        method: "PUT",
+        method: "put",
         data: content,
       }),
       invalidatesTags: (result, error, arg) => [
@@ -30,7 +30,7 @@ export const commentApi = createApi({
     >({
       query: (newComment) => ({
         url: "main/comment",
-        method: "POST",
+        method: "post",
         data: newComment, // body:{content:string,(communityId || postId):string}
       }),
       invalidatesTags: ["Comment"],
@@ -39,7 +39,7 @@ export const commentApi = createApi({
     deleteComment: builder.mutation<null, string>({
       query: (commentId) => ({
         url: `main/comment/${commentId}`,
-        method: "DELETE",
+        method: "delete",
       }),
       invalidatesTags: ["Comment"],
     }),

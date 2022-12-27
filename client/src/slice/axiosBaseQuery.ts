@@ -22,9 +22,6 @@ export const axiosBaseQuery =
         method,
         data,
         params,
-        headers: {
-          ["x-access-token"]: sessionStorage.getItem("x-access-token"),
-        },
       });
 
       if (result.status === 204) {

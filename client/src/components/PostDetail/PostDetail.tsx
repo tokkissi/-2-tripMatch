@@ -13,17 +13,12 @@ import {
   MatchButton,
   ButtonContainer,
   Button,
-  ThumbnailModalButton,
 } from "./PostDetailStyle";
 import type { FreePostType, AuthorType } from "./../../type/freePost";
 import type { MatchPostType } from "../../type/matchPost";
-import Modal from "../Modal/Modal";
-import { useAppSelector } from "../../store/hooks";
 import { useAppDispatch } from "./../../store/hooks";
 import { showModal } from "../../slice/modal";
-import axios from "axios";
 import { dateFormat } from "../../util/dateFormatting";
-import ProfileModal from "../ProfileModal/ProfileModal";
 import authAxios from "../../axios/authAxios";
 
 interface PostDetailProps {
@@ -89,15 +84,17 @@ const PostDetail: React.FC<PostDetailProps> = ({
         currentLike && setIsLikePost(true);
       }
     };
-    sessionStorage.getItem("x-access-token") && getLikePost();
-  }, [id, isLikePost]);
+    if (sessionStorage.getItem("x-access-token") && !clickLikePost) {
+      getLikePost();
+    }
+  }, [clickLikePost, id, isLikePost]);
 
   // 로그인한 유저가 운영자나 글 작성자인지 체크함
   useEffect(() => {
     const currentPost = matchPost || freePost;
 
     setIsAuthor(sessionStorage.getItem("email") === currentPost?.author?.email);
-    setIsAdmin(sessionStorage.getItem("role") === "admin");
+    setIsAdmin(sessionStorage.getItem("roleToken") === "admin");
   }, [freePost, matchPost]);
 
   const onToggleLikes = () => {
@@ -135,17 +132,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
         );
       }
     }
-
-    // await axios.post('') 동행 신청 api 작성
   };
-
-  const getUpdatePathname = () =>
-    location.pathname.includes("match")
-      ? `/match/write/${matchPost?.postId}`
-      : `/free/write/${freePost?.communityId}`;
-
-  const getListPathname = () =>
-    location.pathname.includes("match") ? "/match" : "/free";
 
   const onClickDelete = () => {
     dispatch(
@@ -157,21 +144,41 @@ const PostDetail: React.FC<PostDetailProps> = ({
     );
   };
 
+  const getUpdatePathname = () =>
+    location.pathname.includes("match")
+      ? `/match/write/${matchPost?.postId}`
+      : `/free/write/${freePost?.communityId}`;
+
+  const getListPathname = () =>
+    location.pathname.includes("match") ? "/match" : "/free";
+
+  const getButtonsForUserType = () => {
+    if (isAuthor) {
+      return (
+        <>
+          <Link to={getUpdatePathname()} state={freePost || matchPost}>
+            <Button>글수정</Button>
+          </Link>
+          <Button onClick={onClickDelete}>글삭제</Button>
+        </>
+      );
+    } else if (!isAuthor && isAdmin) {
+      return <Button onClick={onClickDelete}>삭제</Button>;
+    } else if (!isAuthor && !isAdmin) {
+      return;
+    }
+  };
+
   return (
     <div>
       {matchPost && (
         <Thumbnail>
-          <ThumbnailImg src={matchPost.thumbnail} />
-          <ThumbnailModalButton
+          <ThumbnailImg
+            src={matchPost.thumbnail}
             onClick={() => {
               setOpenThumbnail && setOpenThumbnail(true);
             }}
-          >
-            <img
-              src="https://res.cloudinary.com/dv6tzjgu4/image/upload/v1672134240/Editing-Expand-icon_bgd0em.png"
-              alt="expand thumbnail"
-            />
-          </ThumbnailModalButton>
+          />
         </Thumbnail>
       )}
       <PostTitle>
@@ -219,7 +226,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
           </p>
           <p>
             <span>희망 연령대</span>
-            {matchPost.hopeAge}
+            {matchPost.hopeAge.join(", ")}
           </p>
         </MatchContainer>
       )}
@@ -238,14 +245,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
         <Link to={getListPathname()}>
           <Button>목록</Button>
         </Link>
-        {isAuthor || isAdmin ? (
-          <>
-            <Link to={getUpdatePathname()} state={freePost || matchPost}>
-              <Button>글수정</Button>
-            </Link>
-            <Button onClick={onClickDelete}>글삭제</Button>
-          </>
-        ) : null}
+        {getButtonsForUserType()}
       </ButtonContainer>
     </div>
   );

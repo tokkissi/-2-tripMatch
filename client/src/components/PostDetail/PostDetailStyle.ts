@@ -40,19 +40,6 @@ export const ThumbnailImg = styled.img`
   width: 100%;
 `;
 
-export const ThumbnailModalButton = styled.button`
-  position: absolute;
-  padding: 0;
-  right: 10px;
-  top: 10px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  img {
-    width: 30px;
-  }
-`;
-
 export const UserContainer = styled.div`
   display: flex;
   align-items: center;

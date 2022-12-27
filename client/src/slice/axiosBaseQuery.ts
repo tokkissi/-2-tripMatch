@@ -17,7 +17,12 @@ export const axiosBaseQuery =
   > =>
   async ({ url, method, data, params }) => {
     try {
-      const result = await axios({ url: baseUrl + url, method, data, params });
+      const result = await axios({
+        url: baseUrl + url,
+        method,
+        data,
+        params,
+      });
 
       if (result.status === 204) {
         throw new Error("204 에러입니다.");

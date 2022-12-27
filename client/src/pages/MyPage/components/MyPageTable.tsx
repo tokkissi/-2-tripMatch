@@ -17,16 +17,6 @@ interface TripMatchPostType {
   status: boolean;
 }
 
-const data11 = [
-  {
-    postId: "1",
-    title: "title1",
-    region: "ganwondo",
-    status: true,
-    duration: ["2022-12-30", "2022-12-31"],
-  },
-];
-
 const MyPageTable: React.FC = () => {
   const [data, setData] = useState<PostType[]>([]);
   const [post, setPost] = useState<TripMatchPostType[]>([]);
@@ -38,17 +28,16 @@ const MyPageTable: React.FC = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        // const fetchData = await authAxios.get(`/api/main/mypage/posts`);
-        // console.log(data);
-        // setData(fetchData.data);
-        setData(data11);
+        const fetchData = await authAxios.get(`/api/main/mypage/posts`);
+        console.log(data);
+        setData(fetchData.data);
       } catch (err: unknown) {
         console.error(err);
       }
     };
 
     getData();
-  }, []);
+  }, [data]);
   //console.log(data);
   const handleChangeValue = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();

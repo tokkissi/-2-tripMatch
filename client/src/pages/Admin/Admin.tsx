@@ -41,7 +41,7 @@ const Admin = () => {
   };
 
   const deleteMember = async (email: string) => {
-    await axios
+    await authAxios
       .delete(`/api/admin/users/${email}`)
       .then()
       .catch((err) => console.log(err));
@@ -54,7 +54,8 @@ const Admin = () => {
     } else {
       newRole = "user";
     }
-    await axios
+
+    await authAxios
       .put(`/api/admin/users/${email}`, { role: newRole })
       .then()
       .catch((err) => console.log(err));

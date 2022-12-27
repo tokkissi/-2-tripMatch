@@ -23,68 +23,60 @@ export interface Author {
   nickname: string;
 }
 
-// const data11 = [
-//   {
-//     matchId: "1",
-//     postId: "1",
-//     title: "title",
-//     duration: ["2023-01-01", "2023-01-02"],
-//     status: "수락",
-//     contact: "instagram @11ddy",
-//     author: [
-//       {
-//         profileImg: "",
-//         email: "222@gmail.com",
-//         nickname: "xxcs",
-//       },
-//     ],
-//   },
-//   {
-//     matchId: "2",
-//     postId: "2",
-//     title: "title2",
-//     duration: ["2022-12-11", "2022-12-13"],
-//     status: "거절",
-//     contact: "instagram @sjj",
-//     author: [
-//       {
-//         profileImg: "",
-//         email: "sjsj@gmail.com",
-//         nickname: "sjdhakd",
-//       },
-//     ],
-//   },
-//   {
-//     matchId: "3",
-//     postId: "3",
-//     title: "title3",
-//     duration: ["2022-12-23", "2023-12-26"],
-//     status: "수락",
-//     contact: "instagram @skdfj01",
-//     author: [
-//       {
-//         profileImg: "",
-//         email: "678@gmail.com",
-//         nickname: "hhsj",
-//       },
-//     ],
-//   },
-//   {
-//     matchId: "4",
-//     postId: "4",
-//     title: "title4",
-//     duration: ["2022-12-30", "2023-12-31"],
-//     status: "",
-//     contact: "instagram @hjjj",
-//     author: [
-//       {
-//         profileImg: "",
-//         email: "hjj@gmail.com",
-//         nickname: "klm",
-//       },
-//     ],
-//   },
-// ];
+const data11 = [
+  {
+    matchId: "1",
+    postId: "1",
+    title: "title",
+    duration: ["2023-01-01", "2023-01-02"],
+    matchStatus: "수락",
+    contact: "instagram @11ddy",
+    author: {
+      profileImg: "",
+      email: "222@gmail.com",
+      nickname: "xxcs",
+    },
+  },
+  {
+    matchId: "2",
+    postId: "2",
+    title: "title2",
+    duration: ["2022-12-11", "2022-12-13"],
+    matchStatus: "거절",
+    contact: "instagram @sjj",
+    author: {
+      profileImg: "",
+      email: "sjsj@gmail.com",
+      nickname: "sjdhakd",
+    },
+  },
+  {
+    matchId: "3",
+    postId: "3",
+    title: "title3",
+    duration: ["2022-12-23", "2022-12-26"],
+    matchStatus: "수락",
+    contact: "instagram @skdfj01",
+    author: {
+      profileImg: "",
+      email: "678@gmail.com",
+      nickname: "hhsj",
+    },
+  },
+  {
+    matchId: "4",
+    postId: "4",
+    title: "title4",
+    duration: ["2022-12-30", "2022-12-31"],
+    matchStatus: "대기중",
+    contact: "instagram @hjjj",
+    author: {
+      profileImg: "",
+      email: "hjj@gmail.com",
+      nickname: "klm",
+    },
+  },
+];
 
 const MyEnrollTable: React.FC = () => {
   const [data, setData] = useState<Enroll[]>([]);
@@ -96,9 +88,9 @@ const MyEnrollTable: React.FC = () => {
   useEffect(() => {
     const enrollData = async () => {
       try {
-        const fetchData = await authAxios.get("/api/main/mypage/myEnroll");
-        setData(fetchData.data);
-        // setData(data11);
+        // const fetchData = await authAxios.get("/api/main/mypage/myEnroll");
+        // setData(fetchData.data);
+        setData(data11);
       } catch (err: unknown) {
         console.error(err);
       }
@@ -150,10 +142,16 @@ const MyEnrollTable: React.FC = () => {
             data.map((item) => {
               const today = Date.now();
               const tripEnd = item.duration[1];
+              const tripStart = item.duration[0];
               const dateTripEnd = new Date(tripEnd);
+              const dataTripStart = new Date(tripStart);
               const tripEndTime = dateTripEnd.getTime();
+              const tripStartTime = dataTripStart.getTime();
               const elapse = Number(
                 ((today - tripEndTime) / 1000 / 60 / 60 / 24).toFixed(0),
+              );
+              const leftDay = Number(
+                ((tripStartTime - today) / 1000 / 60 / 60 / 24).toFixed(0),
               );
 
               // 1. 수락해서 여행 종료되고 시간이 지나 리뷰 버튼이 없는경우
@@ -177,14 +175,15 @@ const MyEnrollTable: React.FC = () => {
                           </button>
                           {isReview && (
                             <ReviewModal
-                              email={item.author.email}
+                              authorEmail={item.author.email}
+                              matchId={item.matchId}
                               setReview={setReview}
                             />
                           )}
-                          <span>여행 종료로부터 + {elapse}</span>
+                          <span id="endText">여행 종료로부터 + {elapse}</span>
                         </ReviewDiv>
-                      ) : elapse < 1 && item.matchStatus === "거절" ? (
-                        <span></span>
+                      ) : elapse < 1 && item.matchStatus === "수락" ? (
+                        <span id="left">여행 시작 {leftDay}일 전</span>
                       ) : elapse < 1 && item.matchStatus === "대기중" ? (
                         <div>
                           <button id="cancel" onClick={onCancel}>

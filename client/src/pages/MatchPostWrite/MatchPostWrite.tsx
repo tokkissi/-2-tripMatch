@@ -11,7 +11,7 @@ import {
 import AppInputText from "../../components/AppInputText/AppInputText";
 import AppInputRadioCheck from "../../components/AppInputRadioCheck/AppInputRadioCheck";
 import AppInputFile from "../../components/AppInputFile/AppInputFile";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Editor as ToastEditor } from "@toast-ui/react-editor";
 import { MatchPostType } from "../../type/matchPost";
 import { useCreateMatchPostMutation } from "../../slice/matchPostApi";
@@ -28,22 +28,22 @@ const regions = [
 ];
 
 const genderList = [
-  { value: "man", htmlValue: "남성" },
-  { value: "woman", htmlValue: "여성" },
-  { value: "both", htmlValue: "성별무관" },
+  { value: "남성", htmlValue: "남성" },
+  { value: "여성", htmlValue: "여성" },
+  { value: "성별무관", htmlValue: "성별무관" },
 ];
 
 const ageList = [
-  { value: "20", htmlValue: "20대" },
-  { value: "30", htmlValue: "30대" },
-  { value: "40", htmlValue: "40대" },
-  { value: "50", htmlValue: "50대" },
-  { value: "none", htmlValue: "연령대무관" },
+  { value: "20대", htmlValue: "20대" },
+  { value: "30대", htmlValue: "30대" },
+  { value: "40대", htmlValue: "40대" },
+  { value: "50대", htmlValue: "50대" },
+  { value: "연령대무관", htmlValue: "연령대무관" },
 ];
 
 const MatchPostWrite = () => {
   const navigate = useNavigate();
-
+  const state: MatchPostType = useLocation().state;
   const [createMatchPost] = useCreateMatchPostMutation();
 
   const regionRef = useRef<HTMLSelectElement>(null);
@@ -58,7 +58,7 @@ const MatchPostWrite = () => {
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
 
-  const [updateImg, { error, isLoading }] = useUpdateImgMutation();
+  const [updateImg] = useUpdateImgMutation();
 
   const imageHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) {
@@ -82,8 +82,6 @@ const MatchPostWrite = () => {
     event.preventDefault();
     const imgData = new FormData();
     imgData.append("file", imageUploaded || "");
-    imgData.append("upload_preset", "tripMatch");
-    imgData.append("cloud_name", "dk9scwone");
 
     const image = await updateImg(imgData).unwrap();
     if (!image) {
@@ -121,12 +119,14 @@ const MatchPostWrite = () => {
       <Container>
         <AppSelect
           refer={regionRef}
+          defaultValue={state && state.region}
           className={"region"}
           options={regions}
           label={"지 역"}
         />
         <AppInputText
           refer={titleRef}
+          defaultValue={state && state.title}
           inputWidth="100%"
           type={"text"}
           label={"제 목"}
@@ -135,6 +135,7 @@ const MatchPostWrite = () => {
         />
         <AppInputText
           refer={peopleCntRef}
+          defaultValue={state && state.userCount.toString()}
           inputWidth="5%"
           type={"number"}
           label={"모집 인원"}
@@ -143,6 +144,7 @@ const MatchPostWrite = () => {
         <DateRange>
           <AppInputText
             type={"date"}
+            defaultValue={state && state.duration[0]}
             label={"여행 기간"}
             className={"startDatePicker"}
             onChange={(e) => setStartDate(e.target.value)}
@@ -150,6 +152,7 @@ const MatchPostWrite = () => {
           <p>~</p>
           <AppInputText
             type={"date"}
+            defaultValue={state && state.duration[1]}
             className={"endDatePicker"}
             onChange={(e) => setEndDate(e.target.value)}
           />
@@ -157,12 +160,14 @@ const MatchPostWrite = () => {
         <AppInputRadioCheck
           radioAndCheckBoxList={genderList}
           type={"radio"}
+          defaultValue={state && state.hopeGender}
           label={"희망 성별"}
           className={"gender"}
           onChange={(e) => setGender(e.target.value)}
         />
         <AppInputRadioCheck
           radioAndCheckBoxList={ageList}
+          defaultValues={state && state.hopeAge}
           onChange={(e) => handleAges(e)}
           type={"checkbox"}
           label={"희망 연령대"}
@@ -177,13 +182,14 @@ const MatchPostWrite = () => {
         />
         <AppInputText
           refer={contactRef}
+          defaultValue={state && state.contact}
           inputWidth="20%"
           type={"text"}
           label={"연락 수단"}
           className={"contact"}
           placeholder={"인스타그램, 전화번호 등"}
         />
-        <Editor contentRef={contentRef} />
+        <Editor contentRef={contentRef} initialValue={state && state.content} />
         <ButtonContainer>
           <Link to="/match">
             <MatchPostAppButton

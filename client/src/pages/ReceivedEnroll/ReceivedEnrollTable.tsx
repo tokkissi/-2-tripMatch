@@ -7,7 +7,7 @@ export interface EnrolledPersonType {
   matchId: string;
   postId: string;
   title: string;
-  status: boolean;
+  status: string;
   duration: string[];
   applicant: Applicant[];
 }
@@ -18,22 +18,71 @@ export interface Applicant {
   profileImg: string;
 }
 
+const data11 = [
+  {
+    matchId: "1",
+    postId: "1",
+    title: "title",
+    status: "",
+    duration: ["2022-10-24", "2022-10-25"],
+    applicant: [
+      {
+        email: "111@gmail.com",
+        nickname: "aass",
+        profileImg: "",
+      },
+    ],
+  },
+];
+
 const ReceivedEnrollTable: React.FC = () => {
   const [data, setData] = useState<EnrolledPersonType[]>([]);
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const fetchData = await authAxios.get(
-          "/api/main/mypage/receivedEnroll",
-        );
-        setData(fetchData.data);
+        // const fetchData = await authAxios.get(
+        //   "/api/main/mypage/receivedEnroll",
+        // );
+        setData(data11);
       } catch (err: unknown) {
         console.error(err);
       }
     };
     getData();
   }, []);
+
+  const handleApproval = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const approvalFn = async () => {
+      try {
+        await authAxios.put(
+          `/api/main/matches/${data[0].matchId}`,
+          { status: "수락" },
+          // { headers: { matchId: data[0].matchId } },
+        );
+      } catch (err: unknown) {
+        console.error(err);
+      }
+    };
+    approvalFn();
+  };
+
+  const handleDenied = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const deniedFn = async () => {
+      try {
+        await authAxios.put(
+          `/api/main/matches/${data[0].matchId}`,
+          { status: "거절" },
+          // { headers: { matchId: data[0].matchId } },
+        );
+      } catch (err: unknown) {
+        console.error(err);
+      }
+    };
+    deniedFn();
+  };
 
   return (
     <Content>
@@ -55,8 +104,12 @@ const ReceivedEnrollTable: React.FC = () => {
                     <td id="title">{item.title}</td>
                     <td>{item.applicant[0].nickname}</td>
                     <td id="last">
-                      <button>수락</button>
-                      <button>거절</button>
+                      <button value="수락" onClick={handleApproval}>
+                        수락
+                      </button>
+                      <button value="거절" onClick={handleDenied}>
+                        거절
+                      </button>
                     </td>
                   </tr>
                 );

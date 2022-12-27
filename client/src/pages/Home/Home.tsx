@@ -13,11 +13,13 @@ const Home = () => {
   const [img, setImg] = useState<File | string>("");
   const [updateImg, { error, isLoading }] = useUpdateImgMutation();
 
+  const email = sessionStorage.getItem("email");
+
   const {
     data: matchData,
     isError: matchError,
     isLoading: matchLoading,
-  } = useGetAllMatchPostQuery({ page: 1 });
+  } = useGetAllMatchPostQuery({ page: 1, ...(email && { email }) });
 
   const {
     data: freeData,

@@ -12,9 +12,9 @@ export interface Enroll {
   postId: string;
   title: string;
   duration: string[];
-  status: string;
+  matchStatus: string;
   contact: string;
-  author: Author[];
+  author: Author;
 }
 
 export interface Author {
@@ -23,68 +23,68 @@ export interface Author {
   nickname: string;
 }
 
-const data11 = [
-  {
-    matchId: "1",
-    postId: "1",
-    title: "title",
-    duration: ["2023-01-01", "2023-01-02"],
-    status: "수락",
-    contact: "instagram @11ddy",
-    author: [
-      {
-        profileImg: "",
-        email: "222@gmail.com",
-        nickname: "xxcs",
-      },
-    ],
-  },
-  {
-    matchId: "2",
-    postId: "2",
-    title: "title2",
-    duration: ["2022-12-11", "2022-12-13"],
-    status: "거절",
-    contact: "instagram @sjj",
-    author: [
-      {
-        profileImg: "",
-        email: "sjsj@gmail.com",
-        nickname: "sjdhakd",
-      },
-    ],
-  },
-  {
-    matchId: "3",
-    postId: "3",
-    title: "title3",
-    duration: ["2022-12-23", "2023-12-26"],
-    status: "수락",
-    contact: "instagram @skdfj01",
-    author: [
-      {
-        profileImg: "",
-        email: "678@gmail.com",
-        nickname: "hhsj",
-      },
-    ],
-  },
-  {
-    matchId: "4",
-    postId: "4",
-    title: "title4",
-    duration: ["2022-12-30", "2023-12-31"],
-    status: "",
-    contact: "instagram @hjjj",
-    author: [
-      {
-        profileImg: "",
-        email: "hjj@gmail.com",
-        nickname: "klm",
-      },
-    ],
-  },
-];
+// const data11 = [
+//   {
+//     matchId: "1",
+//     postId: "1",
+//     title: "title",
+//     duration: ["2023-01-01", "2023-01-02"],
+//     status: "수락",
+//     contact: "instagram @11ddy",
+//     author: [
+//       {
+//         profileImg: "",
+//         email: "222@gmail.com",
+//         nickname: "xxcs",
+//       },
+//     ],
+//   },
+//   {
+//     matchId: "2",
+//     postId: "2",
+//     title: "title2",
+//     duration: ["2022-12-11", "2022-12-13"],
+//     status: "거절",
+//     contact: "instagram @sjj",
+//     author: [
+//       {
+//         profileImg: "",
+//         email: "sjsj@gmail.com",
+//         nickname: "sjdhakd",
+//       },
+//     ],
+//   },
+//   {
+//     matchId: "3",
+//     postId: "3",
+//     title: "title3",
+//     duration: ["2022-12-23", "2023-12-26"],
+//     status: "수락",
+//     contact: "instagram @skdfj01",
+//     author: [
+//       {
+//         profileImg: "",
+//         email: "678@gmail.com",
+//         nickname: "hhsj",
+//       },
+//     ],
+//   },
+//   {
+//     matchId: "4",
+//     postId: "4",
+//     title: "title4",
+//     duration: ["2022-12-30", "2023-12-31"],
+//     status: "",
+//     contact: "instagram @hjjj",
+//     author: [
+//       {
+//         profileImg: "",
+//         email: "hjj@gmail.com",
+//         nickname: "klm",
+//       },
+//     ],
+//   },
+// ];
 
 const MyEnrollTable: React.FC = () => {
   const [data, setData] = useState<Enroll[]>([]);
@@ -96,15 +96,16 @@ const MyEnrollTable: React.FC = () => {
   useEffect(() => {
     const enrollData = async () => {
       try {
-        // const fetchData = await authAxios.get("/api/main/mypage/myEnroll");
-        // setData(fetchData.data);
-        setData(data11);
+        const fetchData = await authAxios.get("/api/main/mypage/myEnroll");
+        setData(fetchData.data);
+        // setData(data11);
       } catch (err: unknown) {
         console.error(err);
       }
     };
     enrollData();
   }, []);
+  console.log(data);
 
   const onCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -155,10 +156,6 @@ const MyEnrollTable: React.FC = () => {
                 ((today - tripEndTime) / 1000 / 60 / 60 / 24).toFixed(0),
               );
 
-              if (item.status !== "수락" && item.status !== "거절") {
-                item.status = "대기중";
-              }
-
               // 1. 수락해서 여행 종료되고 시간이 지나 리뷰 버튼이 없는경우
               // 2. 신청 상태가 거절일 때 버튼 아예 없애기
               // 3. 여행 종료 후 일주일 이내일 때 리뷰 버튼 보여주기
@@ -168,25 +165,27 @@ const MyEnrollTable: React.FC = () => {
                 <tbody key={item.postId}>
                   <tr>
                     <td id="title">{item.title}</td>
-                    <td>{item.author[0].nickname}</td>
-                    <td>{item.status}</td>
+                    <td>{item.author.nickname}</td>
+                    <td>{item.matchStatus}</td>
                     <td id="last">
-                      {elapse >= 1 && elapse <= 7 && item.status === "수락" ? (
+                      {elapse >= 1 &&
+                      elapse <= 7 &&
+                      item.matchStatus === "수락" ? (
                         <ReviewDiv>
                           <button id="review" onClick={onReview}>
                             리뷰
                           </button>
                           {isReview && (
                             <ReviewModal
-                              email={item.author[0].email}
+                              email={item.author.email}
                               setReview={setReview}
                             />
                           )}
                           <span>여행 종료로부터 + {elapse}</span>
                         </ReviewDiv>
-                      ) : elapse < 1 &&
-                        item.status !== "수락" &&
-                        item.status !== "거절" ? (
+                      ) : elapse < 1 && item.matchStatus === "거절" ? (
+                        <span></span>
+                      ) : elapse < 1 && item.matchStatus === "대기중" ? (
                         <div>
                           <button id="cancel" onClick={onCancel}>
                             취소
@@ -201,7 +200,7 @@ const MyEnrollTable: React.FC = () => {
                     </td>
                   </tr>
 
-                  {item.status === "수락" ? (
+                  {item.matchStatus === "수락" ? (
                     <tr id="agreeContact">
                       <td id="contact">
                         <span>

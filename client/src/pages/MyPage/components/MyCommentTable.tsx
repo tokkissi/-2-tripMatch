@@ -8,8 +8,6 @@ import authAxios from "../../../axios/authAxios";
 const MyCommentTable: React.FC = () => {
   const [data, setData] = useState<CommentType[]>([]);
 
-  // const baseUrl = "https://e14cb7f4-6c52-45e6-84b4-2e92c7458bf0.mock.pstmn.io/commentedPost";
-
   useEffect(() => {
     const postData = async () => {
       try {

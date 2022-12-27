@@ -18,22 +18,22 @@ export interface Applicant {
   profileImg: string;
 }
 
-const data11 = [
-  {
-    matchId: "1",
-    postId: "1",
-    title: "title",
-    status: "",
-    duration: ["2022-10-24", "2022-10-25"],
-    applicant: [
-      {
-        email: "111@gmail.com",
-        nickname: "aass",
-        profileImg: "",
-      },
-    ],
-  },
-];
+// const data11 = [
+//   {
+//     matchId: "1",
+//     postId: "1",
+//     title: "title",
+//     status: "",
+//     duration: ["2022-10-24", "2022-10-25"],
+//     applicant: [
+//       {
+//         email: "111@gmail.com",
+//         nickname: "aass",
+//         profileImg: "",
+//       },
+//     ],
+//   },
+// ];
 
 const ReceivedEnrollTable: React.FC = () => {
   const [data, setData] = useState<EnrolledPersonType[]>([]);
@@ -41,10 +41,11 @@ const ReceivedEnrollTable: React.FC = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        // const fetchData = await authAxios.get(
-        //   "/api/main/mypage/receivedEnroll",
-        // );
-        setData(data11);
+        const fetchData = await authAxios.get(
+          "/api/main/mypage/receivedEnroll",
+        );
+        setData(fetchData.data);
+        // setData(data11);
       } catch (err: unknown) {
         console.error(err);
       }

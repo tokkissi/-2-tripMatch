@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 import { Link, useLocation, useParams } from "react-router-dom";
 import UserProfile from "../UserProfile/UserProfile";
 import {
@@ -66,8 +67,8 @@ const PostDetail: React.FC<PostDetailProps> = ({
         });
       }
     };
-    fetchLikePost();
-  }, [clickLikePost, id, isLikePost]);
+    location.pathname.includes("match") && fetchLikePost();
+  }, [clickLikePost, id, isLikePost, location.pathname]);
 
   // 이미 좋아요를 누른 게시글이면 setIsLikePost(true)
   useEffect(() => {
@@ -84,10 +85,14 @@ const PostDetail: React.FC<PostDetailProps> = ({
         currentLike && setIsLikePost(true);
       }
     };
-    if (sessionStorage.getItem("x-access-token") && !clickLikePost) {
+    if (
+      sessionStorage.getItem("x-access-token") &&
+      !clickLikePost &&
+      location.pathname.includes("match")
+    ) {
       getLikePost();
     }
-  }, [clickLikePost, id, isLikePost]);
+  }, [clickLikePost, id, isLikePost, location.pathname]);
 
   // 로그인한 유저가 운영자나 글 작성자인지 체크함
   useEffect(() => {
@@ -235,6 +240,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
           (freePost && { __html: freePost.content }) ||
           (matchPost && { __html: matchPost.content })
         }
+        className="toastui-editor-contents"
       ></PostContent>
       {matchPost && (
         <MatchButton onClick={onClickApply} isApplying={isApplying!}>

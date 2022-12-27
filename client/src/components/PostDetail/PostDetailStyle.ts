@@ -67,6 +67,7 @@ export const PostContent = styled.article`
   padding: 40px 0;
   font-size: ${(props) => props.theme.font.M};
   line-height: 1.7;
+  font-family: "S-CoreDream-3Light";
 `;
 
 export const Date = styled.p`

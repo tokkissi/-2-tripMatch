@@ -36,7 +36,9 @@ const MyEnrollTable: React.FC = () => {
     const enrollData = async () => {
       try {
         const fetchData = await authAxios.get("/api/main/mypage/myEnroll");
-        setData(fetchData.data);
+        if (fetchData.status === 200) {
+          setData(fetchData.data);
+        }
       } catch (err: unknown) {
         console.error(err);
       }
@@ -50,7 +52,9 @@ const MyEnrollTable: React.FC = () => {
     const enrollData = async () => {
       try {
         const fetchData = await authAxios.get("/api/main/mypage/myEnroll");
-        setData(fetchData.data);
+        if (fetchData.status === 200) {
+          setData(fetchData.data);
+        }
       } catch (err: unknown) {
         console.error(err);
       }
@@ -85,7 +89,9 @@ const MyEnrollTable: React.FC = () => {
             </tr>
           </thead>
 
-          {data &&
+          {/* endDate 속성명 변경 */}
+
+          {data ? (
             data.map((item) => {
               const onCancel = () => {
                 setCancel(!isCancel);
@@ -127,9 +133,14 @@ const MyEnrollTable: React.FC = () => {
               return (
                 <tbody key={item.postId}>
                   <tr>
-                    <td id="title">
-                      <Link to={`/match/${item.postId}`}>{item.title}</Link>
-                    </td>
+                    {!item.title ? (
+                      <td id="title">삭제된 게시물 입니다.</td>
+                    ) : (
+                      <td id="title">
+                        <Link to={`/match/${item.postId}`}>{item.title}</Link>
+                      </td>
+                    )}
+
                     <td>{item.author.nickname}</td>
                     <td>{item.matchStatus}</td>
                     <td id="last">
@@ -180,7 +191,12 @@ const MyEnrollTable: React.FC = () => {
                   )}
                 </tbody>
               );
-            })}
+            })
+          ) : (
+            <tr>
+              <td></td>
+            </tr>
+          )}
         </table>
       </Layer>
     </Content>

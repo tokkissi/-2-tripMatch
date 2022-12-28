@@ -19,23 +19,6 @@ export interface Applicant {
   profileImg: string;
 }
 
-// const data11 = [
-//   {
-//     matchId: "1",
-//     postId: "1",
-//     title: "title",
-//     status: "",
-//     duration: ["2022-10-24", "2022-10-25"],
-//     applicant: [
-//       {
-//         email: "111@gmail.com",
-//         nickname: "aass",
-//         profileImg: "",
-//       },
-//     ],
-//   },
-// ];
-
 const ReceivedEnrollTable: React.FC = () => {
   const [data, setData] = useState<EnrolledPersonType[]>([]);
   const [status, setStatus] = useState<boolean>(false);
@@ -46,7 +29,9 @@ const ReceivedEnrollTable: React.FC = () => {
         const fetchData = await authAxios.get(
           "/api/main/mypage/receivedEnroll",
         );
-        setData(fetchData.data);
+        if (fetchData.status === 200) {
+          setData(fetchData.data);
+        }
       } catch (err: unknown) {
         console.error(err);
       }
@@ -84,7 +69,7 @@ const ReceivedEnrollTable: React.FC = () => {
           </thead>
           {/* 수락하면 status true, 거절하면 status false */}
           <tbody>
-            {data &&
+            {data ? (
               data.map((item) => {
                 const handleApproval = (
                   e: React.MouseEvent<HTMLButtonElement>,
@@ -108,7 +93,6 @@ const ReceivedEnrollTable: React.FC = () => {
                     }
                   };
                   approvalFn();
-                  // setStatus(true);
                 };
 
                 const handleDenied = (
@@ -133,14 +117,19 @@ const ReceivedEnrollTable: React.FC = () => {
                     }
                   };
                   deniedFn();
-                  // setStatus(true);
                 };
 
                 return (
                   <tr key={item.matchId}>
-                    <td id="title">
-                      <Link to={`/match/${item.postId}`}>{item.title}</Link>
-                    </td>
+                    {}
+                    {!item.title ? (
+                      <td id="title">삭제된 게시물 입니다.</td>
+                    ) : (
+                      <td id="title">
+                        <Link to={`/match/${item.postId}`}>{item.title}</Link>
+                      </td>
+                    )}
+
                     <td>{item.applicant.nickname}</td>
 
                     {item.matchStatus !== "대기중" ? (
@@ -174,10 +163,12 @@ const ReceivedEnrollTable: React.FC = () => {
                     )}
                   </tr>
                 );
-              })}
-            <tr>
-              <td></td>
-            </tr>
+              })
+            ) : (
+              <tr>
+                <td></td>
+              </tr>
+            )}
           </tbody>
         </table>
       </Layer>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Container, FestivalInfo, ModalCard } from "./FestivalListStyle";
+import { Container, ModalCard, TripInfo } from "./FestivalListStyle";
 import axios from "axios";
 import TitleStyle from "../Title/TitleStyle";
 import Title from "../Title/Title";
@@ -58,14 +58,21 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
             }}
           />
 
-          <img src={item.firstimage} className="festivalImg" />
+          <img src={item.firstimage} className="modalImg" />
           <div className="info">
-            <div className="festivalTitle">{item.title}</div>
-            <div className="festivalDate">
-              {dateFormat(item.eventstartdate)}~{dateFormat(item.eventenddate)}
-            </div>
+            <div className="modalTitle">{item.title}</div>
+            {toggleOn ? (
+              <div className="festivalDate">
+                {dateFormat(item.eventstartdate)}~
+                {dateFormat(item.eventenddate)}
+              </div>
+            ) : (
+              <div></div>
+            )}
             <div className="address">{item.addr1}</div>
-            <div className="tel">{item.tel}</div>
+            <div className="tel">
+              {item.tel ? item.tel : "연락처가 없습니다."}
+            </div>
           </div>
         </div>
       </ModalCard>
@@ -95,13 +102,13 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
                 setToggleOn(false);
               }}
             >
-              굿스테이정보
+              숙박정보
             </span>
           </h3>
         </TitleStyle>
       )}
       <Container>
-        <FestivalInfo>
+        <TripInfo>
           {InfoList &&
             InfoList.map((item) => {
               return (
@@ -120,15 +127,18 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
                       ? item.title.slice(0, 29) + "..."
                       : item.title}
                   </div>
-                  <div className="itemDate">
-                    {dateFormat(item.eventstartdate)}~
-                    {dateFormat(item.eventenddate)}
-                  </div>
+                  {location === "/" ||
+                    (toggleOn && ( //데이터 받아보고 수정하기
+                      <div className="itemDate">
+                        {dateFormat(item.eventstartdate)}~
+                        {dateFormat(item.eventenddate)}
+                      </div>
+                    ))}
                 </div>
               );
             })}
           {festivalModal && <InfoModal item={itemInfo} />}
-        </FestivalInfo>
+        </TripInfo>
         {location === "festival" ? (
           <div className="shortCutBtn">
             <div>혼자 가기 외로울 땐?</div>

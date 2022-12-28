@@ -53,7 +53,7 @@ const Container = styled.div`
   }
 `;
 
-const FestivalInfo = styled.div`
+const TripInfo = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
@@ -111,7 +111,7 @@ const ModalCard = styled(Modal)`
       cursor: pointer;
     }
 
-    .festivalImg {
+    .modalImg {
       min-width: 11vw;
       min-height: 11vw;
       max-width: 12vw;
@@ -129,7 +129,7 @@ const ModalCard = styled(Modal)`
         margin-top: 8px;
       }
 
-      .festivalTitle {
+      .modalTitle {
         font-size: ${(props) => props.theme.font.L};
         font-weight: bold;
       }
@@ -141,4 +141,4 @@ const ModalCard = styled(Modal)`
   }
 `;
 
-export { Container, FestivalInfo, ModalCard };
+export { Container, TripInfo, ModalCard };

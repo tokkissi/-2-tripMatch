@@ -96,7 +96,7 @@ const MyEnrollTable: React.FC = () => {
                     );
                     if (a.status === 200) {
                       setState(true);
-                      console.log("삭제 성공");
+                      // console.log("삭제 성공");
                     }
                   } catch (err: unknown) {
                     console.error(err);
@@ -145,7 +145,7 @@ const MyEnrollTable: React.FC = () => {
                         </ReviewDiv>
                       ) : elapse < 1 && item.matchStatus === "수락" ? (
                         <span></span>
-                      ) : elapse < 1 && item.matchStatus === "대기중" ? (
+                      ) : item.matchStatus === "대기중" ? (
                         <div>
                           <button id="cancel" onClick={onCancel}>
                             취소

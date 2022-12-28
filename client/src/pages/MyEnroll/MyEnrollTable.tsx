@@ -60,7 +60,13 @@ const MyEnrollTable: React.FC = () => {
 
   const handleCancel = () => {
     if (modalText?.title === "동행 신청 취소") {
-      return onCancel;
+      data.map(async (item) => {
+        try {
+          await authAxios.delete(`/api/main/matches/${item.matchId}`);
+        } catch (err: unknown) {
+          console.error(err);
+        }
+      });
     }
   };
 
@@ -83,7 +89,7 @@ const MyEnrollTable: React.FC = () => {
           </thead>
 
           {data &&
-            data?.map((item) => {
+            data.map((item) => {
               const today = Date.now();
               const tripEnd = item.duration[1];
               const dateTripEnd = new Date(tripEnd);

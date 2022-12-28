@@ -20,6 +20,9 @@ import FestivalList from "./components/FestivalList/FestivalList";
 import Search from "./pages/Search/Search";
 import UpdateUserInfoPage from "./pages/MyPage/UpdateUserInfoPage";
 import WishListPage from "./pages/WishList/WishListPage";
+import NoticeList from "./pages/NoticeList/NoticeList";
+import NoticeDetail from "./pages/NoticeDetail/NoticeDetail";
+import NoticeWrite from "./pages/NoticeWrite/NoticeWrite";
 
 const App = () => {
   return (
@@ -49,6 +52,10 @@ const App = () => {
             path="festival"
             element={<FestivalList location="festival" />}
           />
+          <Route path="notice" element={<NoticeList />} />
+          <Route path="notice/:id" element={<NoticeDetail />} />
+          <Route path="notice/write" element={<NoticeWrite />} />
+          <Route path="notice/write/:id" element={<NoticeWrite />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -11,6 +11,7 @@ interface Item {
 
 interface ItemObj {
   item: Item;
+  stateFn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface LocationProps {
@@ -45,9 +46,14 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
     return date.slice(0, 4) + "." + date.slice(4, 6) + "." + date.slice(6, 8);
   };
 
-  const InfoModal: React.FC<ItemObj> = ({ item }) => {
+  const InfoModal: React.FC<ItemObj> = ({ item, stateFn }) => {
     return (
-      <ModalCard>
+      <ModalCard
+        onClick={(e) => {
+          e.stopPropagation();
+          stateFn(false);
+        }}
+      >
         <div className="modalCard">
           <img
             className="closeModal"
@@ -143,7 +149,7 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
                 </div>
               );
             })}
-          {modalOn && <InfoModal item={itemInfo} />}
+          {modalOn && <InfoModal item={itemInfo} stateFn={setModalOn} />}
         </TripInfo>
         {location !== "/" ? (
           <div className="shortCutBtn">

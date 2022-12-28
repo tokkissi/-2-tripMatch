@@ -59,6 +59,19 @@ const MyEnrollTable: React.FC = () => {
   }, []);
   console.log(data);
 
+  useEffect(() => {
+    if (isCancel) {
+      dispatch(
+        showModal({
+          title: "동행 신청 취소",
+          content: "동행 신청을 취소하시겠습니까?",
+          rightButton: "예",
+          leftButton: "아니요",
+        }),
+      );
+    }
+  }, [dispatch, isCancel]);
+
   return (
     <Content>
       <Layer>
@@ -74,19 +87,8 @@ const MyEnrollTable: React.FC = () => {
 
           {data &&
             data.map((item) => {
-              const onCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-                e.preventDefault();
+              const onCancel = () => {
                 setCancel(!isCancel);
-                if (isCancel) {
-                  dispatch(
-                    showModal({
-                      title: "동행 신청 취소",
-                      content: "동행 신청을 취소하시겠습니까?",
-                      rightButton: "예",
-                      leftButton: "아니요",
-                    }),
-                  );
-                }
               };
 
               const handleCancel = async () => {
@@ -109,6 +111,7 @@ const MyEnrollTable: React.FC = () => {
                 e.preventDefault();
                 setReview(!isReview);
               };
+
               const today = Date.now();
               const tripEnd = item.duration[1];
               const dateTripEnd = new Date(tripEnd);

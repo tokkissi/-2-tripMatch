@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Container, FestivalInfo, ModalCard } from "./FestivalListStyle";
 import axios from "axios";
@@ -18,12 +18,13 @@ interface LocationProps {
 }
 
 const FestivalList: React.FC<LocationProps> = ({ location }) => {
-  const [festivalInfo, setFestivalInfo] = useState<Item[]>([]);
+  const [InfoList, setInfoList] = useState<Item[]>([]);
   const [itemInfo, setItemInfo] = useState<Item>({});
   const [festivalModal, setFestivalModal] = useState(false);
+  const [toggleOn, setToggleOn] = useState(true);
 
-  const getInfo = async (infoType: string) => {
-    const response = await axios
+  const getInfo = async (infoType: string, location: string) => {
+    const infoList = await axios
       .get(`http://34.64.156.80:3003/api/main/infoes/${infoType}`)
       .then((res) =>
         res.data.sort((a: Item, b: Item) => {
@@ -31,14 +32,14 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
         }),
       );
     location === "/"
-      ? setFestivalInfo(response.slice(0, 8))
-      : setFestivalInfo(response);
+      ? setInfoList(infoList.slice(0, 8))
+      : setInfoList(infoList);
     return;
   };
 
   useEffect(() => {
-    getInfo("festival");
-  });
+    getInfo("festival", location);
+  }, [location]);
 
   const dateFormat = (date: string) => {
     return date.slice(0, 4) + "." + date.slice(4, 6) + "." + date.slice(6, 8);
@@ -79,24 +80,34 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
         <TitleStyle>
           <h3>
             <span
+              className={`${toggleOn}`}
               onClick={() => {
-                getInfo("festival");
+                getInfo("festival", location);
+                setToggleOn(true);
               }}
             >
               축제정보
             </span>
-            <span>숙박정보</span>
+            <span
+              className={`${!toggleOn}`}
+              onClick={() => {
+                getInfo("stay", location);
+                setToggleOn(false);
+              }}
+            >
+              굿스테이정보
+            </span>
           </h3>
         </TitleStyle>
       )}
       <Container>
         <FestivalInfo>
-          {festivalInfo &&
-            festivalInfo.map((item) => {
+          {InfoList &&
+            InfoList.map((item) => {
               return (
                 <div
                   className="item"
-                  key={item.contentid}
+                  key={item._id}
                   onClick={(e) => {
                     e.stopPropagation();
                     setItemInfo(item);

@@ -7,12 +7,12 @@ const communitiesController = Router();
 communitiesController.get("/", async (req, res, next) => {
   const { page, region } = req.query;
   try {
-    const totalPage = await communityService.getTotalPage(region as string);
+    const totalCount = await communityService.getTotalCount(region as string);
     const communities = await communityService.getTenCommus(
       Number(page) || 1,
       region as string
     );
-    res.status(200).json({ totalPage, communities });
+    res.status(200).json({ totalCount, communities });
   } catch (err) {
     next(err);
   }

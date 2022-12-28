@@ -7,6 +7,8 @@ import {
   ButtonContainer,
   MatchPostAppButton,
   DateRange,
+  RadioAndCheckBoxLabel,
+  RadioAndCheckBoxDiv,
 } from "./MatchPostWriteStyle";
 import AppInputText from "../../components/AppInputText/AppInputText";
 import AppInputRadioCheck from "../../components/AppInputRadioCheck/AppInputRadioCheck";
@@ -14,7 +16,10 @@ import AppInputFile from "../../components/AppInputFile/AppInputFile";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Editor as ToastEditor } from "@toast-ui/react-editor";
 import { MatchPostType } from "../../type/matchPost";
-import { useCreateMatchPostMutation } from "../../slice/matchPostApi";
+import {
+  useUpdateMatchPostMutation,
+  useCreateMatchPostMutation,
+} from "../../slice/matchPostApi";
 
 const regions = [
   "서울",
@@ -45,18 +50,19 @@ const MatchPostWrite = () => {
   const navigate = useNavigate();
   const state: MatchPostType = useLocation().state;
   const [createMatchPost] = useCreateMatchPostMutation();
+  const [updateMatchPost] = useUpdateMatchPostMutation();
 
   const regionRef = useRef<HTMLSelectElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
   const peopleCntRef = useRef<HTMLInputElement>(null);
   const contactRef = useRef<HTMLInputElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const startDateRef = useRef<HTMLInputElement>(null);
+  const endDateRef = useRef<HTMLInputElement>(null);
   const contentRef: LegacyRef<ToastEditor> = useRef(null);
 
-  const [gender, setGender] = useState<string>("남성");
-  const [ages, setAges] = useState<string[]>([]);
-  const [startDate, setStartDate] = useState<string>("");
-  const [endDate, setEndDate] = useState<string>("");
+  const [genders, setGender] = useState<string>(state ? state.hopeGender : "");
+  const [ages, setAges] = useState<string[]>(state ? state.hopeAge : []);
 
   const [updateImg] = useUpdateImgMutation();
 
@@ -93,30 +99,46 @@ const MatchPostWrite = () => {
       return;
     }
 
+    if (fileUrl === "" && state) {
+      fileUrl = state.thumbnail;
+    }
     const region = regionRef.current!.value;
     const title = titleRef.current!.value;
     const peopleCnt = Number(peopleCntRef.current!.value);
     const contact = contactRef.current!.value;
+    const startDate = startDateRef.current!.value;
+    const endDate = endDateRef.current!.value;
     const content = contentRef.current?.getInstance().getHTML() || "";
     const matchPost: MatchPostType = {
+      ...(state && { postId: state.postId }),
       title: title,
       region: region,
       userCount: peopleCnt,
       duration: [startDate, endDate],
-      hopeGender: gender,
+      hopeGender: genders,
       hopeAge: ages,
       thumbnail: fileUrl,
       contact: contact,
       content: content,
     };
 
-    createMatchPost(matchPost)
-      .then(() => {
-        navigate("/match");
-      })
-      .catch(() => {
-        alert("에러가 발생하였습니다. 관리자에게 문의해주세요.");
-      });
+    if (state) {
+      updateMatchPost(matchPost)
+        .then(() => {
+          navigate(`/match/${matchPost.postId}`);
+        })
+        .catch(() => {
+          alert("에러가 발생하였습니다. 관리자에게 문의해주세요.");
+        });
+    } else {
+      createMatchPost(matchPost)
+        .then(() => {
+          navigate("/match");
+        })
+        .catch(() => {
+          alert("에러가 발생하였습니다. 관리자에게 문의해주세요.");
+        });
+    }
   };
 
   return (
@@ -149,35 +171,55 @@ const MatchPostWrite = () => {
         <DateRange>
           <AppInputText
             type={"date"}
+            refer={startDateRef}
             defaultValue={state && state.duration[0]}
             label={"여행 기간"}
             className={"startDatePicker"}
-            onChange={(e) => setStartDate(e.target.value)}
           />
           <p>~</p>
           <AppInputText
             type={"date"}
+            refer={endDateRef}
             defaultValue={state && state.duration[1]}
             className={"endDatePicker"}
-            onChange={(e) => setEndDate(e.target.value)}
           />
         </DateRange>
-        <AppInputRadioCheck
-          radioAndCheckBoxList={genderList}
-          type={"radio"}
-          defaultValue={state && state.hopeGender}
-          label={"희망 성별"}
-          className={"gender"}
-          onChange={(e) => setGender(e.target.value)}
-        />
-        <AppInputRadioCheck
-          radioAndCheckBoxList={ageList}
-          defaultValues={state && state.hopeAge}
-          onChange={(e) => handleAges(e)}
-          type={"checkbox"}
-          label={"희망 연령대"}
-          className={"age"}
-        />
+        <RadioAndCheckBoxDiv>
+          <RadioAndCheckBoxLabel>희망 성별</RadioAndCheckBoxLabel>
+          {genderList.map((gender) => {
+            return (
+              <AppInputRadioCheck
+                key={gender.value}
+                type="radio"
+                value={gender.value}
+                checked={genders.includes(gender.value)}
+                onClick={(e) => setGender(e.target.value)}
+                htmlValue={gender.htmlValue}
+                className="gender"
+              />
+            );
+          })}
+        </RadioAndCheckBoxDiv>
+        <RadioAndCheckBoxDiv>
+          <RadioAndCheckBoxLabel>희망 연령대</RadioAndCheckBoxLabel>
+          {ageList.map((age) => {
+            return (
+              <AppInputRadioCheck
+                key={age.value}
+                type="checkbox"
+                value={age.value}
+                checked={Boolean(
+                  ages.find((stateAge) => {
+                    return age.value === stateAge;
+                  }),
+                )}
+                htmlValue={age.htmlValue}
+                onClick={handleAges}
+                className="age"
+              />
+            );
+          })}
+        </RadioAndCheckBoxDiv>
         <AppInputFile
           refer={fileRef}
           defaultValue={state && state.thumbnail}

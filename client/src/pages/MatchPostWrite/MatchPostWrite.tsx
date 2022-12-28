@@ -20,6 +20,7 @@ import {
   useUpdateMatchPostMutation,
   useCreateMatchPostMutation,
 } from "../../slice/matchPostApi";
+import { dateFormat } from "../../util/dateFormatting";
 
 const regions = [
   "서울",
@@ -52,6 +53,7 @@ const MatchPostWrite = () => {
   const [createMatchPost] = useCreateMatchPostMutation();
   const [updateMatchPost] = useUpdateMatchPostMutation();
 
+  const today = dateFormat("today");
   const regionRef = useRef<HTMLSelectElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
   const peopleCntRef = useRef<HTMLInputElement>(null);
@@ -63,8 +65,33 @@ const MatchPostWrite = () => {
 
   const [genders, setGender] = useState<string>(state ? state.hopeGender : "");
   const [ages, setAges] = useState<string[]>(state ? state.hopeAge : []);
-
+  const [startDate, setStartDate] = useState<string>(
+    state ? state.duration[0] : today,
+  );
+  const [endDate, setEndDate] = useState<string>(
+    state ? state.duration[1] : today,
+  );
   const [updateImg] = useUpdateImgMutation();
+
+  const handleStartDate = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value > endDate) {
+      alert("종료 날짜보다 작게 설정 바랍니다.");
+      setStartDate(endDate);
+      event.target.value = endDate;
+      return;
+    }
+    setStartDate(event.target.value);
+  };
+
+  const handleEndDate = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value < startDate) {
+      alert("시작 날짜보다 크게 설정 바랍니다.");
+      setEndDate(startDate);
+      event.target.value = endDate;
+      return;
+    }
+    setEndDate(event.target.value);
+  };
 
   const handleAges = (event: ChangeEvent<HTMLInputElement>) => {
     let updatedList = [...ages];
@@ -109,6 +136,11 @@ const MatchPostWrite = () => {
     const startDate = startDateRef.current!.value;
     const endDate = endDateRef.current!.value;
     const content = contentRef.current?.getInstance().getHTML() || "";
+
+    if (ages.length === 0 || genders.length === 0) {
+      alert("입력 값을 확인해주세요.");
+      return;
+    }
     const matchPost: MatchPostType = {
       ...(state && { postId: state.postId }),
       title: title,
@@ -153,6 +185,7 @@ const MatchPostWrite = () => {
         />
         <AppInputText
           refer={titleRef}
+          required={true}
           defaultValue={state && state.title}
           inputWidth="100%"
           type={"text"}
@@ -162,6 +195,7 @@ const MatchPostWrite = () => {
         />
         <AppInputText
           refer={peopleCntRef}
+          required={true}
           defaultValue={state && state.userCount.toString()}
           inputWidth="5%"
           type={"number"}
@@ -171,17 +205,21 @@ const MatchPostWrite = () => {
         <DateRange>
           <AppInputText
             type={"date"}
+            required={true}
+            defaultValue={startDate}
             refer={startDateRef}
-            defaultValue={state && state.duration[0]}
             label={"여행 기간"}
             className={"startDatePicker"}
+            onChange={handleStartDate}
           />
           <p>~</p>
           <AppInputText
             type={"date"}
+            required={true}
+            defaultValue={endDate}
             refer={endDateRef}
-            defaultValue={state && state.duration[1]}
             className={"endDatePicker"}
+            onChange={handleEndDate}
           />
         </DateRange>
         <RadioAndCheckBoxDiv>
@@ -229,6 +267,7 @@ const MatchPostWrite = () => {
         />
         <AppInputText
           refer={contactRef}
+          required={true}
           defaultValue={state && state.contact}
           inputWidth="20%"
           type={"text"}

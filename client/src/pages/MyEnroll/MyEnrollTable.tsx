@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Content, Layer, ReviewDiv } from "./MyEnrollTableStyle";
+import { Content, Layer, StyledLink, ReviewDiv } from "./MyEnrollTableStyle";
 import Modal from "../../components/Modal/Modal";
 import { showModal } from "../../slice/modal";
 import axios from "axios";
@@ -137,7 +137,9 @@ const MyEnrollTable: React.FC = () => {
                       <td id="title">삭제된 게시물 입니다.</td>
                     ) : (
                       <td id="title">
-                        <Link to={`/match/${item.postId}`}>{item.title}</Link>
+                        <StyledLink to={`/match/${item.postId}`}>
+                          {item.title}
+                        </StyledLink>
                       </td>
                     )}
 

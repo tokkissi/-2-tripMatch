@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Content, Layer } from "./ReceivedEnrollTableStyle";
+import { Content, StyledLink, Layer } from "./ReceivedEnrollTableStyle";
 import axios from "axios";
 import authAxios from "../../axios/authAxios";
 import { Link } from "react-router-dom";
@@ -127,7 +127,9 @@ const ReceivedEnrollTable: React.FC = () => {
                       <td id="title">삭제된 게시물 입니다.</td>
                     ) : (
                       <td id="title">
-                        <Link to={`/match/${item.postId}`}>{item.title}</Link>
+                        <StyledLink to={`/match/${item.postId}`}>
+                          {item.title}
+                        </StyledLink>
                       </td>
                     )}
 

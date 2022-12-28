@@ -27,8 +27,23 @@ const MyEnrollTable: React.FC = () => {
   const [data, setData] = useState<Enroll[]>([]);
   const [isCancel, setCancel] = useState(false);
   const [isReview, setReview] = useState(false);
+  const [state, setState] = useState(false);
   const dispatch = useAppDispatch();
   const { show: isShown, modalText } = useAppSelector((state) => state.modal);
+
+  useEffect(() => {
+    const enrollData = async () => {
+      try {
+        const fetchData = await authAxios.get("/api/main/mypage/myEnroll");
+        setData(fetchData.data);
+      } catch (err: unknown) {
+        console.error(err);
+      }
+    };
+    if (state) {
+      enrollData();
+    }
+  }, [state]);
 
   useEffect(() => {
     const enrollData = async () => {
@@ -76,7 +91,13 @@ const MyEnrollTable: React.FC = () => {
               const handleCancel = async () => {
                 if (modalText?.title === "동행 신청 취소") {
                   try {
-                    await authAxios.delete(`/api/main/matches/${item.matchId}`);
+                    const a = await authAxios.delete(
+                      `/api/main/matches/${item.matchId}`,
+                    );
+                    if (a.status === 200) {
+                      setState(true);
+                      console.log("삭제 성공");
+                    }
                   } catch (err: unknown) {
                     console.error(err);
                   }

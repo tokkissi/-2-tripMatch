@@ -64,7 +64,10 @@ const ReviewModal: React.FC<ReviewProps> = ({
         const fetchData = await axios.get(
           `http://34.64.156.80:3003/api/main/auth/${authorEmail}`,
         );
-        setAuthorInfo(fetchData.data);
+
+        if (fetchData.status === 200) {
+          setAuthorInfo(fetchData.data);
+        }
       } catch (err: unknown) {
         console.error(err);
       }
@@ -101,6 +104,7 @@ const ReviewModal: React.FC<ReviewProps> = ({
         matchPoint: point,
       },
     );
+    setReview(false);
   };
 
   return (
@@ -111,7 +115,7 @@ const ReviewModal: React.FC<ReviewProps> = ({
           {/* "https://picsum.photos/600/900" */}
           <div className="nickname">{authorInfo.nickname}</div>
           <div className="detailInfo">
-            {authorInfo.age} {authorInfo.gender}성
+            {authorInfo.age} {authorInfo.gender}
           </div>
         </div>
         <div className="question">동행과의 여행은 어떠셨나요?</div>

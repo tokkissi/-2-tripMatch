@@ -28,10 +28,9 @@ export const MatchStatus = styled.span<{ status: boolean }>`
 
 export const Thumbnail = styled.div`
   width: 100%;
-  height: 400px;
+  max-height: 400px;
   overflow: hidden;
   margin-bottom: 10px;
-  background-color: #ccc;
   position: relative;
 `;
 

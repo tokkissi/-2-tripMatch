@@ -3,9 +3,7 @@ import styled from "styled-components";
 import Theme from "../../styles/Theme";
 
 export const Container = styled.div`
-  width: 1000px;
-  margin: auto;
-  width: fit-content;
+  width: 60vw;
   margin: auto;
   /* padding-bottom: 30vh; */
 `;

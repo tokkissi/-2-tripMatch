@@ -46,7 +46,7 @@ const MyCommentTable: React.FC = () => {
                     <td>
                       {item.duration[0]} ~ {item.duration[1]}
                     </td>
-                    <td id="last">{item.author.nickname}</td>
+                    <td id="nickname">{item.author.nickname}</td>
                   </tr>
                 );
               })}

@@ -169,7 +169,11 @@ const MyEnrollTable: React.FC = () => {
                           </button>
                           {isShown && <Modal callBackFn={handleCancel} />}
                         </div>
+                      ) : !item.title && item.matchStatus === "대기중" ? (
+                        // 여행 시작 안했고 대기중일 때
+                        <span></span>
                       ) : (
+                        // 여행 끝난지 한참됨
                         // 여행 시작 안했고 대기중일 때
                         <span></span>
                         // 여행 끝난지 한참됨

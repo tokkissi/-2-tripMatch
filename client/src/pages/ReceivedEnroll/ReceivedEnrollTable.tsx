@@ -64,7 +64,8 @@ const ReceivedEnrollTable: React.FC = () => {
             <tr id="first">
               <th>내가 쓴 글</th>
               <th>신청자</th>
-              <th>상태</th>
+              <th>모집상태</th>
+              <th>수락 / 거절</th>
             </tr>
           </thead>
           {/* 수락하면 status true, 거절하면 status false */}
@@ -131,6 +132,7 @@ const ReceivedEnrollTable: React.FC = () => {
                     )}
 
                     <td>{item.applicant.nickname}</td>
+                    <td>{item.matchStatus}</td>
 
                     {item.matchStatus !== "대기중" ? (
                       <td id="last">

@@ -27,7 +27,7 @@ export const Content = styled.div`
 
     tr {
       display: grid;
-      grid-template-columns: 1fr 150px 280px;
+      grid-template-columns: 1fr 150px 120px 230px;
       gap: 20px;
       text-align: center;
       padding-top: 10px;
@@ -45,7 +45,7 @@ export const Content = styled.div`
     th {
       padding: 15px;
       height: 20px;
-      padding: 15px 5px 10px 23px;
+      padding: 10px 5px 10px 23px;
       font-size: ${(props) => props.theme.font.M};
       font-weight: 700;
       text-align: center;

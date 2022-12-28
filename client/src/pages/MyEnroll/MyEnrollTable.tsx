@@ -43,38 +43,6 @@ const MyEnrollTable: React.FC = () => {
   }, []);
   console.log(data);
 
-  const onCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setCancel(!isCancel);
-    if (isCancel) {
-      dispatch(
-        showModal({
-          title: "동행 신청 취소",
-          content: "동행 신청을 취소하시겠습니까?",
-          rightButton: "예",
-          leftButton: "아니요",
-        }),
-      );
-    }
-  };
-
-  const handleCancel = () => {
-    if (modalText?.title === "동행 신청 취소") {
-      data.map(async (item) => {
-        try {
-          await authAxios.delete(`/api/main/matches/${item.matchId}`);
-        } catch (err: unknown) {
-          console.error(err);
-        }
-      });
-    }
-  };
-
-  const onReview = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setReview(!isReview);
-  };
-
   return (
     <Content>
       <Layer>
@@ -90,6 +58,35 @@ const MyEnrollTable: React.FC = () => {
 
           {data &&
             data.map((item) => {
+              const onCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+                e.preventDefault();
+                setCancel(!isCancel);
+                if (isCancel) {
+                  dispatch(
+                    showModal({
+                      title: "동행 신청 취소",
+                      content: "동행 신청을 취소하시겠습니까?",
+                      rightButton: "예",
+                      leftButton: "아니요",
+                    }),
+                  );
+                }
+              };
+
+              const handleCancel = async () => {
+                if (modalText?.title === "동행 신청 취소") {
+                  try {
+                    await authAxios.delete(`/api/main/matches/${item.matchId}`);
+                  } catch (err: unknown) {
+                    console.error(err);
+                  }
+                }
+              };
+
+              const onReview = (e: React.MouseEvent<HTMLButtonElement>) => {
+                e.preventDefault();
+                setReview(!isReview);
+              };
               const today = Date.now();
               const tripEnd = item.duration[1];
               const dateTripEnd = new Date(tripEnd);

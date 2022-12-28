@@ -59,6 +59,8 @@ postsController.delete("/:postId", loginCheck, async (req, res, next) => {
     const post = await postService.getAuthor(postId);
     if (post?.author.email !== req.email) return next(new Error("403"));
     await postService.delete(postId);
+    await likeService.banish(postId);
+    await commentService.banish({ postId });
     res.status(200).end();
   } catch (err) {
     next(err);

@@ -49,6 +49,7 @@ communitiesController.delete(
     try {
       await communityService.checkAuthor(communityId, req.email);
       await communityService.delete(communityId);
+      await commentService.banish({ communityId });
       res.status(200).end();
     } catch (err) {
       next(err);

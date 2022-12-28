@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Content, Layer } from "./TableContentStyle";
+import { Content, StyledLink, Layer } from "./TableContentStyle";
 import { CommentType } from "../../../type/myComments";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -40,7 +40,9 @@ const MyCommentTable: React.FC = () => {
                 return (
                   <tr key={item.postId}>
                     <td id="title">
-                      <Link to={`/match/${item.postId}`}>{item.title}</Link>
+                      <StyledLink to={`/match/${item.postId}`}>
+                        {item.title}
+                      </StyledLink>
                     </td>
                     <td>{item.region}</td>
                     <td>

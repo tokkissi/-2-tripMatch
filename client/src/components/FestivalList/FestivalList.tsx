@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useCallback, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Container, FestivalInfo, ModalCard } from "./FestivalListStyle";
-import { mockData } from "./mockData";
 import axios from "axios";
-import { closeModal, showModal } from "../../slice/modal";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import TitleStyle from "../Title/TitleStyle";
 import Title from "../Title/Title";
 
 interface Item {
@@ -23,27 +21,24 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
   const [festivalInfo, setFestivalInfo] = useState<Item[]>([]);
   const [itemInfo, setItemInfo] = useState<Item>({});
   const [festivalModal, setFestivalModal] = useState(false);
-  const date = new Date();
-  const eventStartDate = `${date.getFullYear()}${date.getMonth() + 1}01`;
-  const serviceKey =
-    "7vK0Tt5CPNrirky41NfjhrXhOVngGJ0McJjDrgASEMepGMEtUXEP1%2Fy2wlH6mAUF4U%2FJAUtS0xsaYjtn3NLGgA%3D%3D";
+
+  const getInfo = async (infoType: string) => {
+    const response = await axios
+      .get(`http://34.64.156.80:3003/api/main/infoes/${infoType}`)
+      .then((res) =>
+        res.data.sort((a: Item, b: Item) => {
+          return Number(a.eventstartdate) - Number(b.eventstartdate);
+        }),
+      );
+    location === "/"
+      ? setFestivalInfo(response.slice(0, 8))
+      : setFestivalInfo(response);
+    return;
+  };
 
   useEffect(() => {
-    // const getData = async () => {
-    //   const response = await axios.get(`http://apis.data.go.kr/B551011/KorService/searchFestival?numOfRows={home ? 8 : 20}&pageNo=1&MobileOS=ETC&MobileApp=AppTest&arrange=C&_type=json&serviceKey=${serviceKey}&eventStartDate=${eventStartDate}`)
-    // }
-    const newData = mockData
-      .sort((a, b) => {
-        return Number(a.eventstartdate) - Number(b.eventstartdate);
-      })
-      .map((item) => {
-        return { ...item, readcount: "0" };
-      });
-
-    location === "/"
-      ? setFestivalInfo(newData.slice(0, 8))
-      : setFestivalInfo(newData); //찐데이터로 받을 때 수정해야할 식
-  }, [location]);
+    getInfo("festival");
+  });
 
   const dateFormat = (date: string) => {
     return date.slice(0, 4) + "." + date.slice(4, 6) + "." + date.slice(6, 8);
@@ -78,7 +73,22 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
 
   return (
     <div>
-      <Title title="축제정보" location={location} />
+      {location === "/" ? (
+        <Title title="여행정보" location="/" />
+      ) : (
+        <TitleStyle>
+          <h3>
+            <span
+              onClick={() => {
+                getInfo("festival");
+              }}
+            >
+              축제정보
+            </span>
+            <span>숙박정보</span>
+          </h3>
+        </TitleStyle>
+      )}
       <Container>
         <FestivalInfo>
           {festivalInfo &&
@@ -94,7 +104,11 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
                   }}
                 >
                   <img src={item.firstimage} />
-                  <div className="itemTitle">{item.title}</div>
+                  <div className="itemTitle">
+                    {item.title.length > 29
+                      ? item.title.slice(0, 29) + "..."
+                      : item.title}
+                  </div>
                   <div className="itemDate">
                     {dateFormat(item.eventstartdate)}~
                     {dateFormat(item.eventenddate)}

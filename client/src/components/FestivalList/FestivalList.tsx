@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Container, ModalCard, TripInfo } from "./FestivalListStyle";
 import axios from "axios";
 import TitleStyle from "../Title/TitleStyle";
@@ -20,8 +20,9 @@ interface LocationProps {
 const FestivalList: React.FC<LocationProps> = ({ location }) => {
   const [InfoList, setInfoList] = useState<Item[]>([]);
   const [itemInfo, setItemInfo] = useState<Item>({});
-  const [festivalModal, setFestivalModal] = useState(false);
+  const [modalOn, setModalOn] = useState(false);
   const [toggleOn, setToggleOn] = useState(true);
+  const navigate = useNavigate();
 
   const getInfo = async (infoType: string, location: string) => {
     const infoList = await axios
@@ -54,14 +55,20 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671625307/free-icon-cancel-8532370_kuiqk1.png"
             onClick={(e) => {
               e.stopPropagation();
-              setFestivalModal(false);
+              setModalOn(false);
             }}
           />
 
-          <img src={item.firstimage} className="modalImg" />
+          <img
+            src={item.firstimage}
+            className="modalImg"
+            onClick={() => {
+              window.open(item.firstimage, "_blank");
+            }}
+          />
           <div className="info">
             <div className="modalTitle">{item.title}</div>
-            {toggleOn ? (
+            {item.eventstartdate ? (
               <div className="festivalDate">
                 {dateFormat(item.eventstartdate)}~
                 {dateFormat(item.eventenddate)}
@@ -118,7 +125,7 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
                   onClick={(e) => {
                     e.stopPropagation();
                     setItemInfo(item);
-                    setFestivalModal(true);
+                    setModalOn(true);
                   }}
                 >
                   <img src={item.firstimage} />
@@ -128,7 +135,7 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
                       : item.title}
                   </div>
                   {location === "/" ||
-                    (toggleOn && ( //데이터 받아보고 수정하기
+                    (item.eventstartdate && (
                       <div className="itemDate">
                         {dateFormat(item.eventstartdate)}~
                         {dateFormat(item.eventenddate)}
@@ -137,9 +144,9 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
                 </div>
               );
             })}
-          {festivalModal && <InfoModal item={itemInfo} />}
+          {modalOn && <InfoModal item={itemInfo} />}
         </TripInfo>
-        {location === "festival" ? (
+        {location !== "/" ? (
           <div className="shortCutBtn">
             <div>혼자 가기 외로울 땐?</div>
             <Link to="/match/write">

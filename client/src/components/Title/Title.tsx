@@ -17,7 +17,7 @@ const Title: React.FC<TitleProps> = ({ title, location }) => {
       link = "/free";
       break;
     case "여행정보":
-      link = "festival";
+      link = "tripinfo";
       break;
     default:
       link = "/";

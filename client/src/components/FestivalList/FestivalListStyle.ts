@@ -119,6 +119,7 @@ const ModalCard = styled(Modal)`
       object-fit: contain;
       background-color: ${(props) => props.theme.color.lightblue};
       border-radius: 10px;
+      cursor: pointer;
     }
 
     .info {

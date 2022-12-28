@@ -1,13 +1,13 @@
 import React from "react";
 import AuthTemplate from "../../components/Auth/AuthTemplate";
-import RegisterForm from "./components/RegisterForm";
+import FindPasswordForm from "./components/FindPasswordForm";
 
-const RegisterPage = () => {
+const FindPassword = () => {
   return (
     <AuthTemplate>
-      <RegisterForm />
+      <FindPasswordForm />
     </AuthTemplate>
   );
 };
 
-export default RegisterPage;
+export default FindPassword;

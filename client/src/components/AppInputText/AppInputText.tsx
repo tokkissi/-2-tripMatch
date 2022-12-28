@@ -4,6 +4,7 @@ import { Div, Label, Input } from "./AppInputTextStyle";
 
 const AppInputText: React.FC<AppInputProps> = ({
   label,
+  required,
   type,
   defaultValue,
   inputWidth,
@@ -11,6 +12,7 @@ const AppInputText: React.FC<AppInputProps> = ({
   placeholder,
   refer,
   onChange,
+  min,
 }) => {
   return (
     <Div>
@@ -23,6 +25,8 @@ const AppInputText: React.FC<AppInputProps> = ({
         placeholder={placeholder}
         className={className}
         onChange={onChange}
+        required={required}
+        min={min}
       />
     </Div>
   );

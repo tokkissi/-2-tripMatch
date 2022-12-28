@@ -19,6 +19,56 @@ const MyHeader = () => {
     }
   };
 
+  const getDropDownForUserType = () => {
+    if (role === "user" && myPageDrop) {
+      return (
+        <MyPageModal
+          onMouseEnter={() => {
+            setMyPageDrop(true);
+          }}
+          onMouseLeave={() => {
+            setMyPageDrop(false);
+          }}
+        >
+          <div className="modalCard">
+            <div onClick={() => navigate("/mypage/userInfo")}>마이페이지</div>
+            <div
+              onClick={() => {
+                sessionStorage.clear();
+                window.location.href = "/";
+              }}
+            >
+              로그아웃
+            </div>
+          </div>
+        </MyPageModal>
+      );
+    } else if (role === "admin" && myPageDrop) {
+      return (
+        <MyPageModal
+          onMouseEnter={() => {
+            setMyPageDrop(true);
+          }}
+          onMouseLeave={() => {
+            setMyPageDrop(false);
+          }}
+        >
+          <div className="modalCard">
+            <div onClick={() => navigate("/admin")}>회원관리페이지</div>
+            <div
+              onClick={() => {
+                sessionStorage.clear();
+                window.location.href = "/";
+              }}
+            >
+              로그아웃
+            </div>
+          </div>
+        </MyPageModal>
+      );
+    }
+  };
+
   return (
     <Header>
       <div className="logo">
@@ -34,6 +84,11 @@ const MyHeader = () => {
           type="text"
           ref={searchRef}
           placeholder="지역명으로 검색해 보세요."
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              onSearch();
+            }
+          }}
         ></input>
         <img
           src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095050/freeIconMagnifyingglass_p7owop.png"
@@ -44,20 +99,20 @@ const MyHeader = () => {
         />
       </div>
       <div className="navBar">
-        <Link to={role ? "/match" : "/login"}>
+        <Link to="/match">
           <img
             className="firstImg"
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/temporaryIconShake_jywmku.png"
             alt="동행게시판"
           />
         </Link>
-        <Link to={role ? "/free" : "/login"}>
+        <Link to="/free">
           <img
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671095094/temporaryIconbubble_h1lmf7.png"
             alt="자유게시판"
           />
         </Link>
-        <Link to={role ? "/wishlist" : "/login"}>
+        <Link to={role ? "/wishlist" : "/auth/login"}>
           <img
             src="https://res.cloudinary.com/dk9scwone/image/upload/v1671184505/free-icon-heart-shape-39559_aatqxl.png"
             alt="위시리스트"
@@ -65,7 +120,11 @@ const MyHeader = () => {
         </Link>
         <Link
           to={
-            role ? (role === "user" ? "/mypage/userInfo" : "/admin") : "/login"
+            role
+              ? role === "user"
+                ? "/mypage/userInfo"
+                : "/admin"
+              : "/auth/login"
           }
         >
           <img
@@ -98,39 +157,7 @@ const MyHeader = () => {
           </div>
         </AlertModal>
       )}
-
-      {myPageDrop && (
-        <MyPageModal
-          onMouseEnter={() => {
-            setMyPageDrop(true);
-          }}
-          onMouseLeave={() => {
-            setMyPageDrop(false);
-          }}
-        >
-          <div className="modalCard">
-            <div
-              onClick={() => {
-                if (role === "user") {
-                  navigate("/mypage/userInfo");
-                } else {
-                  navigate("/admin");
-                }
-              }}
-            >
-              마이페이지
-            </div>
-            <div
-              onClick={() => {
-                sessionStorage.clear();
-                window.location.href = "/";
-              }}
-            >
-              로그아웃
-            </div>
-          </div>
-        </MyPageModal>
-      )}
+      {getDropDownForUserType()}
     </Header>
   );
 };

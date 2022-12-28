@@ -16,26 +16,25 @@ const CommentList: React.FC<CommentListProps> = ({
 }) => {
   const [commentInput, setCommentInput] = useState("");
 
-  const [onCreateComment, { isError }] = useCreateCommentMutation();
+  const [onCreateComment, { isError: isErrorCreateComment }] =
+    useCreateCommentMutation();
 
   const location = useLocation();
 
   const currentPath = location.pathname.split("/").slice(1, 3);
 
   useEffect(() => {
-    if (isError) {
+    if (isErrorCreateComment) {
       alert("댓글 작성에 실패했습니다.");
     }
-  }, [isError]);
+  }, [isErrorCreateComment]);
 
-  const onSubmitComment = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmitComment = () => {
     const path = currentPath[0] === "free" ? "communityId" : "postId";
     onCreateComment({
       content: commentInput,
       [path]: currentPath[1],
     });
-    window.location.reload();
   };
 
   return (

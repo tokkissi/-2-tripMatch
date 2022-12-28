@@ -26,14 +26,20 @@ const MatchPostDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const postquery = useGetMatchPostQuery(id);
-  const { data: matchPost, isError } = postquery;
-  const [onDeletePost] = useDeleteMatchPostMutation();
-  const [onDeleteComment] = useDeleteCommentMutation();
+  const { data: matchPost, isError } = useGetMatchPostQuery(id);
+  const [onDeletePost, { isError: isErrorDeletePost }] =
+    useDeleteMatchPostMutation();
+  const [
+    onDeleteComment,
+    { isSuccess: isSuccessDeleteComment, isError: isErrorDeleteComment },
+  ] = useDeleteCommentMutation();
 
-  const [onApplyMatch, { isSuccess: isSuccessApplyMatch }] =
-    useApplyMatchMutation();
-  const [onCancleMatch] = useCancelMatchMutation();
+  const [
+    onApplyMatch,
+    { isSuccess: isSuccessApplyMatch, isError: isErrorApplyMatch },
+  ] = useApplyMatchMutation();
+  const [onCancleMatch, { isError: isErrorCancleMatch }] =
+    useCancelMatchMutation();
 
   const { show: isShown, modalText } = useAppSelector((state) => state.modal);
 
@@ -76,6 +82,29 @@ const MatchPostDetail = () => {
     isSuccessApplyMatch && getMatchPost();
   }, [id, isSuccessApplyMatch]);
 
+  useEffect(() => {
+    if (isErrorApplyMatch) {
+      alert("동행 신청에 실패했습니다.");
+    } else if (isErrorCancleMatch) {
+      alert("동행 신청 취소에 실패했습니다.");
+    } else if (isErrorDeleteComment) {
+      alert("댓글 삭제에 실패했습니다.");
+    } else if (isErrorDeletePost) {
+      alert("게시글 삭제에 실패했습니다.");
+    }
+  }, [
+    isErrorApplyMatch,
+    isErrorCancleMatch,
+    isErrorDeleteComment,
+    isErrorDeletePost,
+  ]);
+
+  useEffect(() => {
+    if (isSuccessDeleteComment) {
+      window.location.reload();
+    }
+  }, [isSuccessDeleteComment]);
+
   const onClickApplyMatch = () => {
     onApplyMatch(id!);
     setIsApplying(!isApplying);
@@ -93,7 +122,6 @@ const MatchPostDetail = () => {
 
   const onClickDeleteComment = () => {
     onDeleteComment(deleteCommentId);
-    window.location.reload();
   };
 
   const getModalCallback = () => {

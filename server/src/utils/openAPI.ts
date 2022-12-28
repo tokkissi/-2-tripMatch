@@ -10,8 +10,8 @@ export default function openAPI(eventStartDate?: string): Promise<[]> {
           eventStartDate ? "searchFestival" : "searchStay"
         }?numOfRows=20&MobileOS=ETC&MobileApp=AppTest&serviceKey=${
           process.env.SERVICE_KEY
-        }&_type=json&arrange=C&${
-          eventStartDate ? "eventStartDate=" + eventStartDate : "goodStay=1"
+        }&_type=json&arrange=${
+          eventStartDate ? "C&eventStartDate=" + eventStartDate : "R"
         }`,
         method: "GET",
         json: true,

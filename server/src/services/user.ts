@@ -92,6 +92,8 @@ class UserService {
     await this.userModel.deleteOne(email);
   }
   async update(email: string, body: object) {
+    if ("password" in body)
+      body.password = await hashPassword.hash(body.password as string);
     await this.userModel.updateOne(email, body);
   }
   async refresh(accessToken: string, refresh: string) {

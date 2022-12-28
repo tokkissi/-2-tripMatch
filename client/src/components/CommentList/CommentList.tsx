@@ -31,14 +31,7 @@ const CommentList: React.FC<CommentListProps> = ({
     }
   }, [isErrorCreateComment]);
 
-  useEffect(() => {
-    if (isSuccessCreateComment) {
-      window.location.reload();
-    }
-  }, [isSuccessCreateComment]);
-
   const onSubmitComment = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
     const path = currentPath[0] === "free" ? "communityId" : "postId";
     onCreateComment({
       content: commentInput,

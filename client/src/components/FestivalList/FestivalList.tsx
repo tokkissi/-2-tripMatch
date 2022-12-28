@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Container, ModalCard, TripInfo } from "./FestivalListStyle";
 import axios from "axios";
 import TitleStyle from "../Title/TitleStyle";
@@ -23,6 +23,7 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
   const [itemInfo, setItemInfo] = useState<Item>({});
   const [modalOn, setModalOn] = useState(false);
   const [toggleOn, setToggleOn] = useState(true);
+  const navigate = useNavigate();
 
   const getInfo = async (infoType: string, location: string) => {
     const infoList = await axios
@@ -154,9 +155,17 @@ const FestivalList: React.FC<LocationProps> = ({ location }) => {
         {location !== "/" ? (
           <div className="shortCutBtn">
             <div>혼자 가기 외로울 땐?</div>
-            <Link to="/match/write">
-              <button>동행 신청 바로가기</button>
-            </Link>
+            <button
+              onClick={() => {
+                if (sessionStorage.getItem("email")) {
+                  navigate("/match/write");
+                } else {
+                  navigate("/auth/login");
+                }
+              }}
+            >
+              동행 신청 바로가기
+            </button>
           </div>
         ) : (
           false

@@ -74,17 +74,6 @@ const ReviewModal: React.FC<ReviewProps> = ({
     };
     getAuthorInfo();
   }, [authorEmail]);
-  // console.log(authorInfo);
-
-  //임시 데이터
-  // const userInfo = {
-  //   email: "aaaa@naver.com",
-  //   profileImg: "skdjflsf.png",
-  //   nickname: "닉네임은여덟글자",
-  //   introduce: "자기소개어쩌구저쩌구",
-  //   age: "50대 이상",
-  //   gender: "여",
-  // };
 
   const checkStar = (idx: number) => {
     const newStarList = new Array(5).fill(false);
@@ -112,7 +101,6 @@ const ReviewModal: React.FC<ReviewProps> = ({
       <div className="modalCard">
         <div className="userInfo">
           <img src={authorInfo.profileImg} />
-          {/* "https://picsum.photos/600/900" */}
           <div className="nickname">{authorInfo.nickname}</div>
           <div className="detailInfo">
             {authorInfo.age} {authorInfo.gender}

@@ -12,7 +12,7 @@ export interface Enroll {
   matchId: string;
   postId: string;
   title: string;
-  duration: string[];
+  endDate: string;
   matchStatus: string;
   contact: string;
   author: Author;
@@ -119,7 +119,7 @@ const MyEnrollTable: React.FC = () => {
               };
 
               const today = Date.now();
-              const tripEnd = item.duration[1];
+              const tripEnd = item.endDate;
               const dateTripEnd = new Date(tripEnd);
               const tripEndTime = dateTripEnd.getTime();
               const elapse = Number(

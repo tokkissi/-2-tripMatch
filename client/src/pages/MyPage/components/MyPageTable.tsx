@@ -58,7 +58,6 @@ const MyPageTable: React.FC = () => {
     };
     getData();
   }, []);
-  //console.log(data);
 
   return (
     <>
@@ -95,9 +94,7 @@ const MyPageTable: React.FC = () => {
                     }
 
                     const value = e.target.value;
-                    console.log(value);
                     const boolean = value === "모집중" ? true : false;
-                    console.log(boolean);
 
                     try {
                       const put = await authAxios.put(

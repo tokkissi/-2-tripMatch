@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Content, Layer } from "./ReceivedEnrollTableStyle";
+import { Content, StyledLink, Layer } from "./ReceivedEnrollTableStyle";
 import axios from "axios";
 import authAxios from "../../axios/authAxios";
 import { Link } from "react-router-dom";
@@ -9,6 +9,7 @@ export interface EnrolledPersonType {
   postId: string;
   title: string;
   matchStatus: string;
+  status: boolean;
   duration: string[];
   applicant: Applicant;
 }
@@ -18,23 +19,6 @@ export interface Applicant {
   nickname: string;
   profileImg: string;
 }
-
-// const data11 = [
-//   {
-//     matchId: "1",
-//     postId: "1",
-//     title: "title",
-//     status: "",
-//     duration: ["2022-10-24", "2022-10-25"],
-//     applicant: [
-//       {
-//         email: "111@gmail.com",
-//         nickname: "aass",
-//         profileImg: "",
-//       },
-//     ],
-//   },
-// ];
 
 const ReceivedEnrollTable: React.FC = () => {
   const [data, setData] = useState<EnrolledPersonType[]>([]);
@@ -46,7 +30,9 @@ const ReceivedEnrollTable: React.FC = () => {
         const fetchData = await authAxios.get(
           "/api/main/mypage/receivedEnroll",
         );
-        setData(fetchData.data);
+        if (fetchData.status === 200) {
+          setData(fetchData.data);
+        }
       } catch (err: unknown) {
         console.error(err);
       }
@@ -79,12 +65,13 @@ const ReceivedEnrollTable: React.FC = () => {
             <tr id="first">
               <th>내가 쓴 글</th>
               <th>신청자</th>
-              <th>상태</th>
+              <th>모집상태</th>
+              <th>수락 / 거절</th>
             </tr>
           </thead>
           {/* 수락하면 status true, 거절하면 status false */}
           <tbody>
-            {data &&
+            {data ? (
               data.map((item) => {
                 const handleApproval = (
                   e: React.MouseEvent<HTMLButtonElement>,
@@ -108,7 +95,6 @@ const ReceivedEnrollTable: React.FC = () => {
                     }
                   };
                   approvalFn();
-                  // setStatus(true);
                 };
 
                 const handleDenied = (
@@ -133,15 +119,23 @@ const ReceivedEnrollTable: React.FC = () => {
                     }
                   };
                   deniedFn();
-                  // setStatus(true);
                 };
 
                 return (
                   <tr key={item.matchId}>
-                    <td id="title">
-                      <Link to={`/match/${item.postId}`}>{item.title}</Link>
-                    </td>
+                    {}
+                    {!item.title ? (
+                      <td id="title">삭제된 게시물 입니다.</td>
+                    ) : (
+                      <td id="title">
+                        <StyledLink to={`/match/${item.postId}`}>
+                          {item.title}
+                        </StyledLink>
+                      </td>
+                    )}
+
                     <td>{item.applicant.nickname}</td>
+                    <td>{item.status ? "모집중" : "모집마감"}</td>
 
                     {item.matchStatus !== "대기중" ? (
                       <td id="last">
@@ -174,10 +168,12 @@ const ReceivedEnrollTable: React.FC = () => {
                     )}
                   </tr>
                 );
-              })}
-            <tr>
-              <td></td>
-            </tr>
+              })
+            ) : (
+              <tr>
+                <td></td>
+              </tr>
+            )}
           </tbody>
         </table>
       </Layer>

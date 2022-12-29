@@ -21,8 +21,10 @@ const FreePostDetail = () => {
   const { data: post, isError } = postquery;
   const [onDeletePost, { isError: isErrorDeletePost }] =
     useDeleteFreePostMutation();
-  const [onDeleteComment, { isError: isErrorDeleteComment }] =
-    useDeleteCommentMutation();
+  const [
+    onDeleteComment,
+    { isError: isErrorDeleteComment, isSuccess: isSuccessDeleteComment },
+  ] = useDeleteCommentMutation();
 
   const { show: isShown, modalText } = useAppSelector((state) => state.modal);
 
@@ -36,18 +38,18 @@ const FreePostDetail = () => {
       alert("댓글 삭제에 실패했습니다.");
     } else if (isErrorDeletePost) {
       alert("게시글 삭제에 실패했습니다.");
+    } else if (isSuccessDeleteComment) {
+      window.location.reload();
     }
-  }, [isErrorDeleteComment, isErrorDeletePost]);
+  }, [isErrorDeleteComment, isErrorDeletePost, isSuccessDeleteComment]);
 
   const onClickDeletePost = () => {
-    console.log("삭제");
     onDeletePost(id);
     navigate("/free");
   };
 
   const onClickDeleteComment = () => {
     onDeleteComment(deleteCommentId);
-    window.location.reload();
   };
 
   const getModalCallback = () => {

@@ -32,12 +32,6 @@ const Search = () => {
     keyword: `${keyword}`,
   });
 
-  // const {
-  //   data: searchData,
-  //   isError: searchError,
-  //   isLoading: searchLoading,
-  // } = useGetSearchPostQuery({ keyword, ...(email && { email }) });
-
   return (
     <SearchStyle>
       <Keyword>&apos;{location.split("/")[2]}&#39;의 검색 결과입니다.</Keyword>

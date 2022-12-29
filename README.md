@@ -8,7 +8,7 @@
 
 ## 1. 서비스 소개
 
-- 시연 영상
+- 시연 영상 <br>
 https://user-images.githubusercontent.com/102281327/210003219-8c4e4adb-7a88-4b51-ac29-e6107ca057a8.mp4
 
 - 기술 스택

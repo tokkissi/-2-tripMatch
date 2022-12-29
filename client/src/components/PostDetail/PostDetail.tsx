@@ -84,7 +84,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
   useEffect(() => {
     const getLikePost = async () => {
       const result = await authAxios.get(
-        "http://34.64.156.80:3003/api/main/likes",
+        "http://kdt-sw3-team08.elicecoding.com:3003/api/main/likes",
       );
 
       if (result.data) {

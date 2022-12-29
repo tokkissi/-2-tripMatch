@@ -47,7 +47,7 @@ const MatchPostDetail = () => {
   useEffect(() => {
     const getMatchPost = async () => {
       const result = await authAxios.get(
-        "http://34.64.156.80:3003/api/main/mypage/myEnroll",
+        "http://kdt-sw3-team08.elicecoding.com:3003/api/main/mypage/myEnroll",
       );
 
       if (result.data) {
@@ -66,7 +66,7 @@ const MatchPostDetail = () => {
   useEffect(() => {
     const getMatchPost = async () => {
       const result = await authAxios.get(
-        "http://34.64.156.80:3003/api/main/mypage/myEnroll",
+        "http://kdt-sw3-team08.elicecoding.com:3003/api/main/mypage/myEnroll",
       );
 
       if (result.data) {

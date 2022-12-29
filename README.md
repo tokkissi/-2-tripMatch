@@ -97,14 +97,16 @@
 
 ## 4. 프로젝트 팀원 역할 분담
 
-| 이름   | 담당 업무            |
-| ------ | -------------------- |
-| 김제원 | 팀장/프론트엔드 개발 |
-| 김은채 | 프론트엔드 개발      |
-| 김지윤 | 프론트엔드 개발      |
-| 이도연 | 프론트엔드 개발      |
-| 정지영 | 프론트엔드 개발      |
-| 김지택 | 백엔드 개발          |
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/tokkissi"><img src="https://avatars.githubusercontent.com/u/53216523?v=4" width="100px;" alt=""/><br /><b>김제원</b></a></td>
+    <td align="center"><a href="https://github.com/eunbbori"><img src="https://avatars.githubusercontent.com/u/112812483?v=4" width="100px;" alt=""/><br /><b>김은채</b></a></td>
+    <td align="center"><a href="https://github.com/Jiyun-Kim-5017"><img src="https://avatars.githubusercontent.com/u/113993379?v=4" width="100px;" alt=""/><br /><b>김지윤</b></a></td>
+    <td align="center"><a href="https://github.com/leedo97y"><img src="https://avatars.githubusercontent.com/u/99410440?v=4" width="100px;" alt=""/><br /><b>이도연</b></a></td>
+    <td align="center"><a href="https://github.com/Younngg"><img src="https://avatars.githubusercontent.com/u/98656282?v=4" width="100px;" alt=""/><br /><b>정지영</b></a></td>
+    <td align="center"><a href="https://github.com/Salmambo"><img src="https://avatars.githubusercontent.com/u/102281327?v=4" width="100px;" alt=""/><br /><b>김지택</b></a></td>
+  </tr>
+ </table>
 
   - 김제원: 팀장/프론트엔드 담당
     - 기획 단계: 구체적인 설계와 지표에 따른 프로젝트 제안서 작성

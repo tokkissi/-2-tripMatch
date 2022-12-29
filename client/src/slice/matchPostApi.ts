@@ -2,7 +2,6 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import type { MatchPostType } from "./../type/matchPost";
 import { authAxiosBaseQuery, axiosBaseQuery } from "./axiosBaseQuery";
 import { CommentType } from "./../type/comment";
-import { FreePostType } from "../type/freePost";
 
 export const matchPostApi = createApi({
   reducerPath: "matchPostApi",

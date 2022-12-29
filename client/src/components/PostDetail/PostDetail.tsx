@@ -83,9 +83,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
   // 이미 좋아요를 누른 게시글이면 setIsLikePost(true)
   useEffect(() => {
     const getLikePost = async () => {
-      const result = await authAxios.get(
-        "http://kdt-sw3-team08.elicecoding.com:3003/api/main/likes",
-      );
+      const result = await authAxios.get("/api/main/likes");
 
       if (result.data) {
         const currentLike = result.data.find(

@@ -10,8 +10,8 @@ import NotFound from "../../components/NotFound/NotFound";
 const Search = () => {
   const [searchMatch, setSearchMatch] = useState([]);
   const [searchFree, setSearchFree] = useState([]);
-  const email = sessionStorage.getItem("email");
   const location = decodeURIComponent(useLocation().pathname);
+  const email = sessionStorage.getItem("email");
 
   const getSearchData = async () => {
     const keyword = location.split("/")[2];
@@ -22,15 +22,12 @@ const Search = () => {
           email ? `&email=${email}` : ""
         }`,
       )
-      .then((res) => res.data)
+      .then((res) => console.log(res.data))
       .catch((err) => alert("문제가 발생했습니다. 다시 시도해 주세요."));
 
-    setSearchMatch(searchData.posts);
-    setSearchFree(searchData.communities);
-    console.log(searchData);
+    // setSearchMatch(searchData.posts);
+    // setSearchFree(searchData.communities);
   };
-  console.log(searchMatch);
-  console.log(searchFree);
 
   const getSearchDataCallback = useCallback(getSearchData, [email, location]);
 
@@ -40,7 +37,7 @@ const Search = () => {
 
   return (
     <SearchStyle>
-      <Keyword>&apos;{location.split("/")[2]}&#39;의 검색 결과입니다.</Keyword>
+      {/* <Keyword>&apos;{location.split("/")[2]}&#39;의 검색 결과입니다.</Keyword>
       <Title title="동행게시판" location="/search" />
       <Content>
         {searchMatch.length !== 0 ? (
@@ -56,7 +53,7 @@ const Search = () => {
         ) : (
           <NotFound message="검색 결과가 없습니다." />
         )}
-      </Content>
+      </Content> */}
     </SearchStyle>
   );
 };

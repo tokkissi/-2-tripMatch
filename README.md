@@ -8,8 +8,7 @@
 
 ## 1. 서비스 소개
 
-- 시연 영상 <br>
-https://user-images.githubusercontent.com/102281327/210003219-8c4e4adb-7a88-4b51-ac29-e6107ca057a8.mp4
+![시연영상](/uploads/475c0b595de403309aea5abf6d0de1ef/8팀_8282__1_.mov)
 
 - 기술 스택
   ![img](https://res.cloudinary.com/dnow6qfd8/image/upload/v1672301273/2022-12-29_17_03_48_eadleu.png)

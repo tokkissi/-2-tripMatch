@@ -1,8 +1,8 @@
 # Trip Match
 
-- 믿을 수 있는 여행 동행자를 구하는 사이트
-- [링크](http://kdt-sw3-team08.elicecoding.com/) <br>
-![QR](https://res.cloudinary.com/dnow6qfd8/image/upload/v1672332941/qr_lpuiw1.png)
+- 믿을 수 있는 국내 여행 동행자를 구하는 사이트
+
+<br />
 
 ## 서비스 구성 안내
 

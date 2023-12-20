@@ -4,9 +4,6 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "@toast-ui/react-editor": "^3.2.2",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.8",
@@ -17,7 +14,7 @@
     "@types/react-table": "^7.7.12",
     "axios": "^1.2.1",
     "immer": "^9.0.16",
-    "react": "^18.3.0",
+    "react": "^18.0.0",
     "react-dom": "^18.3.0-next-de7d1c907-20221223",
     "react-js-pagination": "^3.0.3",
     "react-redux": "^8.0.5",
